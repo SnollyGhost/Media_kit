@@ -15,8 +15,8 @@ app.use(express.json());
 const transporter = nodemailer.createTransport({
   service: 'gmail',
   auth: {
-    user: process.env.SMTP_USER, // e.g., nafyaddachasa91@gmail.com
-    pass: process.env.SMTP_PASS, // e.g., your-gmail-app-password
+    user: (process.env.SMTP_USER || 'nafyaddachasa91@gmail.com').trim(),
+    pass: (process.env.SMTP_PASS || '').replace(/\s+/g, ''),
   },
 });
 
@@ -25,7 +25,7 @@ app.post("/api/notify", async (req, res) => {
   const { name, email, phone, company, package: pkg, message, preferredMethod } = req.body;
 
   const mailOptions = {
-    from: `"Web Inquiry" <${process.env.SMTP_USER}>`,
+    from: `"Web Inquiry" <${process.env.SMTP_USER || "nafyaddachasa91@gmail.com"}>`,
     to: "nafyaddachasa91@gmail.com",
     subject: `New Mission Brief: ${name} (${pkg})`,
     text: `
@@ -62,12 +62,6 @@ app.post("/api/notify", async (req, res) => {
   };
 
   try {
-    if (!process.env.SMTP_USER || !process.env.SMTP_PASS) {
-      console.warn("SMTP credentials missing. Logging inquiry to console instead.");
-      console.log("Inquiry Data:", req.body);
-      return res.status(200).json({ status: "logged_only", message: "SMTP credentials not configured" });
-    }
-
     await transporter.sendMail(mailOptions);
     res.status(200).json({ status: "ok", message: "Notification sent" });
   } catch (error) {

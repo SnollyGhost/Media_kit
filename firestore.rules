@@ -15,20 +15,20 @@ service cloud.firestore {
     // Inquiry Validation
     function isValidInquiry(data) {
       let requiredFields = ['name', 'email', 'phone', 'package', 'createdAt', 'status', 'preferredMethod'];
+      
       return data.keys().hasAll(requiredFields) &&
-             data.name is string && data.name.size() >= 1 && data.name.size() <= 100 &&
-             data.email is string && data.email.size() >= 5 && data.email.size() <= 100 &&
-             data.phone is string && data.phone.size() >= 5 && data.phone.size() <= 20 &&
-             data.package is string && data.package.size() >= 1 && data.package.size() <= 100 &&
+             data.name is string && data.name.size() > 0 &&
+             data.email is string && data.email.size() > 0 &&
+             data.phone is string && data.phone.size() > 0 &&
              data.status == 'pending' &&
-             data.preferredMethod in ['telegram', 'whatsapp', 'email'] &&
-             data.createdAt == request.time &&
-             (!('company' in data) || (data.company is string && data.company.size() <= 100)) &&
-             (!('message' in data) || (data.message is string && data.message.size() <= 2000));
+             data.createdAt is timestamp;
     }
 
     match /inquiries/{inquiryId} {
+      // Allow any user to submit an inquiry if it passes validation
       allow create: if isValidInquiry(incoming());
+      
+      // Only admins can read or manage inquiries
       allow read, update, delete: if isAdmin();
     }
     
