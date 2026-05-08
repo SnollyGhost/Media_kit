@@ -11,6 +11,13 @@ const PORT = 3000;
 
 app.use(express.json());
 
+console.log("Server starting. SMTP_USER defined:", !!process.env.SMTP_USER);
+console.log("SMTP_PASS defined:", !!process.env.SMTP_PASS);
+
+if (!process.env.SMTP_USER || !process.env.SMTP_PASS) {
+  console.warn("WARNING: SMTP credentials missing. Dashboard notifications will fail.");
+}
+
 // Email transporter configuration
 const transporter = nodemailer.createTransport({
   service: 'gmail',
@@ -62,6 +69,10 @@ app.post("/api/notify", async (req, res) => {
   };
 
   try {
+    if (!process.env.SMTP_PASS) {
+      console.error("Vercel Error: SMTP_PASS environment variable is missing.");
+      return res.status(500).json({ status: "error", message: "Server configuration missing (SMTP_PASS)" });
+    }
     await transporter.sendMail(mailOptions);
     res.status(200).json({ status: "ok", message: "Notification sent" });
   } catch (error) {
@@ -85,9 +96,13 @@ async function startServer() {
     });
   }
 
-  app.listen(PORT, "0.0.0.0", () => {
-    console.log(`Server running on http://localhost:${PORT}`);
-  });
+  if (process.env.NODE_ENV !== "production") {
+    app.listen(PORT, "0.0.0.0", () => {
+      console.log(`Server running on http://localhost:${PORT}`);
+    });
+  }
 }
 
 startServer();
+
+export default app;
