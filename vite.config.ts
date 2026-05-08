@@ -8,7 +8,7 @@ export default defineConfig(({mode}) => {
   return {
     plugins: [react(), tailwindcss()],
     define: {
-      'process.env.GEMINI_API_KEY': JSON.stringify(env.GEMINI_API_KEY),
+      'process.env.GEMINI_API_KEY': JSON.stringify(env.GEMINI_API_KEY || null),
     },
     build: {
       chunkSizeWarningLimit: 2000,
@@ -16,10 +16,6 @@ export default defineConfig(({mode}) => {
         output: {
           manualChunks(id) {
             if (id.includes('node_modules')) {
-              if (id.includes('@google/genai')) return 'vendor-ai';
-              if (id.includes('motion/react') || id.includes('framer-motion')) return 'vendor-motion';
-              if (id.includes('react')) return 'vendor-react';
-              if (id.includes('lucide-react')) return 'vendor-icons';
               return 'vendor';
             }
           },

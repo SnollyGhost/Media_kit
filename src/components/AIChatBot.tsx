@@ -5,11 +5,13 @@ import { GoogleGenAI } from "@google/genai";
 import { NAFYAD_INFO, CREATOR_NAME } from '../lib/data';
 
 const getApiKey = () => {
-  const viteApiKey = import.meta.env.VITE_GEMINI_API_KEY;
-  if (viteApiKey) return viteApiKey;
+  try {
+    const viteApiKey = import.meta.env.VITE_GEMINI_API_KEY;
+    if (viteApiKey) return viteApiKey;
+  } catch (e) {
+    // Ignore meta errors
+  }
   
-  // Checking process.env as well for backward compatibility in this environment
-  // Using a safe check to avoid reference errors in the browser
   try {
     return process.env.GEMINI_API_KEY;
   } catch {
@@ -18,7 +20,8 @@ const getApiKey = () => {
 };
 
 const apiKey = getApiKey();
-const ai = apiKey ? new GoogleGenAI({ apiKey }) : null;
+// Only initialize if we have a non-empty string that looks like a key
+const ai = (typeof apiKey === 'string' && apiKey.length > 5) ? new GoogleGenAI({ apiKey }) : null;
 
 interface Message {
   role: 'user' | 'model';
