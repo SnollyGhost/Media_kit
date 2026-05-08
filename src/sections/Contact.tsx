@@ -48,28 +48,55 @@ export const Contact = ({ selectedPackage }: ContactProps) => {
     setStatus('submitting');
     try {
       // 1. Save to Firestore
-      await addDoc(collection(db, 'inquiries'), {
-        ...formData,
-        status: 'pending',
-        createdAt: serverTimestamp()
-      });
+      try {
+        await addDoc(collection(db, 'inquiries'), {
+          ...formData,
+          status: 'pending',
+          createdAt: serverTimestamp()
+        });
+        console.log('Inquiry saved to Firestore successfully.');
+      } catch (dbError: any) {
+        console.error('Firestore Error:', dbError);
+        // If we get a permission error, it's likely the rules or auth
+        const isPermissionError = dbError?.code === 'permission-denied' || dbError?.message?.includes('permission');
+        throw new Error(isPermissionError 
+          ? 'Database access denied. Please ensure Firestore rules are deployed.' 
+          : 'Database connection failed. Please contact ' + BUSINESS_EMAIL);
+      }
 
       // 2. Trigger Email Notification via Backend
       try {
-        await fetch('/api/notify', {
+        const response = await fetch('/api/notify', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(formData)
         });
+        
+        if (!response.ok) {
+          const errorData = await response.json();
+          console.warn('Notification service responded with error:', errorData);
+        } else {
+          console.log('Notification email triggered successfully.');
+        }
       } catch (notifyError) {
-        console.warn('Notification service failed, but data was saved to Firestore.', notifyError);
+        console.warn('Notification service unreachable. Data was saved to Firestore, but email might not have been sent.', notifyError);
+        // We don't throw here because Firestore succeeded
       }
 
       setStatus('success');
-    } catch (error) {
+    } catch (error: any) {
+      console.error('Submission Error:', error);
       setStatus('error');
-      setErrorMessage('Transmission failed. Direct email: ' + BUSINESS_EMAIL);
-      handleFirestoreError(error, OperationType.CREATE, 'inquiries');
+      setErrorMessage(error instanceof Error ? error.message : 'Transmission failed. Direct email: ' + BUSINESS_EMAIL);
+      
+      // Only report to handleFirestoreError if it's a Firestore-related error that wasn't already handled
+      if (error?.code?.startsWith('firestore/') || error?.message?.includes('Database access denied')) {
+        try {
+          handleFirestoreError(error, OperationType.CREATE, 'inquiries');
+        } catch (e) {
+          // Ignore secondary error from handler
+        }
+      }
     }
   };
 
