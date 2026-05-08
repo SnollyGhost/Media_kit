@@ -11,12 +11,17 @@ export default defineConfig(({mode}) => {
       'process.env.GEMINI_API_KEY': JSON.stringify(env.GEMINI_API_KEY),
     },
     build: {
-      chunkSizeWarningLimit: 1000,
+      chunkSizeWarningLimit: 2000,
       rollupOptions: {
         output: {
-          manualChunks: {
-            'vendor-ui': ['motion/react', 'lucide-react'],
-            'vendor-react': ['react', 'react-dom'],
+          manualChunks(id) {
+            if (id.includes('node_modules')) {
+              if (id.includes('@google/genai')) return 'vendor-ai';
+              if (id.includes('motion/react') || id.includes('framer-motion')) return 'vendor-motion';
+              if (id.includes('react')) return 'vendor-react';
+              if (id.includes('lucide-react')) return 'vendor-icons';
+              return 'vendor';
+            }
           },
         },
       },
