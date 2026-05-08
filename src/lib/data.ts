@@ -1,3 +1,8 @@
+import bybitLogo from '../assets/bybit.jpg';
+import ehudAiLogo from '../assets/EhudAI.png';
+import hawiLogo from '../assets/hawi.png';
+import huluPayLogo from '../assets/huluPay.png';
+
 export const CREATOR_NAME = "NAFYAD";
 export const BUSINESS_EMAIL = "nafyaddachasa91@gmail.com";
 
@@ -283,10 +288,10 @@ export const PACKAGES: Package[] = [
 ];
 
 export const BRANDS = [
-  { name: 'Bybit', logo: '/src/assets/bybit.jpg' },
-  { name: 'Ehud AI', logo: '/src/assets/EhudAI.png' },
-  { name: 'Hawi', logo: '/src/assets/hawi.png' },
-  { name: 'HuluPay', logo: '/src/assets/huluPay.png' },
+  { name: 'Bybit', logo: bybitLogo },
+  { name: 'Ehud AI', logo: ehudAiLogo },
+  { name: 'Hawi', logo: hawiLogo },
+  { name: 'HuluPay', logo: huluPayLogo },
 ];
 
 export const TESTIMONIALS = [

@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion } from 'motion/react';
 import { CREATOR_NAME, NAFYAD_INFO } from '../lib/data';
+import creatorImg from '../assets/creator.jpg';
 
 export const About = () => {
   return (
@@ -15,7 +16,7 @@ export const About = () => {
           >
             <div className="aspect-[4/5] rounded-[40px] overflow-hidden border border-white/10 relative z-10">
               <img 
-                src="/src/assets/creator.jpg" 
+                src={creatorImg} 
                 alt={`${CREATOR_NAME} - Creator & Strategist`}
                 className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700"
                 referrerPolicy="no-referrer"

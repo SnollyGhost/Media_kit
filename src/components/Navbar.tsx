@@ -12,6 +12,7 @@ const NAV_LINKS = [
 ];
 
 import { CREATOR_NAME } from '../lib/data';
+import logoImg from '../assets/logo.png';
 
 export const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -38,7 +39,7 @@ export const Navbar = () => {
           className="flex items-center gap-3 group"
         >
           <img 
-            src="/src/assets/logo.png" 
+            src={logoImg} 
             alt="Logo" 
             className="w-12 h-12 object-contain group-hover:scale-110 transition-transform duration-500"
           />
