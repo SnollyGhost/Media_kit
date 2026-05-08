@@ -4,7 +4,21 @@ import { MessageSquare, Send, X, Bot, User, Loader2 } from 'lucide-react';
 import { GoogleGenAI } from "@google/genai";
 import { NAFYAD_INFO, CREATOR_NAME } from '../lib/data';
 
-const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
+const getApiKey = () => {
+  const viteApiKey = import.meta.env.VITE_GEMINI_API_KEY;
+  if (viteApiKey) return viteApiKey;
+  
+  // Checking process.env as well for backward compatibility in this environment
+  // Using a safe check to avoid reference errors in the browser
+  try {
+    return process.env.GEMINI_API_KEY;
+  } catch {
+    return undefined;
+  }
+};
+
+const apiKey = getApiKey();
+const ai = apiKey ? new GoogleGenAI({ apiKey }) : null;
 
 interface Message {
   role: 'user' | 'model';
@@ -28,6 +42,15 @@ export const AIChatBot = () => {
 
   const handleSend = async () => {
     if (!input.trim() || isLoading) return;
+
+    if (!ai) {
+      setMessages(prev => [...prev, 
+        { role: 'user', content: input.trim() },
+        { role: 'model', content: "AI is currently offline. Please ensure the VITE_GEMINI_API_KEY is set in your environment variables." }
+      ]);
+      setInput('');
+      return;
+    }
 
     const userMessage = input.trim();
     setInput('');
