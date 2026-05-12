@@ -14,7 +14,12 @@ export const FeaturedVideos = () => {
 
   const getEmbedUrl = (url: string, platform: string) => {
     if (platform === 'youtube') {
-      const id = url.split('/').pop()?.split('?')[0];
+      let id = '';
+      if (url.includes('v=')) {
+        id = url.split('v=')[1].split('&')[0];
+      } else {
+        id = url.split('/').pop()?.split('?')[0] || '';
+      }
       return `https://www.youtube.com/embed/${id}?autoplay=1`;
     }
     if (platform === 'tiktok') {
@@ -36,6 +41,11 @@ export const FeaturedVideos = () => {
         return `https://www.instagram.com/reel/${match[1]}/embed`;
       }
       return url;
+    }
+    if (platform === 'facebook') {
+      const fbUrl = url.replace('web.facebook.com', 'www.facebook.com');
+      const encodedUrl = encodeURIComponent(fbUrl);
+      return `https://www.facebook.com/plugins/video.php?href=${encodedUrl}&show_text=0&width=500`;
     }
     return url;
   };
@@ -141,10 +151,12 @@ export const FeaturedVideos = () => {
                       <img
                         src={video.thumbnail}
                         alt={video.title}
-                        className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105 filter grayscale-[0.5] group-hover:grayscale-0"
+                        className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105"
                         referrerPolicy="no-referrer"
+                        loading="lazy"
+                        decoding="async"
                       />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black via-black/30 to-transparent opacity-90 group-hover:opacity-70 transition-opacity" />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/10 opacity-100 transition-opacity" />
                       
                       <div className="absolute top-4 right-4 z-10 flex gap-2">
                         <div className="bg-white/10 backdrop-blur-md p-1.5 rounded-lg border border-white/10">
@@ -176,10 +188,6 @@ export const FeaturedVideos = () => {
                         <h3 className="text-xl font-display font-bold leading-tight mb-2 group-hover:text-brand-purple transition-colors">
                           {video.title}
                         </h3>
-                        <div className="flex items-center gap-2 text-white/40 text-[10px] font-bold uppercase tracking-widest">
-                          <Eye className="w-3 h-3" />
-                          <span>{video.views} Engagement</span>
-                        </div>
                       </div>
 
                       <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-500 bg-black/20 backdrop-blur-[2px]">

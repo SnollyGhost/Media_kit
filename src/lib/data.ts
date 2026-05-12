@@ -3,6 +3,16 @@ import ehudAiLogo from '../assets/EhudAI.png';
 import hawiLogo from '../assets/hawi.png';
 import huluPayLogo from '../assets/huluPay.png';
 
+// Import new custom covers
+import ehudAiCover from '../assets/covers/ehud-ai-1.png';
+import gerdPrideCover from '../assets/covers/gerd-pride-1.png';
+import lazarusCover from '../assets/covers/lazarus.jpeg';
+import telegramCover from '../assets/covers/telegram-premium-1.png';
+import satelliteCover from '../assets/covers/satellite-1.jpg';
+import astronautCover from '../assets/covers/astronaut-1.png';
+import cryptoStartCover from '../assets/covers/crypto-start-1.png';
+import bitcoinGerdCover from '../assets/covers/bitcoin-gerd-1.png';
+
 export const CREATOR_NAME = "NAFYAD";
 export const BUSINESS_EMAIL = "nafyaddachasa91@gmail.com";
 
@@ -93,94 +103,94 @@ export const NICHES = [
 ];
 
 export const VIDEOS: Video[] = [
-  // TIKTOK (Priority)
+  // TECH (Strategic selection from user links)
   {
-    id: 'tt-1',
-    title: 'Digital Workspace Evolution',
+    id: 'tech-1',
+    title: 'EhudAl: Next-Gen Al Videos 📹',
     platform: 'tiktok',
     category: 'tech',
-    views: '2.4M',
-    thumbnail: 'https://images.unsplash.com/photo-1550745165-9bc0b252726f?q=80&w=1000&auto=format&fit=crop',
-    url: 'https://www.tiktok.com/@nafyad_/video/7546159416861625606',
-    tags: ['TechStyle', 'AI'],
+    views: '',
+    thumbnail: ehudAiCover,
+    url: 'https://www.tiktok.com/@nafyad_/video/7632959584352668945',
+    tags: ['EhudAI', 'Innovation'],
   },
   {
-    id: 'tt-2',
-    title: 'Future Horizons',
-    platform: 'tiktok',
-    category: 'space',
-    views: '1.9M',
-    thumbnail: 'https://images.unsplash.com/photo-1446776811953-b23d57bd21aa?q=80&w=1000&auto=format&fit=crop',
-    url: 'https://www.tiktok.com/@nafyad_/video/7483828207234436358',
-    tags: ['Future', 'Tech'],
-  },
-  {
-    id: 'tt-3',
-    title: 'Tech Insights',
+    id: 'tech-2',
+    title: 'Ethiopia Pride, GERD',
     platform: 'tiktok',
     category: 'tech',
-    views: '820K',
-    thumbnail: 'https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=1000&auto=format&fit=crop',
-    url: 'https://www.tiktok.com/@nafyad_/video/7598466285554371857',
-    tags: ['Hardware', 'Review'],
+    views: '',
+    thumbnail: gerdPrideCover,
+    url: 'https://www.tiktok.com/@nafyad_/video/7544066848392760632',
+    tags: ['Ethiopia', 'Pride'],
   },
   {
-    id: 'tt-4',
-    title: 'Neural Reality',
-    platform: 'tiktok',
-    category: 'tech',
-    views: '1.5M',
-    thumbnail: 'https://images.unsplash.com/photo-1664575197229-3bbebc281874?q=80&w=1000&auto=format&fit=crop',
-    url: 'https://www.tiktok.com/@nafyad_/video/7346159416861625606',
-    tags: ['AI', 'BrainTech'],
-  },
-  // YOUTUBE
-  {
-    id: 'yt-1',
-    title: 'Silicon Evolution',
-    platform: 'youtube',
-    category: 'tech',
-    views: '850K',
-    thumbnail: 'https://images.unsplash.com/photo-1587620962725-abab7fe55159?q=80&w=1000&auto=format&fit=crop',
-    url: 'https://www.youtube.com/shorts/B73ztRa-eCA',
-    tags: ['Innovation', 'Web3'],
-  },
-  {
-    id: 'yt-2',
-    title: 'Mission to Mars',
-    platform: 'youtube',
-    category: 'space',
-    views: '1.2M',
-    thumbnail: 'https://images.unsplash.com/photo-1541411438265-4bb4687110f2?q=80&w=1000&auto=format&fit=crop',
-    url: 'https://www.youtube.com/shorts/k9nK7B_2AFA',
-    tags: ['Mars', 'Science'],
-  },
-  // INSTAGRAM & FACEBOOK
-  {
-    id: 'ig-1',
-    title: 'Cosmic Journeys',
+    id: 'tech-3',
+    title: "Lazarus vs The World's Banks 💰",
     platform: 'instagram',
-    category: 'space',
-    views: '3.4M',
-    thumbnail: 'https://images.unsplash.com/photo-1462331940025-496dfbfc7564?q=80&w=1000&auto=format&fit=crop',
-    url: 'https://www.instagram.com/reels/DWWcW3eDO4f/',
-    tags: ['Astronomy', 'Cinematic'],
+    category: 'tech',
+    views: '',
+    thumbnail: lazarusCover,
+    url: 'https://www.instagram.com/reels/DVVROatjZ6X/',
+    tags: ['Banking', 'Lazarus'],
   },
   {
-    id: 'ig-2',
-    title: 'Digital Sovereignty',
-    platform: 'instagram',
+    id: 'tech-4',
+    title: 'Telegram Premium in Ethiopia',
+    platform: 'tiktok',
+    category: 'tech',
+    views: '',
+    thumbnail: telegramCover,
+    url: 'https://www.tiktok.com/@nafyad_/video/7627176419260386577',
+    tags: ['Telegram', 'Premium'],
+  },
+  // SPACE
+  {
+    id: 'space-1',
+    title: 'Ethiopia Builds Satellites 🚀',
+    platform: 'tiktok',
+    category: 'space',
+    views: '',
+    thumbnail: satelliteCover,
+    url: 'https://www.tiktok.com/@nafyad_/video/7632384538139757825',
+    tags: ['Space', 'Ethiopia'],
+  },
+  {
+    id: 'space-2',
+    title: "Ethiopia's 1st Astronaut Candidate",
+    platform: 'facebook',
+    category: 'space',
+    views: '',
+    thumbnail: astronautCover,
+    url: 'https://web.facebook.com/reel/2055975581646873',
+    tags: ['Astronaut', 'Science'],
+  },
+  // CRYPTO
+  {
+    id: 'crypto-1',
+    title: 'Start Small, Think Big 🌱',
+    platform: 'tiktok',
     category: 'crypto',
-    views: '2.1M',
-    thumbnail: 'https://images.unsplash.com/photo-1621761191319-c6fb62004040?q=80&w=1000&auto=format&fit=crop',
-    url: 'https://www.instagram.com/reels/Cz9-p-oR1y_/',
-    tags: ['Crypto', 'Finance'],
+    views: '',
+    thumbnail: cryptoStartCover,
+    url: 'https://www.tiktok.com/@nafyad_/video/7555062611889392907',
+    tags: ['Strategy', 'Mindset'],
+  },
+  {
+    id: 'crypto-2',
+    title: "Bitcoin Built Ethiopia's Power, GERD",
+    platform: 'tiktok',
+    category: 'crypto',
+    views: '',
+    thumbnail: bitcoinGerdCover,
+    url: 'https://www.tiktok.com/@nafyad_/video/7623670489700961553',
+    tags: ['Bitcoin', 'GERD'],
   },
 ];
 
 export const METRICS: Metric[] = [
   {
-    label: 'TikTok Views',
+    label: 'TikTok Views (Last 6 Months)',
     value: '7.9M',
     change: '+519K Likes',
     isPositive: true,
@@ -194,7 +204,7 @@ export const METRICS: Metric[] = [
     ],
   },
   {
-    label: 'Meta Views',
+    label: 'Meta Views (Last 6 Months)',
     value: '9.1M',
     change: '+522K Interactions',
     isPositive: true,
@@ -208,7 +218,7 @@ export const METRICS: Metric[] = [
     ],
   },
   {
-    label: 'YouTube Views',
+    label: 'YouTube Views (Last 6 Months)',
     value: '2.4M',
     change: '+9.7K Subs',
     isPositive: true,
