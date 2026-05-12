@@ -3,7 +3,26 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Aura Nova | Creator Media Kit</title>
+    <title>NAFYAD | Media Kit</title>
+    <script>
+      // Fix for "Uncaught TypeError: Cannot redefine property: ethereum"
+      // This error often occurs when multiple wallet extensions (e.g., MetaMask, Coinbase) 
+      // try to inject the same window.ethereum property into the page.
+      (function() {
+        const originalDefineProperty = Object.defineProperty;
+        Object.defineProperty = function(obj, prop, descriptor) {
+          if (obj === window && prop === 'ethereum') {
+            try {
+              return originalDefineProperty.call(Object, obj, prop, descriptor);
+            } catch (e) {
+              console.warn('NAFYAD: Handled conflict while defining window.ethereum.');
+              return obj;
+            }
+          }
+          return originalDefineProperty.call(Object, obj, prop, descriptor);
+        };
+      })();
+    </script>
   </head>
   <body>
     <div id="root"></div>
