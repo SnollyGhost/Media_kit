@@ -27,46 +27,44 @@ function getTransporter() {
   return { transporter, user, pass };
 }
 
-// Health Check
+// Health Check (Local/Preview)
 app.get("/api/health", (req, res) => {
   res.json({
     status: "ok",
-    env: {
+    environment: {
       userSet: !!process.env.SMTP_USER,
       passSet: !!process.env.SMTP_PASS,
-      isProd: process.env.NODE_ENV === "production"
+      isLocal: !process.env.VERCEL
     }
   });
 });
 
-// Notify endpoint
+// Notify endpoint (Local/Preview)
 app.post("/api/notify", async (req, res) => {
   try {
     const { name, email, phone, company, package: pkg, message, preferredMethod } = req.body;
     const { transporter, user, pass } = getTransporter();
 
     if (!pass) {
-      return res.status(500).json({ 
-        status: "error", 
-        message: "SMTP_PASS not found in environment." 
-      });
+      return res.status(500).json({ status: "error", message: "SMTP_PASS missing" });
     }
 
     if (!transporter) {
-      return res.status(500).json({ status: "error", message: "Failed to create mail transporter" });
+      return res.status(500).json({ status: "error", message: "Transporter init failed" });
     }
 
     const mailOptions = {
-      from: `"NafTech" <${user}>`,
+      from: `"NafTech Local" <${user}>`,
       to: "nafyaddachasa91@gmail.com",
-      subject: `⚡️ Brief from ${name}`,
+      subject: `⚡️ Local Brief from ${name}`,
       text: `Name: ${name}\nEmail: ${email}\nPackage: ${pkg}\nMessage: ${message}`,
-      html: `<h3>New Brief</h3><p><strong>From:</strong> ${name} (${email})</p><p><strong>Project:</strong> ${pkg}</p><p><strong>Message:</strong> ${message}</p>`
+      html: `<h3>Local Brief</h3><p><strong>From:</strong> ${name} (${email})</p><p><strong>Project:</strong> ${pkg}</p><p><strong>Message:</strong> ${message}</p>`
     };
 
     await transporter.sendMail(mailOptions);
     return res.status(200).json({ status: "ok" });
   } catch (error: any) {
+    console.error("Local notify error:", error);
     return res.status(500).json({ status: "error", error: error.message });
   }
 });
