@@ -35,14 +35,14 @@ app.post("/api/notify", async (req, res) => {
 
   // Validate environment on the fly for better debugging
   const user = (process.env.SMTP_USER || 'nafyaddachasa91@gmail.com').trim();
-  const pass = (process.env.SMTP_PASS || '').trim();
+  const pass = (process.env.SMTP_PASS || '').replace(/\s+/g, '');
 
   if (!pass) {
-    console.error("Vercel Error: SMTP_PASS environment variable is missing.");
+    console.error("Configuration Error: SMTP_PASS environment variable is missing.");
     return res.status(500).json({ 
       status: "error", 
       message: "Server configuration missing (SMTP_PASS)",
-      debug: { userSet: !!process.env.SMTP_USER, passSet: false }
+      hint: "Go to Project Settings > Secrets and add 'SMTP_PASS' with your Google App Password (16 characters)."
     });
   }
 
