@@ -1,6 +1,7 @@
 import express from "express";
 import nodemailer from "nodemailer";
 import dotenv from "dotenv";
+import path from "path";
 
 // Try to load .env only in local dev
 if (!process.env.VERCEL) {
@@ -70,23 +71,37 @@ app.post("/api/notify", async (req, res) => {
   }
 });
 
-// Local server boot for dev/preview
-if (!process.env.VERCEL && process.env.NODE_ENV !== "production") {
-  (async () => {
-    try {
-      const { createServer } = await import("vite");
-      const vite = await createServer({
-        server: { middlewareMode: true },
-        appType: "spa"
+const PORT = 3000;
+
+async function bootstrap() {
+  if (!process.env.VERCEL) {
+    if (process.env.NODE_ENV !== "production") {
+      // Local dev/preview with Vite
+      try {
+        const { createServer } = await import("vite");
+        const vite = await createServer({
+          server: { middlewareMode: true },
+          appType: "spa"
+        });
+        app.use(vite.middlewares);
+      } catch (e) {
+        console.error("Failed to start Vite middleware:", e);
+      }
+    } else {
+      // Production serving
+      const distPath = path.join(process.cwd(), "dist");
+      app.use(express.static(distPath));
+      app.get("*", (req, res) => {
+        res.sendFile(path.join(distPath, "index.html"));
       });
-      app.use(vite.middlewares);
-      app.listen(3000, "0.0.0.0", () => {
-        console.log("Local dev server: http://localhost:3000");
-      });
-    } catch (e) {
-      console.error("Failed to start local server:", e);
     }
-  })();
+
+    app.listen(PORT, "0.0.0.0", () => {
+      console.log(`Server listening on port ${PORT}`);
+    });
+  }
 }
+
+bootstrap();
 
 export default app;
