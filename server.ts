@@ -31,8 +31,23 @@ const transporter = nodemailer.createTransport({
 app.post("/api/notify", async (req, res) => {
   const { name, email, phone, company, package: pkg, message, preferredMethod } = req.body;
 
+  console.log(`Processing inquiry from: ${email}`);
+
+  // Validate environment on the fly for better debugging
+  const user = (process.env.SMTP_USER || 'nafyaddachasa91@gmail.com').trim();
+  const pass = (process.env.SMTP_PASS || '').trim();
+
+  if (!pass) {
+    console.error("Vercel Error: SMTP_PASS environment variable is missing.");
+    return res.status(500).json({ 
+      status: "error", 
+      message: "Server configuration missing (SMTP_PASS)",
+      debug: { userSet: !!process.env.SMTP_USER, passSet: false }
+    });
+  }
+
   const mailOptions = {
-    from: `"Web Inquiry" <${process.env.SMTP_USER || "nafyaddachasa91@gmail.com"}>`,
+    from: `"Web Inquiry" <${user}>`,
     to: "nafyaddachasa91@gmail.com",
     subject: `New Mission Brief: ${name} (${pkg})`,
     text: `
@@ -69,16 +84,36 @@ app.post("/api/notify", async (req, res) => {
   };
 
   try {
-    if (!process.env.SMTP_PASS) {
-      console.error("Vercel Error: SMTP_PASS environment variable is missing.");
-      return res.status(500).json({ status: "error", message: "Server configuration missing (SMTP_PASS)" });
-    }
-    await transporter.sendMail(mailOptions);
-    res.status(200).json({ status: "ok", message: "Notification sent" });
-  } catch (error) {
+    // Re-verify transporter to handle potential timeout issues in serverless
+    await transporter.verify();
+    
+    const info = await transporter.sendMail(mailOptions);
+    console.log("Email sent successfully:", info.messageId);
+    res.status(200).json({ status: "ok", message: "Notification sent", messageId: info.messageId });
+  } catch (error: any) {
     console.error("Failed to send email:", error);
-    res.status(500).json({ status: "error", message: "Failed to send notification" });
+    res.status(500).json({ 
+      status: "error", 
+      message: "Failed to send notification", 
+      error: error.message,
+      // Provide hint for Gmail users
+      hint: error.message.includes('Username and Password not accepted') 
+        ? "Ensure you are using a Gmail 'App Password', not your regular login password. Also verify 'Less Secure Apps' settings if applicable." 
+        : "Check Vercel environment variables and SMTP port/service settings."
+    });
   }
+});
+
+// Health check to verify API routing on Vercel
+app.get("/api/health", (req, res) => {
+  res.json({ 
+    status: "ok", 
+    env: {
+      smtpUserSet: !!process.env.SMTP_USER,
+      smtpPassSet: !!process.env.SMTP_PASS,
+      nodeEnv: process.env.NODE_ENV
+    }
+  });
 });
 
 async function startServer() {

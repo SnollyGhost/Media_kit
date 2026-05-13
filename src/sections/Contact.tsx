@@ -72,15 +72,19 @@ export const Contact = ({ selectedPackage }: ContactProps) => {
           body: JSON.stringify(formData)
         });
         
+        const responseData = await response.json();
+        
         if (!response.ok) {
-          const errorData = await response.json();
-          console.warn('Notification service responded with error:', errorData);
+          console.warn('Notification service error:', responseData);
+          // We don't block success UI because Firestore worked, but we log the hint
+          if (responseData.hint) {
+            console.info('Tip for fixing email:', responseData.hint);
+          }
         } else {
           console.log('Notification email triggered successfully.');
         }
       } catch (notifyError) {
         console.warn('Notification service unreachable. Data was saved to Firestore, but email might not have been sent.', notifyError);
-        // We don't throw here because Firestore succeeded
       }
 
       setStatus('success');
@@ -374,11 +378,11 @@ export const Contact = ({ selectedPackage }: ContactProps) => {
           </div>
 
           <footer className="mt-32 pt-12 border-t border-white/5 text-center">
-             <div className="text-white/20 text-xs font-mono tracking-widest uppercase">
-                &copy; 2026 {CREATOR_NAME} &bull; All Rights Reserved
+             <div className="text-white/20 text-[10px] font-mono tracking-widest uppercase">
+                &copy; {new Date().getFullYear()} {CREATOR_NAME} &bull; All Rights Reserved
              </div>
           </footer>
-       </div>
-    </section>
-  );
+        </div>
+      </section>
+    );
 };

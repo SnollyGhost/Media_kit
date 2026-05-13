@@ -1,5 +1,6 @@
 import { motion } from 'motion/react';
 import { SOCIAL_LINKS, CREATOR_NAME, BUSINESS_EMAIL } from '../lib/data';
+import logoImg from '../assets/logo.png';
 import { Youtube, Instagram, Facebook, ArrowUpRight, Mail, MapPin } from 'lucide-react';
 
 const TiktokIcon = ({ className }: { className?: string }) => (
@@ -23,11 +24,21 @@ export const Footer = () => {
             <motion.div 
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
-              className="flex items-center gap-3 mb-8"
+              className="flex items-center gap-3 mb-8 group"
             >
-              <span className="text-3xl font-display font-black tracking-tighter uppercase text-white">
-                {CREATOR_NAME}
-              </span>
+              <img 
+                src={logoImg} 
+                alt="Nafyad Logo" 
+                className="w-10 h-10 object-contain"
+              />
+              <div className="flex flex-col">
+                <span className="text-xl font-display font-black tracking-tight uppercase text-white">
+                  {CREATOR_NAME}
+                </span>
+                <span className="text-[8px] font-bold tracking-[0.3em] text-white/20 uppercase">
+                  Media Kit
+                </span>
+              </div>
             </motion.div>
             <p className="text-white/40 text-sm font-light leading-relaxed mb-8 max-w-xs">
               Systems-driven brand architect helping technical operators and agencies scale through elite content assets and strategic design.
@@ -123,11 +134,6 @@ export const Footer = () => {
         <div className="pt-12 border-t border-white/5 flex flex-col md:flex-row items-center justify-between gap-8">
           <div className="text-[10px] text-white/20 uppercase tracking-[0.3em] font-medium">
             &copy; {currentYear} {CREATOR_NAME} &bull; Strategic Digital Operator
-          </div>
-          <div className="flex items-center gap-8">
-            <a href="#" className="text-[10px] text-white/20 hover:text-white uppercase tracking-[0.2em] transition-colors">Privacy</a>
-            <a href="#" className="text-[10px] text-white/20 hover:text-white uppercase tracking-[0.2em] transition-colors">Terms</a>
-            <a href="#" className="text-[10px] text-white/20 hover:text-white uppercase tracking-[0.2em] transition-colors">Cookies</a>
           </div>
         </div>
       </div>

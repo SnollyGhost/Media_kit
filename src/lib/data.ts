@@ -40,11 +40,13 @@ Core Pillars:
 • Spaceverse: Research into aerospace and the future of global space exploration.
 
 Partnership Packages:
-- Option 1: Single Video - 1 video, concept, editing, captions. Price: 30K ETB.
+- Option 1: Single Video - 1 video, concept, editing, captions. Price: 30K ETB (approx. USD equivalent available).
 - Option 2: Mini Campaign - 3 videos, concept, editing, captions. Price: 80K ETB.
 - Option 3: Standard Campaign - 5 videos, concept, editing, captions. Price: 125K ETB.
 - Option 4: Premium - 8 videos/month, dedicated playlist, monthly planning. Price: 185K ETB.
-- Option 5: Premium Plus | Yearly Partnership - 100 videos/year, long-term partnership, brand consistency. Price: 2.1M ETB.`;
+- Option 5: Premium Plus | Yearly Partnership - 100 videos/year, long-term partnership, brand consistency. Price: 2.1M ETB.
+
+Note: Pricing for international clients is calculated at a fixed rate of 1 USD = 180 ETB.`;
 
 export interface Video {
   id: string;
@@ -69,6 +71,8 @@ export interface Package {
   id: string;
   name: string;
   price: string;
+  priceValue: number; // Numeric ETB value for conversion
+  priceSuffix?: string;
   description: string;
   features: string[];
   idealFor: string;
@@ -238,6 +242,7 @@ export const PACKAGES: Package[] = [
     id: 'single',
     name: 'Option 1: Single Video',
     price: '30K ETB',
+    priceValue: 30000,
     description: '1 high-quality video optimized for all platforms.',
     features: [
       'Concept development',
@@ -250,6 +255,7 @@ export const PACKAGES: Package[] = [
     id: 'campaign-3',
     name: 'Option 2: Mini Campaign',
     price: '80K ETB',
+    priceValue: 80000,
     description: '3 videos optimized for all platforms.',
     features: [
       'Concept development',
@@ -262,6 +268,7 @@ export const PACKAGES: Package[] = [
     id: 'campaign-5',
     name: 'Option 3: Standard Campaign',
     price: '125K ETB',
+    priceValue: 125000,
     description: '5 videos optimized for all platforms.',
     features: [
       'Full campaign rollout',
@@ -275,6 +282,7 @@ export const PACKAGES: Package[] = [
     id: 'premium',
     name: 'Option 4: Premium',
     price: '185K ETB',
+    priceValue: 185000,
     description: '8 videos per month optimized for all platforms.',
     features: [
       'Dedicated playlist',
@@ -287,6 +295,7 @@ export const PACKAGES: Package[] = [
     id: 'premium-plus',
     name: 'Option 5: Premium Plus | Yearly Partnership',
     price: '2.1M ETB',
+    priceValue: 2100000,
     description: '100 videos per year | Yearly Partnership.',
     features: [
       'Dedicated playlist',
