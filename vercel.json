@@ -1,7 +1,6 @@
 {
   "rewrites": [
     { "source": "/api/notify", "destination": "/api/notify.ts" },
-    { "source": "/api/chat", "destination": "/api/chat.ts" },
     { "source": "/api/health", "destination": "/api/health.ts" },
     { "source": "/(.*)", "destination": "/index.html" }
   ]
