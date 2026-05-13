@@ -31,14 +31,9 @@ export const Footer = () => {
                 alt="Nafyad Logo" 
                 className="w-10 h-10 object-contain"
               />
-              <div className="flex flex-col">
-                <span className="text-xl font-display font-black tracking-tight uppercase text-white">
-                  {CREATOR_NAME}
-                </span>
-                <span className="text-[8px] font-bold tracking-[0.3em] text-white/20 uppercase">
-                  Media Kit
-                </span>
-              </div>
+              <span className="text-xl font-display font-black tracking-tight uppercase text-white">
+                {CREATOR_NAME}
+              </span>
             </motion.div>
             <p className="text-white/40 text-sm font-light leading-relaxed mb-8 max-w-xs">
               Systems-driven brand architect helping technical operators and agencies scale through elite content assets and strategic design.

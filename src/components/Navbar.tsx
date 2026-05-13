@@ -43,14 +43,9 @@ export const Navbar = () => {
             alt="Nafyad Logo" 
             className="w-11 h-11 object-contain group-hover:rotate-[360deg] transition-transform duration-700"
           />
-          <div className="flex flex-col -gap-1">
-            <span className="text-2xl font-display font-black tracking-tight uppercase group-hover:text-brand-purple transition-colors">
-              {CREATOR_NAME}
-            </span>
-            <span className="text-[9px] font-bold tracking-[0.4em] text-white/40 uppercase">
-              Media Kit
-            </span>
-          </div>
+          <span className="text-3xl font-display font-black tracking-tighter uppercase group-hover:text-brand-purple transition-colors drop-shadow-[0_0_15px_rgba(147,51,234,0.3)]">
+            {CREATOR_NAME}
+          </span>
         </motion.a>
 
         {/* Desktop Nav */}
