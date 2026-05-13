@@ -4,8 +4,6 @@ import { MessageSquare, Send, X, Bot, User, Loader2 } from 'lucide-react';
 import { GoogleGenAI } from "@google/genai";
 import { NAFYAD_INFO, CREATOR_NAME } from '../lib/data';
 
-const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
-
 interface Message {
   role: 'user' | 'model';
   content: string;
@@ -13,6 +11,7 @@ interface Message {
 
 export const AIChatBot = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [showGreeting, setShowGreeting] = useState(false);
   const [messages, setMessages] = useState<Message[]>([
     { role: 'model', content: "Ask me about Nafyad’s work, content strategy, services, or how to build a sharper tech brand." }
   ]);
@@ -21,20 +20,34 @@ export const AIChatBot = () => {
   const scrollRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    // Show greeting bubble after 3 seconds if not open
+    const timer = setTimeout(() => {
+      if (!isOpen) setShowGreeting(true);
+    }, 3000);
+    return () => clearTimeout(timer);
+  }, []);
+
+  useEffect(() => {
+    if (isOpen) setShowGreeting(false);
+  }, [isOpen]);
+
+  useEffect(() => {
     if (scrollRef.current) {
       scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
     }
   }, [messages]);
 
-  const handleSend = async () => {
-    if (!input.trim() || isLoading) return;
+  const handleSend = async (customInput?: string) => {
+    const messageToSend = customInput || input;
+    if (!messageToSend.trim() || isLoading) return;
 
-    const userMessage = input.trim();
+    const userMessage = messageToSend.trim();
     setInput('');
     setMessages(prev => [...prev, { role: 'user', content: userMessage }]);
     setIsLoading(true);
 
     try {
+      const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY as string });
       const response = await ai.models.generateContent({
         model: "gemini-3-flash-preview",
         contents: [
@@ -70,7 +83,7 @@ Context about Nafyad:
 ${NAFYAD_INFO}
 
 SITE METRICS:
-TikTok: 91K Followers | YouTube: 50K Subs | FB: 60K Followers | IG: 9.1M Views.
+200K+ Followers across social media | 430+ Contents Produced.
 
 INQUIRY LOGIC:
 Direct partners to the "Secure Inbound" form on the site for partnerships.`,
@@ -88,8 +101,29 @@ Direct partners to the "Secure Inbound" form on the site for partnerships.`,
     }
   };
 
+  const QUICK_REPLIES = [
+    "What services do you offer?",
+    "How to partner with you?",
+    "Tell me about NafTech",
+  ];
+
   return (
     <>
+      {/* Greeting Bubble */}
+      <AnimatePresence>
+        {showGreeting && !isOpen && (
+          <motion.div
+            initial={{ opacity: 0, x: 20, scale: 0.8 }}
+            animate={{ opacity: 1, x: 0, scale: 1 }}
+            exit={{ opacity: 0, x: 10, scale: 0.8 }}
+            className="fixed bottom-24 right-6 z-50 bg-brand-purple text-white px-4 py-2 rounded-2xl rounded-br-none shadow-xl text-xs font-medium cursor-pointer"
+            onClick={() => setIsOpen(true)}
+          >
+            How can I help you?
+          </motion.div>
+        )}
+      </AnimatePresence>
+
       {/* Trigger Button */}
       <motion.button
         id="ai-bot-trigger"
@@ -114,7 +148,7 @@ Direct partners to the "Secure Inbound" form on the site for partnerships.`,
             initial={{ opacity: 0, y: 20, scale: 0.9 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.9 }}
-            className="fixed bottom-24 right-6 z-50 w-[350px] sm:w-[400px] h-[500px] bg-[#0A0A0A] border border-white/10 rounded-2xl shadow-2xl flex flex-col overflow-hidden backdrop-blur-xl"
+            className="fixed bottom-24 right-6 z-50 w-[350px] sm:w-[400px] h-[550px] bg-[#0A0A0A] border border-white/10 rounded-2xl shadow-2xl flex flex-col overflow-hidden backdrop-blur-xl"
           >
             {/* Header */}
             <div className="p-4 border-b border-white/10 flex items-center justify-between bg-black/40">
@@ -164,6 +198,21 @@ Direct partners to the "Secure Inbound" form on the site for partnerships.`,
               )}
             </div>
 
+            {/* Quick Replies */}
+            {messages.length === 1 && !isLoading && (
+              <div className="px-4 py-2 flex flex-wrap gap-2">
+                {QUICK_REPLIES.map((reply) => (
+                  <button
+                    key={reply}
+                    onClick={() => handleSend(reply)}
+                    className="text-[10px] font-bold uppercase tracking-widest bg-white/5 border border-white/10 px-3 py-1.5 rounded-full text-white/50 hover:text-white hover:border-white/30 transition-all"
+                  >
+                    {reply}
+                  </button>
+                ))}
+              </div>
+            )}
+
             {/* Input */}
             <div className="p-4 border-t border-white/10 bg-black/40">
               <div className="relative">
@@ -178,7 +227,7 @@ Direct partners to the "Secure Inbound" form on the site for partnerships.`,
                 />
                 <button 
                   id="send-message"
-                  onClick={handleSend}
+                  onClick={() => handleSend()}
                   disabled={!input.trim() || isLoading}
                   className="absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-brand-purple flex items-center justify-center text-white disabled:opacity-50 disabled:cursor-not-allowed hover:scale-105 active:scale-95 transition-all"
                 >

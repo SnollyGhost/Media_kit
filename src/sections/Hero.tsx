@@ -1,20 +1,42 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'motion/react';
 import { Instagram, Youtube, Facebook, Loader2 } from 'lucide-react';
 import { SOCIAL_LINKS, CREATOR_NAME, STATS } from '../lib/data';
 
 const StatItem = ({ value, label }: { value: string, label: string }) => {
+  const [displayValue, setDisplayValue] = useState(0);
+  const targetValue = parseInt(value.replace(/[^0-9]/g, ''));
+  const isK = value.includes('K') || value.includes('k');
+
+  useEffect(() => {
+    let start = 0;
+    const duration = 2000;
+    const increment = targetValue / (duration / 16);
+    
+    const timer = setInterval(() => {
+      start += increment;
+      if (start >= targetValue) {
+        setDisplayValue(targetValue);
+        clearInterval(timer);
+      } else {
+        setDisplayValue(Math.floor(start));
+      }
+    }, 16);
+
+    return () => clearInterval(timer);
+  }, [targetValue]);
+
   return (
     <motion.div 
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
-      className="flex flex-col items-center sm:items-start"
+      className="flex flex-col items-center sm:items-start group transition-all duration-500"
     >
-      <div className="text-3xl md:text-4xl font-display font-medium text-white tracking-tighter">
-        {value}+
+      <div className="text-4xl md:text-5xl font-display font-medium text-white tracking-tighter group-hover:text-brand-purple transition-colors">
+        {displayValue}{isK ? 'K' : ''}+
       </div>
-      <div className="text-[9px] font-bold uppercase tracking-[0.2em] text-white/40">
+      <div className="text-[10px] font-bold uppercase tracking-[0.2em] text-white/40 group-hover:text-white/60">
         {label}
       </div>
     </motion.div>
@@ -75,10 +97,9 @@ export const Hero = () => {
           <span className="text-brand-gradient font-bold drop-shadow-[0_0_30px_rgba(147,51,234,0.3)] block">INTO ATTENTION.</span>
         </motion.h1>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-12 mb-16 max-w-4xl mx-auto px-4">
-          <StatItem value={STATS.tiktok} label="TikTok Authority" />
-          <StatItem value={STATS.youtube} label="YouTube Scholars" />
-          <StatItem value={STATS.facebook} label="Meta Reach" />
+        <div className="flex flex-wrap justify-center gap-12 md:gap-24 mb-16 max-w-5xl mx-auto px-4">
+          <StatItem value={STATS.totalFollowers} label="Global Social Followers" />
+          <StatItem value={STATS.produced} label="Contents Produced" />
         </div>
 
         <motion.div

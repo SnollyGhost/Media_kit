@@ -24,10 +24,8 @@ export const SOCIAL_LINKS = {
 };
 
 export const STATS = {
-  tiktok: "91K",
-  youtube: "50K",
-  facebook: "60K",
-  instagram: "9.5K",
+  totalFollowers: "200K",
+  produced: "430",
 };
 
 export const NAFYAD_INFO = `Nafyad is a Computer Science graduate and research-driven strategist building a new digital identity for the Ethiopian tech landscape. As the founder of NafTech, he specializes in dismantling the Black Box of modern innovation. He makes complex topics like AI, blockchain, and space technology accessible through high-fidelity storytelling and skeptical, evidence-based insights.
