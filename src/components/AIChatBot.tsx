@@ -1,27 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { MessageSquare, Send, X, Bot, User, Loader2 } from 'lucide-react';
-import { GoogleGenAI } from "@google/genai";
 import { NAFYAD_INFO, CREATOR_NAME } from '../lib/data';
-
-const getApiKey = () => {
-  try {
-    const viteApiKey = import.meta.env.VITE_GEMINI_API_KEY;
-    if (viteApiKey) return viteApiKey;
-  } catch (e) {
-    // Ignore meta errors
-  }
-  
-  try {
-    return process.env.GEMINI_API_KEY;
-  } catch {
-    return undefined;
-  }
-};
-
-const apiKey = getApiKey();
-// Only initialize if we have a non-empty string that looks like a key
-const ai = (typeof apiKey === 'string' && apiKey.length > 5) ? new GoogleGenAI({ apiKey }) : null;
 
 interface Message {
   role: 'user' | 'model';
@@ -46,32 +26,19 @@ export const AIChatBot = () => {
   const handleSend = async () => {
     if (!input.trim() || isLoading) return;
 
-    if (!ai) {
-      setMessages(prev => [...prev, 
-        { role: 'user', content: input.trim() },
-        { role: 'model', content: "AI is currently offline. Please ensure the VITE_GEMINI_API_KEY is set in your environment variables." }
-      ]);
-      setInput('');
-      return;
-    }
-
     const userMessage = input.trim();
     setInput('');
     setMessages(prev => [...prev, { role: 'user', content: userMessage }]);
     setIsLoading(true);
 
     try {
-      const response = await ai.models.generateContent({
-        model: "gemini-3-flash-preview",
-        contents: [
-          ...messages.map(m => ({ 
-            role: m.role, 
-            parts: [{ text: m.content }] 
-          })),
-          { role: 'user', parts: [{ text: userMessage }] }
-        ],
-        config: {
-          systemInstruction: `You are Nafyad AI, a high-performance digital strategist for Nafyad's brand. Your goal is to provide extreme utility with minimum words.
+      const response = await fetch('/api/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          messages: messages,
+          userMessage: userMessage,
+          systemContext: `You are Nafyad AI, a high-performance digital strategist for Nafyad's brand. Your goal is to provide extreme utility with minimum words.
 
 CORE DIRECTIVES:
 - MAXIMUM CONCISENESS: Never use 10 words when 5 will do.
@@ -99,16 +66,20 @@ SITE METRICS:
 TikTok: 91K Followers | YouTube: 50K Subs | FB: 60K Followers | IG: 9.1M Views.
 
 INQUIRY LOGIC:
-Direct partners to the "Secure Inbound" form on the site for partnerships.`,
-          temperature: 0.4,
-        }
+Direct partners to the "Secure Inbound" form on the site for partnerships.`
+        })
       });
 
-      const reply = response.text || "I'm sorry, I couldn't process that. Can you try again?";
-      setMessages(prev => [...prev, { role: 'model', content: reply }]);
-    } catch (error) {
+      const data = await response.json();
+      
+      if (!response.ok) {
+        throw new Error(data.message || 'Transmission failed');
+      }
+
+      setMessages(prev => [...prev, { role: 'model', content: data.reply }]);
+    } catch (error: any) {
       console.error("Chat Error:", error);
-      setMessages(prev => [...prev, { role: 'model', content: "There was an error connecting to my wisdom banks. Please try again later." }]);
+      setMessages(prev => [...prev, { role: 'model', content: "AI is briefly offline for maintenance. Direct inquiries are still active." }]);
     } finally {
       setIsLoading(false);
     }
