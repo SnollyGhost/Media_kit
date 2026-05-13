@@ -3,138 +3,179 @@ import path from "path";
 import nodemailer from "nodemailer";
 import dotenv from "dotenv";
 
-dotenv.config();
+// Load local env vars if present
+try {
+  dotenv.config();
+} catch (e) {
+  console.log("Dotenv skipped");
+}
 
 const app = express();
-const PORT = Number(process.env.PORT) || 3000;
-
 app.use(express.json());
 
-console.log("Server starting. SMTP_USER defined:", !!process.env.SMTP_USER);
-console.log("SMTP_PASS defined:", !!process.env.SMTP_PASS);
+// Debug logs for Vercel deployment verification
+console.log("Server Initialization...");
+console.log("SMTP_USER:", process.env.SMTP_USER ? "Defined" : "MISSING");
+console.log("SMTP_PASS:", process.env.SMTP_PASS ? "Defined" : "MISSING");
 
-if (!process.env.SMTP_USER || !process.env.SMTP_PASS) {
-  console.warn("WARNING: SMTP credentials missing. Dashboard notifications will fail.");
-}
+// Email transporter lazy initializer
+let transporterInstance: nodemailer.Transporter | null = null;
 
-// Email transporter helper
-let transporter: nodemailer.Transporter | null = null;
-
-function getTransporter() {
+function getEmailConfig() {
   const user = (process.env.SMTP_USER || 'nafyaddachasa91@gmail.com').trim();
   const pass = (process.env.SMTP_PASS || '').replace(/\s+/g, '');
-
-  if (!transporter) {
-    transporter = nodemailer.createTransport({
+  
+  if (!transporterInstance && pass) {
+    transporterInstance = nodemailer.createTransport({
       service: 'gmail',
       auth: { user, pass },
+      pool: true, // Use pooling for better performance in serverless
+      maxConnections: 1,
+      maxMessages: 5
     });
   }
-  return { transporter, user, pass };
+  return { transporter: transporterInstance, user, pass };
 }
 
-// API route for inquiry notifications
+// Health Check with details
+app.get("/api/health", (req, res) => {
+  res.json({
+    status: "ok",
+    timestamp: new Date().toISOString(),
+    config: {
+      userSet: !!process.env.SMTP_USER,
+      passSet: !!process.env.SMTP_PASS,
+      isVercel: !!process.env.VERCEL,
+      nodeEnv: process.env.NODE_ENV
+    },
+    path: req.path
+  });
+});
+
+// Primary Contact Notification API
 app.post("/api/notify", async (req, res) => {
+  const { name, email, phone, company, package: pkg, message, preferredMethod } = req.body;
+  const { transporter, user, pass } = getEmailConfig();
+
+  console.log(`[API] Processing nudge from ${email}`);
+
+  if (!pass) {
+    console.error("[CRITICAL] SMTP_PASS missing in environment.");
+    return res.status(500).json({
+      status: "error",
+      message: "Server configuration missing (SMTP_PASS)",
+      hint: "Add SMTP_PASS to Vercel Environment Variables. Use a Google App Password."
+    });
+  }
+
+  if (!transporter) {
+    return res.status(500).json({
+      status: "error",
+      message: "Transporter failed to initialize"
+    });
+  }
+
   try {
-    const { name, email, phone, company, package: pkg, message, preferredMethod } = req.body;
-    const { transporter, user, pass } = getTransporter();
+    const briefText = `NEW BRIEF RECEIVED:
+    --------------------
+    Name: ${name}
+    Email: ${email}
+    Phone: ${phone}
+    Method: ${preferredMethod}
+    Company: ${company || 'N/A'}
+    Project: ${pkg}
+    Brief: ${message || 'N/A'}
+    --------------------`;
 
-    console.log(`Processing inquiry from: ${email}`);
-
-    if (!pass) {
-      return res.status(500).json({ 
-        status: "error", 
-        message: "SMTP_PASS is not configured in Vercel Environment Variables.",
-        hint: "Go to Vercel Dashboard > Settings > Environment Variables and add SMTP_PASS."
-      });
-    }
-
-    const mailOptions = {
-      from: `"Web Inquiry" <${user}>`,
-      to: "nafyaddachasa91@gmail.com",
-      subject: `New Mission Brief: ${name} (${pkg})`,
-      text: `Name: ${name}\nEmail: ${email}\nPhone: ${phone}\nMessage: ${message}`,
-      html: `
-        <div style="font-family: sans-serif; padding: 20px; color: #333;">
-          <h2 style="color: #8A2BE2;">New Mission Brief Received</h2>
-          <p><strong>Client Name:</strong> ${name}</p>
-          <p><strong>Email:</strong> ${email}</p>
-          <p><strong>Phone:</strong> ${phone}</p>
-          <p><strong>Preferred Contact:</strong> ${preferredMethod?.toUpperCase()}</p>
-          <p><strong>Entity/Company:</strong> ${company || 'N/A'}</p>
+    const htmlContent = `
+      <div style="font-family: sans-serif; background: #030303; color: white; padding: 40px; border-radius: 20px;">
+        <h2 style="color: #9333ea; font-size: 24px; margin-bottom: 20px;">Mission Brief Received</h2>
+        <div style="background: rgba(255,255,255,0.05); padding: 20px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.1);">
+          <p><strong>Identity:</strong> ${name}</p>
+          <p><strong>Official POC:</strong> ${email}</p>
+          <p><strong>Signal Number:</strong> ${phone}</p>
+          <p><strong>Channel:</strong> ${preferredMethod?.toUpperCase()}</p>
           <p><strong>Project:</strong> ${pkg}</p>
-          <hr style="border: 1px solid #eee;" />
-          <p><strong>Brief Details:</strong></p>
-          <div style="background: #f9f9f9; padding: 15px; border-radius: 8px;">
-            ${message ? message.replace(/\n/g, '<br/>') : 'No description provided.'}
+          <div style="margin-top: 20px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.1);">
+            <p style="color: rgba(255,255,255,0.4); font-size: 12px;">BRIEF DETAILS:</p>
+            <p>${message || 'No description provided.'}</p>
           </div>
         </div>
-      `
-    };
+      </div>
+    `;
 
-    const info = await transporter.sendMail(mailOptions);
-    console.log("Email sent:", info.messageId);
-    return res.status(200).json({ status: "ok", message: "Notification sent", messageId: info.messageId });
+    await transporter.sendMail({
+      from: `"NafTech Briefs" <${user}>`,
+      to: "nafyaddachasa91@gmail.com",
+      replyTo: email,
+      subject: `⚡️ [NEW BRIEF] ${name} - ${pkg}`,
+      text: briefText,
+      html: htmlContent
+    });
+
+    console.log(`[SUCCESS] Email sent for ${email}`);
+    return res.status(200).json({ status: "ok", message: "Inquiry transmitted" });
 
   } catch (error: any) {
-    console.error("Route Error:", error);
+    console.error("[MAIL ERROR]", error);
     return res.status(500).json({ 
       status: "error", 
-      message: "Server failed to process notification", 
+      message: "SMTP carrier rejected transmission", 
       error: error.message 
     });
   }
 });
 
-// Global Error Handler to prevent HTML error pages on Vercel
+// Final Error Boundary
 app.use((err: any, req: any, res: any, next: any) => {
-  console.error("FATAL ERROR:", err);
+  console.error("[EXPRESS ERROR]", err);
   res.status(500).json({ 
     status: "error", 
-    message: "Internal Server Error", 
-    error: err.message 
+    message: "Internal runtime failure", 
+    details: err.message 
   });
 });
 
-// Health check to verify API routing on Vercel
-app.get("/api/health", (req, res) => {
-  res.json({ 
-    status: "ok", 
-    env: {
-      smtpUserSet: !!process.env.SMTP_USER,
-      smtpPassSet: !!process.env.SMTP_PASS,
-      nodeEnv: process.env.NODE_ENV
+// Server boot logic
+async function bootstrap() {
+  const isVercel = !!process.env.VERCEL;
+  const isProd = process.env.NODE_ENV === "production";
+
+  if (!isProd && !isVercel) {
+    // Development mode with Vite
+    console.log("Detected local environment. Booting Vite...");
+    try {
+      const { createServer } = await import("vite");
+      const vite = await createServer({
+        server: { middlewareMode: true },
+        appType: "spa"
+      });
+      app.use(vite.middlewares);
+    } catch (e) {
+      console.error("Vite failed to load:", e);
     }
-  });
-});
-
-async function startServer() {
-  if (process.env.NODE_ENV !== "production") {
-    const { createServer: createViteServer } = await import("vite");
-    const vite = await createViteServer({
-      server: { middlewareMode: true },
-      appType: "spa",
-    });
-    app.use(vite.middlewares);
-  } else {
-    const distPath = path.join(process.cwd(), 'dist');
+  } else if (!isVercel) {
+    // Standalone production build (not Vercel)
+    console.log("Detected standalone production mode.");
+    const distPath = path.join(process.cwd(), "dist");
     app.use(express.static(distPath));
-    app.get('*', (req, res) => {
-      res.sendFile(path.join(distPath, 'index.html'));
+    app.get("*", (req, res) => {
+      res.sendFile(path.join(distPath, "index.html"));
     });
   }
 
-  // Only start listening if we are not on Vercel
-  if (!process.env.VERCEL) {
+  // Bind to port if not on Vercel
+  if (!isVercel) {
+    const PORT = Number(process.env.PORT) || 3000;
     app.listen(PORT, "0.0.0.0", () => {
-      console.log(`Server running on http://localhost:${PORT}`);
+      console.log(`🚀 Production server operational on port ${PORT}`);
     });
   }
 }
 
-// Start local server if not in a serverless environment
-if (process.env.NODE_ENV !== "production" || !process.env.VERCEL) {
-  startServer();
+// Start only if not imported as a module (avoids conflicts on some platforms)
+if (!process.env.VERCEL) {
+  bootstrap();
 }
 
 export default app;
