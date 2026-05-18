@@ -90,21 +90,21 @@ export const Hero = () => {
 
         <motion.h1
           variants={itemVariants}
-          className="text-7xl md:text-8xl lg:text-[10rem] font-display font-light leading-[0.85] tracking-tighter mb-12"
+          className="text-6xl md:text-8xl lg:text-[9rem] font-display font-light leading-[0.85] tracking-tighter mb-8"
         >
           <span className="text-gradient block">TURNING</span>
           <span className="italic font-serif text-brand-offwhite block">CONTENT</span>
           <span className="text-brand-gradient font-bold drop-shadow-[0_0_30px_rgba(147,51,234,0.3)] block">INTO ATTENTION.</span>
         </motion.h1>
 
-        <div className="flex flex-wrap justify-center gap-12 md:gap-24 mb-16 max-w-5xl mx-auto px-4">
+        <div className="flex flex-wrap justify-center gap-12 md:gap-24 mb-8 max-w-5xl mx-auto px-4">
           <StatItem value={STATS.totalFollowers} label="Global Social Followers" />
           <StatItem value={STATS.produced} label="Contents Produced" />
         </div>
 
         <motion.div
           variants={itemVariants}
-          className="flex flex-col sm:flex-row items-center justify-center gap-6"
+          className="flex flex-col sm:flex-row items-center justify-center gap-6 mb-8"
         >
           <div className="flex flex-col sm:flex-row gap-4">
             <a
@@ -123,21 +123,6 @@ export const Hero = () => {
         </motion.div>
       </motion.div>
 
-      {/* Infinite Marquee */}
-      <div className="absolute bottom-10 left-0 right-0 overflow-hidden py-10 opacity-20 hover:opacity-40 transition-opacity">
-        <motion.div 
-          animate={{ x: [0, -1000] }}
-          transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
-          className="flex whitespace-nowrap gap-20 text-[10px] font-bold uppercase tracking-[0.4em] text-white"
-        >
-          {Array(10).fill(['Software Engineering', 'Neural Networks', 'Spatial Computing', 'Web3 Strategy', 'Aerospace Research', 'Retention Hooking']).flat().map((text, i) => (
-            <span key={i} className="flex items-center gap-10">
-              {text}
-              <span className="w-2 h-2 rounded-full bg-brand-purple" />
-            </span>
-          ))}
-        </motion.div>
-      </div>
     </section>
   );
 };

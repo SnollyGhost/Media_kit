@@ -38,11 +38,11 @@ Core Pillars:
 • Spaceverse: Research into aerospace and the future of global space exploration.
 
 Partnership Packages:
-- Option 1: Single Video - 1 video, concept, editing, captions. Price: 30K ETB (approx. USD equivalent available).
-- Option 2: Mini Campaign - 3 videos, concept, editing, captions. Price: 80K ETB.
-- Option 3: Standard Campaign - 5 videos, concept, editing, captions. Price: 125K ETB.
-- Option 4: Premium - 8 videos/month, dedicated playlist, monthly planning. Price: 185K ETB.
-- Option 5: Premium Plus | Yearly Partnership - 100 videos/year, long-term partnership, brand consistency. Price: 2.1M ETB.
+- Option 1: Single Video - 1 video, concept, editing, captions. Price: 30K ETB (~$165).
+- Option 2: Mini Campaign - 3 videos, concept, editing, captions. Price: 75K ETB (~$415).
+- Option 3: Standard Campaign - 5 videos, concept, editing, captions. Price: 120K ETB (~$665).
+- Option 4: Premium - 8 videos/month, dedicated playlist, monthly planning. Price: 185K ETB (~$1,025).
+- Option 5: Premium Plus | Yearly Partnership - 100 videos/year, long-term partnership, brand consistency. Price: 2.1M ETB (~$11,665).
 
 Note: Pricing for international clients is calculated at a fixed rate of 1 USD = 180 ETB.`;
 
@@ -252,8 +252,8 @@ export const PACKAGES: Package[] = [
   {
     id: 'campaign-3',
     name: 'Option 2: Mini Campaign',
-    price: '80K ETB',
-    priceValue: 80000,
+    price: '75K ETB',
+    priceValue: 75000,
     description: '3 videos optimized for all platforms.',
     features: [
       'Concept development',
@@ -265,8 +265,8 @@ export const PACKAGES: Package[] = [
   {
     id: 'campaign-5',
     name: 'Option 3: Standard Campaign',
-    price: '125K ETB',
-    priceValue: 125000,
+    price: '120K ETB',
+    priceValue: 120000,
     description: '5 videos optimized for all platforms.',
     features: [
       'Full campaign rollout',

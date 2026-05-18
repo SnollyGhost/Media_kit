@@ -2,5 +2,9 @@
   "name": "NAFYAD - Media Kit",
   "description": "Premium creator media kit for NAFYAD, focusing on Technology, Space, and Crypto.",
   "requestFramePermissions": [],
-  "majorCapabilities": ["Real-time Analytics", "Vertical Portfolio"]
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API",
+    "Real-time Analytics",
+    "Vertical Portfolio"
+  ]
 }
