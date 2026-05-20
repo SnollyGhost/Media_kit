@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'motion/react';
-import { Instagram, Youtube, Facebook, Loader2 } from 'lucide-react';
+import { Instagram, Youtube, Facebook } from 'lucide-react';
 import { SOCIAL_LINKS, CREATOR_NAME, STATS } from '../lib/data';
 
 const StatItem = ({ value, label }: { value: string, label: string }) => {
@@ -44,32 +44,6 @@ const StatItem = ({ value, label }: { value: string, label: string }) => {
 };
 
 export const Hero = () => {
-  const [isDownloading, setIsDownloading] = useState(false);
-
-  const handleDownloadPDF = async (e: React.MouseEvent) => {
-    e.preventDefault();
-    if (isDownloading) return;
-    setIsDownloading(true);
-    try {
-      const response = await fetch('/api/portfolio.pdf');
-      if (!response.ok) throw new Error('Failed to generate PDF');
-      const blob = await response.blob();
-      const url = window.URL.createObjectURL(blob);
-      const link = document.createElement('a');
-      link.href = url;
-      link.setAttribute('download', 'NafTech_MediaKit_Portfolio.pdf');
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-      window.URL.revokeObjectURL(url);
-    } catch (err) {
-      console.error('Download error:', err);
-      alert('Error building dynamic PDF. Please check connection and try again.');
-    } finally {
-      setIsDownloading(false);
-    }
-  };
-
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: { 
@@ -145,20 +119,6 @@ export const Hero = () => {
             >
               View Analysis 
             </a>
-            <button
-              onClick={handleDownloadPDF}
-              disabled={isDownloading}
-              className="flex items-center justify-center gap-2 px-10 py-6 border border-brand-purple/40 hover:border-brand-purple bg-brand-purple/10 hover:bg-brand-purple text-white font-bold text-xs uppercase tracking-widest rounded-sm transition-all duration-500 disabled:opacity-50 text-center w-full sm:w-auto"
-            >
-              {isDownloading ? (
-                <>
-                  <Loader2 className="w-4 h-4 animate-spin text-brand-purple" />
-                  Generating...
-                </>
-              ) : (
-                "Download Media Kit (PDF)"
-              )}
-            </button>
           </div>
         </motion.div>
       </motion.div>
