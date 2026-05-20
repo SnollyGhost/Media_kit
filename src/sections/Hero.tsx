@@ -44,6 +44,32 @@ const StatItem = ({ value, label }: { value: string, label: string }) => {
 };
 
 export const Hero = () => {
+  const [isDownloading, setIsDownloading] = useState(false);
+
+  const handleDownloadPDF = async (e: React.MouseEvent) => {
+    e.preventDefault();
+    if (isDownloading) return;
+    setIsDownloading(true);
+    try {
+      const response = await fetch('/api/portfolio.pdf');
+      if (!response.ok) throw new Error('Failed to generate PDF');
+      const blob = await response.blob();
+      const url = window.URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.setAttribute('download', 'NafTech_MediaKit_Portfolio.pdf');
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      window.URL.revokeObjectURL(url);
+    } catch (err) {
+      console.error('Download error:', err);
+      alert('Error building dynamic PDF. Please check connection and try again.');
+    } finally {
+      setIsDownloading(false);
+    }
+  };
+
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: { 
@@ -106,19 +132,33 @@ export const Hero = () => {
           variants={itemVariants}
           className="flex flex-col sm:flex-row items-center justify-center gap-6 mb-8"
         >
-          <div className="flex flex-col sm:flex-row gap-4">
+          <div className="flex flex-col sm:flex-row gap-4 items-center justify-center w-full">
             <a
               href="#packages"
-              className="group px-12 py-6 bg-white text-black font-bold text-xs uppercase tracking-widest rounded-sm hover:bg-brand-purple hover:text-white transition-all duration-500 transform hover:scale-105 shadow-xl shadow-white/5"
+              className="group px-12 py-6 bg-white text-black font-bold text-xs uppercase tracking-widest rounded-sm hover:bg-brand-purple hover:text-white transition-all duration-500 transform hover:scale-105 shadow-xl shadow-white/5 text-center w-full sm:w-auto"
             >
               Start Collaboration
             </a>
             <a
               href="#work"
-              className="px-10 py-6 border border-white/10 text-white/50 font-bold text-xs uppercase tracking-widest rounded-sm hover:border-white hover:text-white transition-all duration-500"
+              className="px-10 py-6 border border-white/10 text-white/50 font-bold text-xs uppercase tracking-widest rounded-sm hover:border-white hover:text-white transition-all duration-500 text-center w-full sm:w-auto animate-pulse hover:animate-none"
             >
               View Analysis 
             </a>
+            <button
+              onClick={handleDownloadPDF}
+              disabled={isDownloading}
+              className="flex items-center justify-center gap-2 px-10 py-6 border border-brand-purple/40 hover:border-brand-purple bg-brand-purple/10 hover:bg-brand-purple text-white font-bold text-xs uppercase tracking-widest rounded-sm transition-all duration-500 disabled:opacity-50 text-center w-full sm:w-auto"
+            >
+              {isDownloading ? (
+                <>
+                  <Loader2 className="w-4 h-4 animate-spin text-brand-purple" />
+                  Generating...
+                </>
+              ) : (
+                "Download Media Kit (PDF)"
+              )}
+            </button>
           </div>
         </motion.div>
       </motion.div>

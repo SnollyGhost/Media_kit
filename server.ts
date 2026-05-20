@@ -2,6 +2,9 @@ import express from "express";
 import nodemailer from "nodemailer";
 import dotenv from "dotenv";
 import path from "path";
+import React from "react";
+import { renderToStream } from "@react-pdf/renderer";
+import { MediaKitPDFDoc } from "./src/components/MediaKitPDFDoc";
 
 // Try to load .env in development
 if (process.env.NODE_ENV !== "production") {
@@ -37,6 +40,21 @@ app.get("/api/health", (req, res) => {
       isLocal: !process.env.VERCEL
     }
   });
+});
+
+// PDF Portfolio Generation
+app.get("/api/portfolio.pdf", async (req, res) => {
+  try {
+    const stream = await renderToStream(React.createElement(MediaKitPDFDoc));
+    
+    res.setHeader('Content-Type', 'application/pdf');
+    res.setHeader('Content-Disposition', 'attachment; filename=NafTech_Portfolio.pdf');
+    
+    stream.pipe(res);
+  } catch (error: any) {
+    console.error("PDF Generation error:", error);
+    res.status(500).json({ status: "error", message: error.message });
+  }
 });
 
 // Notify endpoint (Local/Preview)
