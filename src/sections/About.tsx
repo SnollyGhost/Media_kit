@@ -62,27 +62,27 @@ export const About = () => {
                 className="space-y-6"
               >
                 <p>
-                  Nafyad is a <span className="text-white font-medium">Computer Science graduate</span> and <span className="text-white font-medium">research-driven strategist</span> building a new digital identity for the <span className="text-white font-medium">Ethiopian tech landscape</span>. As the founder of <span className="text-white font-medium underline decoration-brand-purple/30 underline-offset-4">NafTech</span>, he specializes in dismantling the <span className="text-white font-medium italic">Black Box</span> of modern innovation. He makes complex topics like <span className="text-white font-medium">AI, blockchain, and space technology</span> accessible through <span className="text-white font-medium italic">high-fidelity storytelling</span> and skeptical, <span className="text-white font-medium">evidence-based insights</span>.
+                  Nafyad is a <span className="text-white font-medium">Computer Science graduate</span> and <span className="text-white font-medium">tech content creator</span> who is helping shape the digital world in <span className="text-white font-medium">Ethiopia</span>. As the founder of <span className="text-white font-medium underline decoration-brand-purple/30 underline-offset-4">NafTech</span>, he loves breaking down how modern technology works. He makes complicated topics like <span className="text-white font-medium">AI, blockchain, and space tech</span> easy for everyone to understand through <span className="text-white font-medium italic">clean, high-quality videos</span> and honest, <span className="text-white font-medium">research-backed insights</span>.
                 </p>
 
                 <p>
-                  By merging a background in <span className="text-white font-medium">software development</span> with high-end <span className="text-white font-medium">media production</span>, Nafyad bridges the gap between global innovation and local context. His approach cuts through the noise, providing <span className="text-white font-medium">technical clarity</span> without the fluff. From analyzing <span className="text-white font-medium">crypto futures</span> to exploring the latest in <span className="text-white font-medium italic">neural technology</span>, he delivers <span className="text-white font-medium">high-retention content</span> and strategic reviews for a tech-savvy, curiosity-driven audience.
+                  By combining his background in <span className="text-white font-medium">computer science</span> with creative <span className="text-white font-medium">video editing</span>, Nafyad explains international tech trends while keeping them relevant to our <span className="text-white font-medium">local community</span>. He cuts straight to the point to give you facts without the complicated jargon. Whether he is talking about the latest <span className="text-white font-medium italic">AI chatbots</span> or exploring what is next in space, he creates <span className="text-white font-medium">engaging, easy-to-follow content</span> for curious minds.
                 </p>
 
                 <div className="pt-4">
                   <div className="text-brand-purple font-display font-bold uppercase tracking-widest text-xs mb-4">Core Pillars</div>
-                  <ul className="space-y-3">
+                  <ul className="space-y-3 text-[15px]">
                     <li className="flex gap-3">
                       <span className="text-brand-purple font-bold">•</span>
-                      <span><span className="text-white font-bold">TechTruth:</span> Focused on software development and the mechanics of AI.</span>
+                      <span><span className="text-white font-bold">TechTruth:</span> Focused on tech topics like AI, robotics, chatbots, and what is happening in both local and global tech.</span>
                     </li>
                     <li className="flex gap-3">
                       <span className="text-brand-purple font-bold">•</span>
-                      <span><span className="text-white font-bold">Cryptospace:</span> Strategic analysis of blockchain and digital market dynamics.</span>
+                      <span><span className="text-white font-bold">Cryptospace:</span> Discussing new updates, incidents, and people shaping the blockchain and crypto world.</span>
                     </li>
                     <li className="flex gap-3">
                       <span className="text-brand-purple font-bold">•</span>
-                      <span><span className="text-white font-bold">Spaceverse:</span> Research into aerospace and the future of global space exploration.</span>
+                      <span><span className="text-white font-bold">Spaceverse:</span> Exploring aerospace, satellites, and the future of space exploration.</span>
                     </li>
                   </ul>
                 </div>

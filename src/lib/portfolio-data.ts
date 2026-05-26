@@ -14,23 +14,100 @@ export const STATS = {
   produced: "430",
 };
 
-export const NAFYAD_INFO = `Nafyad is a Computer Science graduate and research-driven digital strategist building high-impact identity for the modern market. As the founder of NafTech, he specializes in creating high-retention content and data-backed digital marketing strategies. He bridges the gap between technical innovation and audience engagement through high-fidelity storytelling and psychological triggers that drive growth.
+export const NAFYAD_INFO = `Nafyad (preferred name: Naf) is a Computer Science graduate and tech content creator who is helping shape the digital world in Ethiopia. As the founder of NafTech, he loves breaking down how modern technology works. He makes complicated topics like AI, blockchain, and space tech easy for everyone to understand through clean, high-quality videos and honest, research-backed insights.
 
-By merging a background in software development with professional media production, Nafyad delivers strategic digital campaigns that cut through the noise. His approach provides clarity and results, focusing on maximizing engagement and building authentic community for brands.
+By combining his background in computer science with creative video editing, Nafyad explains international tech trends while keeping them relevant to our local community. He cuts straight to the point to give you facts without the complicated jargon. Whether he is talking about the latest AI chatbots or exploring what is next in space, he creates engaging, easy-to-follow content for curious minds. He views himself not as a mere "influencer," but as a synergistic mix of tech content creator, software builder, and tactical digital operator.
 
-Content Pillars:
-• Content Strategy: High-fidelity storytelling tailored for viral retention.
-• Digital Marketing: Data-driven campaigns that convert attention into growth.
-• Engagement Optimization: Strategic psychological hooks for improved audience reach.
+Background & Education:
+- Full Name: Nafyad Dechasa Geleta.
+- Preferred Name: Naf.
+- B.S. in Computer Science from Unity University, graduating with an outstanding 3.9 CGPA.
+- Originally comes from Adama, where he spent most of his life. He relocated to Addis Ababa about 2 months ago and is now primarily working out of Addis Ababa.
+- Born on May 27, 2001.
+- Character: A pure computer geek who thrives on highly technical, problem-solving work. He loves to build reusable systems, not just brainstorm one-off content ideas.
+- Gradually started coding/programming in his 2nd year of university. He then launched his content creation journey during his 3rd year of study, with his biggest challenge being balancing consistent content creation with keeping up his stellar grades.
+- First computer was a 15" Toshiba laptop, bought by his family in Grade 7 as a reward for scoring Rank 1 in his whole class!
+- Attended Nafyad School and Holy Angels School for elementary, and Excel School and Hawas School for high school and preparatory.
+- Obsessed with space & technology since elementary school, strongly inspired by watching the "Tech talk by Solomon" weekly show on EBS TV.
+- His childhood dream was to become an astronomer, with his absolute favorite destination planet being Mars! He has some active interest in space science and has spoken to students at local schools about it.
+- First ever programming statement written was the classic "hello world" program.
+- Personally designed and built a major web project during university: a rental management platform called Effoy (https://effoy.onrender.com) with the tagline "Connecting You to Homes That Fit Your Life. Explore, Discover, and Make It Yours. Your next place. A click away. Built for your convenience."
+- No regrets regarding his tech, coding, or content creation journey.
+
+Channel Data & Timeline:
+- Official TikTok Handle: @nafyad_ (NafTech).
+- Launch Date: NafTech officially launched in September 2024.
+- Social Presence: 200K+ Followers across fast-growing social media platforms, with 430+ high-retention video assets successfully produced to date.
+
+Ecosystem Network & Industry Collaborations:
+- Ehud AI Talk: Maintains an active collaboration with Abenezer Alemayehu (Abeni), the host of Ehud AI Talk, focusing on co-production planning and strategic script engineering.
+- Ethio Tech AI: Established professional relationship with Jason Peters (JayP), the CEO of Ethio Tech AI, collaborating on high-level tech interview content.
+- Web3 Network: Solid connections within the local blockchain community, specifically collaborating with Nati, a well-known Crypto OG and co-founder within the ETN ecosystem. High interest in crypto futures trading, actively learning and practicing it as a core skill.
+- Brand Ambassadorships & Partnerships: Active strategic partnerships and content planning campaigns with local platforms, including corporate collaborations with the Auction Ethiopia team (managed alongside contacts Yoseph and Zelalem) to optimize digital ad spend and regional reach. Also collaborates with Bybit, Ehud AI, HuluPay, and Hawi Solutions.
+
+Aviation & Aerospace Milestones:
+- Pilot Training Program: In January 2026, successfully cleared the competitive interview and initial examination phases for the highly prestigious Ethiopian Airlines pilot training program, moving forward into the advanced simulation and flight qualification pipeline. This serves as a practical, high-value extension of Naftech's Spaceverse brand pillar!
+- Space & Tech Events: Heavily involved in regional aerospace community building, including designing behind-the-scenes content frameworks for major tech events like Yuri's Night and digital transformation summits in Addis Ababa.
+
+Event History & Milestones:
+- TikTok Creative Awards: Attended the official TikTok Creative Awards program in Addis Ababa in November 2025, operating as an active creator and conducting on-the-floor live interviews with top regional digital figures.
+
+Technical Stance on Local Manufacturing:
+- Local Assembly Advocacy: Holds a strict, supportive editorial stance on local tech manufacturing capability. For example, when analyzing local hardware like the CL-870 drone, he explicitly highlights that it is assembled locally in Ethiopia, framing this as a critical transition from being passive tech consumers to active ecosystem builders.
+
+Hobbies & Fun Facts:
+- Loves to play football (soccer) very much. In his prime, he is famously the absolute best goalkeeper out there!
+- Deeply obsessed with video games! Has played over 100 video games so far, keeps a catalog of every game played, and maintains an active wishlist of video games to play in the future.
+- Top 3 all-time favorite games are: Uncharted 4: A Thief's End (Legacy of Thieves), GTA V, and God of War (2018).
+- OS Preference: Die-hard fan of Windows and Android. He playfully claims that "iphones are for selfie people!"
+- Favorite Food & Drink: Firfir (ፍርፍር) and hot coffee without any sugar (coffee is a daily sugar-free fuel!).
+- No pets currently, but in the future he absolutely wants to get a dog!
+- Relationship status: He is casually in a relationship. (He prefers to keep detailed private relationship dynamics cozy and private).
+
+Content Style & Creative Preferences:
+- Multi-lane Brand Strategy: Brand is driven by four primary lanes: content creation, trading, AI projects, and building software skills/tools.
+- Hook-First Strategy: Prefers content to have an exceptionally strong, attention-grabbing dynamic hook from the start, especially curiosity-driven openings.
+- High Retention Method: Runs YouTube and TikTok channels with a strict, serious growth mindset rather than casual posting. TikTok strategy is built on metric testing, high follower conversion, shareability, optimal viewer retention, and engagement.
+- YouTube Direction: International-facing from Ethiopia, utilizing long-form videos and shorts as a serious, engineered content system.
+- Script Architecture: Direct, structured storytelling scripts targeting: Hook, Build, Payoff, and Call to Action (CTA).
+- Clear & Direct Explanations: Strongly prefers practical, factual, and research-backed explanations over fluffy, motivational talk.
+
+Creator Inspiration & Hardware Setup:
+- Main Tech Inspirations: Global creators MKBHD and Mrwhosetheboss, and locally "Tech talk by Solomon" (Solomon Kassa).
+- Current Production Gear: HP 15" Laptop with an AMD Ryzen processor, AMD Radeon graphics, 16 GB of RAM, and high-speed SSD storage. (This is his primary coding and editing powerhouse).
+- Video Capture Setup: Samsung phone, a professional neck mic, and a 21-inch ring light.
+
+Brand Meaning & Strategic Vision:
+- Name Meaning: "Nafyad" is a beautiful Afaan Oromo name meaning "Think for me" or "Think for someone." "Naftech" is the perfect synergistic combination of Nafyad and Technology.
+- Heartfelt Advice to Tech Beginners: "Start from what you got in your home... be consistent, and keep a burning hunger to learn, fail, and improve."
+- Long-Term Vision: Build the NafTech / Nafyad brand to be renowned well beyond Ethiopia-expanding throughout East Africa. His goal is to become the premier tech content creator and reviewer in East Africa, partnering with major local and global companies as a brand ambassador.
+
+Business Structure & Team:
+- NafTech is represented by Nafyad as the main face, but behind the scenes, there is a dedicated remote team consisting of video editors and other technical support staff.
+- NafTech operates entirely remotely and is not registered as a physical local office. No physical office exists.
+
+Gear & Software:
+- Shoots videos using a Samsung phone, a high-quality neck mic, and a 21-inch ring light.
+- Professional video editing software used: Adobe Premiere Pro and CapCut.
+- Primary source of up-to-date tech news & information: X (formerly Twitter).
+
+Production & Operations:
+- Speed: Can deliver a fully organized and polished short-form video in just 1 day! (Depends on topic depth/urgency).
+- Workflow: Handles the entire production lifecycle from research and scriptwriting to filming, editing, and publishing.
+- Payments: Accepts local payments in Ethiopia via CBE (Commercial Bank of Ethiopia), Telebirr, or any local gateway.
+- Portfolio & Socials: Direct viewers and brands to check his social channels and work tabs on this site for detailed video examples.
+
+Core Pillars:
+- TechTruth: Focused on tech topics like AI, robotics, chatbots, and what is happening in both local and global tech.
+- Cryptospace: Discussing new updates, incidents, and people shaping the blockchain and crypto world.
+- Spaceverse: Exploring aerospace, satellites, and the future of space exploration.
 
 Partnership Packages:
 - Option 1: Single Video - 1 video, concept, editing, captions. Price: 30K ETB (~$165).
-- Option 2: Mini Campaign - 3 videos, concept, editing, captions. Price: 75K ETB (~$415).
-- Option 3: Standard Campaign - 5 videos, concept, editing, captions. Price: 120K ETB (~$665).
-- Option 4: Premium - 8 videos/month, dedicated playlist, monthly planning. Price: 185K ETB (~$1,025).
-- Option 5: Premium Plus | Yearly Partnership - 100 videos/year, long-term partnership, brand consistency. Price: 2.1M ETB (~$11,665).
-
-Note: Pricing for international clients is calculated at a fixed rate of 1 USD = 180 ETB.`;
+- Option 2: Mini Campaign - 3 videos, concept, editing, captions. Price: Locked / Custom Pricing (Requires booking discovery call).
+- Option 3: Standard Campaign - 5 videos, concept, editing, captions. Price: Locked / Custom Pricing (Requires booking discovery call).
+- Option 4: Premium - 8 videos/month, dedicated playlist, monthly planning. Price: Locked / Custom Pricing (Requires booking discovery call).
+- Option 5: Premium Plus | Yearly Partnership - 100 videos/year, long-term partnership, brand consistency. Price: Locked / Custom Pricing (Requires booking discovery call).`;
 
 export const PACKAGES = [
   {
@@ -38,11 +115,11 @@ export const PACKAGES = [
     name: 'Option 1: Single Video',
     price: '30K ETB',
     priceValue: 30000,
-    description: '1 high-quality video optimized for all platforms.',
+    description: '1 high-fidelity video optimized for extreme reach.',
     features: [
-      'Concept development',
-      'High-end editing & captions',
-      'Platform-ready formatting'
+      'Concept & Strategy Script',
+      'Dynamic Engagement Hooks',
+      'Storytelling Edit'
     ],
     idealFor: 'Quick brand awareness',
   },
@@ -51,11 +128,12 @@ export const PACKAGES = [
     name: 'Option 2: Mini Campaign',
     price: '75K ETB',
     priceValue: 75000,
-    description: '3 videos optimized for all platforms.',
+    isBlurred: true,
+    description: '3 premium videos optimized for steady traffic.',
     features: [
-      'Concept development',
-      'Editing and captions',
-      'Posting-ready versions'
+      '3-Part Targeted Strategy',
+      'High-Retention Hooks',
+      'Professional Editing'
     ],
     idealFor: 'Mid-term campaign',
   },
@@ -64,11 +142,12 @@ export const PACKAGES = [
     name: 'Option 3: Standard Campaign',
     price: '120K ETB',
     priceValue: 120000,
-    description: '5 videos optimized for all platforms.',
+    isBlurred: true,
+    description: '5 top-tier videos targeting leads & growth.',
     features: [
-      'Full campaign rollout',
-      'Advanced editing & captions',
-      'Optimized for retention'
+      '5 High-Performance Videos',
+      'Psychological Story Triggers',
+      'High-Retention Optimization'
     ],
     idealFor: 'Growth acceleration',
     isHighlighted: true,
@@ -78,24 +157,26 @@ export const PACKAGES = [
     name: 'Option 4: Premium',
     price: '185K ETB',
     priceValue: 185000,
-    description: '8 videos per month optimized for all platforms.',
+    isBlurred: true,
+    description: '8 premium videos for dominant market presence.',
     features: [
-      'Dedicated playlist',
-      'Monthly content planning',
-      'Consistent brand exposure'
+      '8 Bespoke Monthly Videos',
+      'Deep Retention Analytics',
+      'Strategic Content Planning'
     ],
     idealFor: 'Dominant market presence',
   },
   {
     id: 'premium-plus',
-    name: 'Option 5: Premium Plus | Yearly Partnership',
+    name: 'Option 5: Premium Plus',
     price: '2.1M ETB',
     priceValue: 2100000,
-    description: '100 videos per year | Yearly Partnership.',
+    isBlurred: true,
+    description: '100 premium videos | Dedicated yearly authority.',
     features: [
-      'Dedicated playlist',
-      'Long-term content partnership',
-      'Maximum brand consistency'
+      '100 Managed Yearly Videos',
+      'Dedicated Brand Playlist',
+      'Long-Term Strategic Mapping'
     ],
     idealFor: 'Strategic enterprise partners',
   },

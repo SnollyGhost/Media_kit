@@ -11,6 +11,7 @@ import bybitLogo from '../assets/bybit.jpg';
 import ehudAiLogo from '../assets/EhudAI.png';
 import hawiLogo from '../assets/hawi.png';
 import huluPayLogo from '../assets/huluPay.png';
+import auctionEthiopiaLogo from '../assets/auction_ethiopia.svg';
 
 // Import new custom covers
 import ehudAiCover from '../assets/covers/ehud-ai-1.png';
@@ -53,6 +54,9 @@ export interface Metric {
 export interface Package {
   id: string;
   name: string;
+  title?: string;
+  videoCount?: string;
+  priceLabel?: string;
   price: string;
   priceValue: number; // Numeric ETB value for conversion
   priceSuffix?: string;
@@ -60,30 +64,32 @@ export interface Package {
   features: string[];
   idealFor: string;
   isHighlighted?: boolean;
+  isCustomPricing?: boolean;
+  isBlurred?: boolean;
 }
 
 export const NICHES = [
   {
     id: 'tech',
     title: 'TechTruth',
-    subtitle: 'Building the Future',
-    description: 'Dismantling the "Black Box" of modern innovation. Deep-dives into software development, AI mechanics, and technical clarity.',
+    subtitle: 'AI, Robotics & Local Trends',
+    description: 'Exploring AI, robotics, helper bots, and general technology topics on both local and global scales.',
     metric: '94% Retention',
     color: 'from-blue-500 to-cyan-400',
   },
   {
     id: 'space',
     title: 'Spaceverse',
-    subtitle: 'The Final Frontier',
-    description: 'Research-driven exploration of aerospace and global space exploration. High-fidelity storytelling bridging global innovation and local context.',
+    subtitle: 'Aerospace & Satellites',
+    description: 'Research-driven exploration of aerospace, satellites, and the future of space exploration.',
     metric: '4.2M Reach',
     color: 'from-purple-600 to-pink-500',
   },
   {
     id: 'crypto',
     title: 'Cryptospace',
-    subtitle: 'Financial Evolution',
-    description: 'Strategic, skeptical, and evidence-based analysis of blockchain and digital market dynamics. Cutting through the noise with data-driven insights.',
+    subtitle: 'Updates, News & People',
+    description: 'Discussing new updates, key incidents, and the people shaping the blockchain and crypto world.',
     metric: 'Top 1% Engagement',
     color: 'from-amber-500 to-orange-400',
   },
@@ -223,7 +229,8 @@ export const METRICS: Metric[] = [
 export const BRANDS = [
   { name: 'Bybit', logo: bybitLogo },
   { name: 'Ehud AI', logo: ehudAiLogo },
-  { name: 'Hawi', logo: hawiLogo },
+  { name: 'Auction Ethiopia', logo: auctionEthiopiaLogo },
+  { name: 'Hawi Solutions', logo: hawiLogo },
   { name: 'HuluPay', logo: huluPayLogo },
 ];
 

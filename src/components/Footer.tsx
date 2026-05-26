@@ -127,7 +127,7 @@ export const Footer = () => {
 
         {/* Bottom Bar */}
         <div className="pt-12 border-t border-white/5 flex flex-col md:flex-row items-center justify-between gap-8">
-          <div className="text-[10px] text-white/20 uppercase tracking-[0.3em] font-medium">
+          <div className="text-xs md:text-sm text-white/60 uppercase tracking-[0.3em] font-medium">
             &copy; {currentYear} {CREATOR_NAME} &bull; Strategic Digital Operator
           </div>
         </div>

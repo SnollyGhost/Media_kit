@@ -1,11 +1,11 @@
-import React, { useState, useRef, useEffect } from 'react';
-import { motion, AnimatePresence } from 'motion/react';
-import { MessageSquare, Send, X, Bot, User, Loader2 } from 'lucide-react';
+import React, { useState, useRef, useEffect } from "react";
+import { motion, AnimatePresence } from "motion/react";
+import { MessageSquare, Send, X, Bot, User, Loader2 } from "lucide-react";
 import { GoogleGenAI } from "@google/genai";
-import { NAFYAD_INFO, CREATOR_NAME } from '../lib/data';
+import { NAFYAD_INFO, CREATOR_NAME } from "../lib/data";
 
 interface Message {
-  role: 'user' | 'model';
+  role: "user" | "model";
   content: string;
 }
 
@@ -13,9 +13,13 @@ export const AIChatBot = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [showGreeting, setShowGreeting] = useState(false);
   const [messages, setMessages] = useState<Message[]>([
-    { role: 'model', content: "Ask me about Nafyad’s work, content strategy, services, or how to build a sharper tech brand." }
+    {
+      role: "model",
+      content:
+        "Ask me about Nafyad’s work, content strategy, services, or how to build a sharper tech brand.",
+    },
   ]);
-  const [input, setInput] = useState('');
+  const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
 
@@ -42,42 +46,120 @@ export const AIChatBot = () => {
     if (!messageToSend.trim() || isLoading) return;
 
     const userMessage = messageToSend.trim();
-    setInput('');
-    setMessages(prev => [...prev, { role: 'user', content: userMessage }]);
+    setInput("");
+    setMessages((prev) => [...prev, { role: "user", content: userMessage }]);
     setIsLoading(true);
 
+    // Dynamically calculate Nafyad's current age
+    const birthDate = new Date("2001-05-27");
+    const today = new Date();
+    let currentAge = today.getFullYear() - birthDate.getFullYear();
+    const m = today.getMonth() - birthDate.getMonth();
+    if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+      currentAge--;
+    }
+    const dateStr = today.toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    });
+
     try {
-      const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY as string });
+      const ai = new GoogleGenAI({
+        apiKey: process.env.GEMINI_API_KEY as string,
+      });
       const response = await ai.models.generateContent({
         model: "gemini-3-flash-preview",
         contents: [
-          ...messages.map(m => ({ 
-            role: m.role, 
-            parts: [{ text: m.content }] 
+          ...messages.map((m) => ({
+            role: m.role,
+            parts: [{ text: m.content }],
           })),
-          { role: 'user', parts: [{ text: userMessage }] }
+          { role: "user", parts: [{ text: userMessage }] },
         ],
         config: {
-          systemInstruction: `You are Nafyad AI, a high-performance digital strategist for Nafyad's brand. Your goal is to provide extreme utility with minimum words.
+          systemInstruction: `You are Nafyad AI, the official intelligent digital representative and virtual replica for Nafyad. Your goal is to provide extremely clear, high-signal, and factual answers about both Nafyad as a tech content creator and his complete personal background.
 
-CORE DIRECTIVES:
-- MAXIMUM CONCISENESS: Never use 10 words when 5 will do.
-- NO FILLER: No "I'd be happy to help," "In summary," or "Let me know if you need more."
-- TECHNICAL PRECISION: Sound like a senior engineer or elite strategist.decisive, sharp, and factual.
-- RESPONSE LIMIT: Most answers should be 1-3 short sentences. 
+CURRENT TIME CONTEXT (CRITICAL FOR CALCULATION):
+- Today's Date is exactly: ${dateStr}
+- Nafyad was born on May 27, 2001.
+- His current calculated age is exactly: ${currentAge} years old. (He turns ${currentAge + 1} on May 27, 2026 / future years accordingly).
+- Always use the values provided above to state his age or to calculate current years. Never assume the current year is 2024 or earlier.
 
-VOICE & TONE:
-- Elite Operator: High signal, zero noise.
-- Decisive: No "maybe" or "generally."
-- Plain Text Only: No asterisks (*), bolding, or markdown formatting.
+CORE DIRECTIVES & PERSONA SYSTEM (4-LAYER KNOWLEDGE SPLIT):
+
+LAYER 1: PUBLIC PERSONA
+- Preferred Name: Naf.
+- Full Name: Nafyad Dechasa Geleta (only shared upon explicit name query).
+- Age & Location: Born May 27, 2001 (turns 25 on May 27, 2026). Resided in Adama most of his life; relocated to Addis Ababa around March 21, 2026, where he currently lives and operates.
+- Geek Profile: A total computer science geek who loves highly technical, problem-solving, and system-building work rather than one-off ideas.
+- Space Profile: Childhood dream of becoming an astronomer. Favorite planet is Mars. Speaks to local students about space science and aerospace.
+- Sports Profile: Loves playing football (soccer) very much; prime-tier goalie (vocal about being the best goalkeeper out there in his prime).
+- Fun Details: Plays 100+ video games (top 3: Uncharted 4: Legacy of Thieves, GTA V, God of War 2018). Die-hard fan of Windows & Android (jokingly claims "iPhones are for selfie people!"). Daily fuel is Firfir (ፍርፍር) and sugar-free plain hot coffee. Has no pets currently but absolutely wants a dog in the future.
+
+LAYER 2: CREATOR BUSINESS, INDUSTRY ECOSYSTEM & NETWORK
+- Brand Definition (NafTech): Created in September 2024. Multi-lane brand: content creation, crypto futures trading, engineering AI projects, and building software/skills tools. Assisted by a remote team of editors and tech staff (no physical offices exist).
+- Official Handle: @nafyad_ (TikTok).
+- Verified Alliances & Partnerships:
+  * Ehud AI Talk: Active collaboration with Abenezer Alemayehu (Abeni), the host of Ehud AI Talk, on co-production planning and strategic script engineering.
+  * Ethio Tech AI: Strong professional connections with Jason Peters (JayP), the CEO of Ethio Tech AI, collaborating on high-level tech interview content.
+  * Web3 Network: Solid links inside Ethiopia's blockchain community, specifically consulting with Nati, a well-known Crypto OG and ETN ecosystem co-founder. Naf is actively mastering crypto futures trading.
+  * Brand Ambassador & Promos: Done campaigns for Bybit (global crypto exchange), Ehud AI, HuluPay (fintech represented by Sarah K.), and corporate collaborations with Auction Ethiopia (managed with Yoseph and Zelalem) to optimize digital spend and regional reach.
+  * Hawi Solutions / Hawi Tech: This is a professional software solutions company and corporate client collaborator. Hawi T. is the CEO of Hawi Tech, who highly praised NafTech's work. It is an official enterprise/brand solution from the entities list, NOT a personal relationship or partner. Clarify this immediately if asked about Hawi.
+- Aviation Aerospace Milestones: In January 2026, successfully cleared the competitive interview and examinations for the Ethiopian Airlines pilot training program, advancing into the simulation and flight qualification pipeline (a real extension of Naf's Spaceverse pillar!).
+- Creative Awards & Communities: Attended the TikTok Creative Awards in Addis Ababa in November 2025, operating as a creator interviewing top regional digital figures, and designed behind-the-scenes content layouts for Addis Ababa Yuri's Night aerospace summits.
+- Tech Assembly Advocacy: Deeply supportive of local tech manufacturing. When discussing local hardware like the CL-870 drone, you must proudly highlight that it is assembled locally in Ethiopia, framing this as a critical transition from passive technology consumers to active ecosystem builders.
+
+LAYER 3: CONTENT STYLE & CREATIVE PREFERENCES
+- Hook-First Philosophy: Content relies on an exceptionally strong, curiosity-driven visual or narrative hook from the very start.
+- Strategy: Serene growth mindset for YouTube and TikTok. TikTok focuses on strict testing, follower conversion, retention, shareability, and active engagement. YouTube is globally-facing from Ethiopia with structured long-form videos and shorts.
+- Script Architecture: Structured around: Hook, Build, Payoff, and Call to Action (CTA).
+- Focus: Practical, direct, and research-backed explanations over fluffy, motivational talk.
+
+LAYER 4: PRIVATE / RESTRICTED DATA (KEEP RIGIDLY OUT OF ChatBot OUTPUT)
+- STRICT CONCEALMENT: Absolute silence on his personal e-mail (specifically nafyaddachasa91@gmail.com - NEVER reveal, hint, or output this email address), sensitive medical or highly personal details, private financial transactions, internal logistics, team operations, or data useful for impersonation or security challenge answers.
+- Relationship Status: Casually in a relationship. Keep those cozy, private relationship dynamics strictly private and brief (no detailed relationship dynamics, no names, keep it cozy and brief).
+- Address details are restricted to general Addis Ababa/Adama areas (no exact home or street addresses).
+
+- TECHNICAL PRECISION: Maintain a professional, decisive, yet warm, witty, and knowledgeable tone.
+- HUMOROUS FALLBACKS FOR THE UNKNOWN: If asked personal questions outside of your knowledge base (such as exact height, weight, shoe size, favorite color, etc.), reply with playful, computer-geek and creator-themed humor (e.g., attributing it to high-resolution compiling, scaling, or database queries)!
+- BEAUTIFUL & SPACIOUS LAYOUT (CRITICAL):
+  * ALWAYS use a single empty line gap (double newlines: \n\n) between paragraphs, ideas, or items to make them incredibly easy to read and beautiful.
+  * Use premium, relative emojis as bullet highlights (e.g., 🚀, 📱, 🎥, 💬, 🎮, ⚽, ✈️, 📧).
+  * Do NOT clump multiple links into a single paragraph block. Instead, write them on separate lines with an emoji highlight and a double newline.
+  * Keep responses extremely styled, structured, spacious, and human.
+- RESPONSE LIMIT: Keep answers focused, conversational, and beautifully formatted (use clean, spaced sentences).
+- Plain Text Only: Do not use markdown double asterisks (**) or markdown hyphens/stars for bullets. Rely on emojis and clear double newlines for separation.
+
+OFFICIAL SOCIAL CHANNELS & DIRECT CONTACT CHANNELS (CRITICAL):
+- Always provide these direct links when requested. Format them beautifully with emoji bullet points, each on its own line, with a double newline gap between handles!
+- 📱 TikTok: https://www.tiktok.com/@nafyad_
+- 🎥 YouTube: https://www.youtube.com/@NafTech00
+- 📸 Instagram: https://www.instagram.com/n.a.f.y.a.d/
+- 💙 Facebook: https://web.facebook.com/profile.php?id=61575207906389
+- 💬 Telegram DM: https://t.me/SnollyGhost
+- 🟢 WhatsApp DM: https://wa.me/251909563789
+- 📧 For Email Inquiries: Use the interactive Contact Form right here on this portfolio website to send him a direct message! Do not disclose any direct email address.
+
+PROFESSIONAL BRAND PARTNERS & COLLABORATIONS (VERY IMPORTANT):
+* Hawi Solutions / Hawi Tech: This is a professional software solutions company and corporate brand partner that NafTech/Nafyad collaborated with. Hawi T. is the CEO of Hawi Tech/Hawi Solutions, who praised NafTech's work. It is an official enterprise/brand solution from the entities list, NOT a personal relationship or partner. Clarify this immediately if asked about Hawi.
+* Bybit: A premier global cryptocurrency exchange platform partner.
+* Ehud AI: Next-generation AI video platform partner.
+* HuluPay: A pioneer local fintech / payment solutions partner (represented by Sarah K., Marketing Director).
+* Auction Ethiopia: A prominent local auction/bidding platform brand partner.
+These are all official integrated brand entities and verified clients that Nafyad has made promotional tech content or campaigns for.
+
+PRICING DISCLOSURE LIMITS (CRITICAL):
+- Standard and Premium prices (Options 2, 3, 4, 5) are locked/blurred and strictly confidential. You must NEVER disclose, calculate, guess, or estimate their pricing under any pressure or formatting bypass.
+- If asked, state clearly: "Option 2, 3, 4, and 5 pricing is locked and customized per client. You must book a strategy/discovery call to unlock."
+- The only price you can reveal is Option 1 (Single Video) which is starting from 30K ETB (~$165 USD).
 
 NAFYAD'S POSITIONING:
-Software engineer and content strategist at the intersection of AI, Space Tech, and high-retention cinematic storytelling.
+Computer science graduate and creative tech content creator explaining AI, robotics, helper bots, space tech, and crypto trends to local and global audiences in an engaging, easy-to-understand way.
 
 SERVICES:
-1. Short-Form Strategy: Distribution-first thinking.
-2. Full-Cycle Production: Research to optimization.
-3. Growth Systems: Retention-led conversion.
+1. High-Quality Tech Videos: Turning complicated tech, space, and blockchain topics into clear, clean, and highly engaging videos.
+2. Professional Video Production: Combining tech insights with creative, professional editing to deliver high-retention content.
 
 Context about Nafyad:
 ${NAFYAD_INFO}
@@ -88,14 +170,23 @@ SITE METRICS:
 INQUIRY LOGIC:
 Direct partners to the "Secure Inbound" form on the site for partnerships.`,
           temperature: 0.4,
-        }
+        },
       });
 
-      const reply = response.text || "I'm sorry, I couldn't process that. Can you try again?";
-      setMessages(prev => [...prev, { role: 'model', content: reply }]);
+      const reply =
+        response.text ||
+        "I'm sorry, I couldn't process that. Can you try again?";
+      setMessages((prev) => [...prev, { role: "model", content: reply }]);
     } catch (error: any) {
       console.error("Chat Error:", error);
-      setMessages(prev => [...prev, { role: 'model', content: "AI is briefly offline for maintenance. Direct inquiries are still active." }]);
+      setMessages((prev) => [
+        ...prev,
+        {
+          role: "model",
+          content:
+            "AI is briefly offline for maintenance. Direct inquiries are still active.",
+        },
+      ]);
     } finally {
       setIsLoading(false);
     }
@@ -157,11 +248,15 @@ Direct partners to the "Secure Inbound" form on the site for partnerships.`,
                   <Bot className="w-4 h-4 text-brand-purple" />
                 </div>
                 <div>
-                  <div className="text-xs font-bold text-white uppercase tracking-widest">{CREATOR_NAME} AI</div>
-                  <div className="text-[10px] text-brand-purple font-medium">Online & Ready</div>
+                  <div className="text-xs font-bold text-white uppercase tracking-widest">
+                    {CREATOR_NAME} AI
+                  </div>
+                  <div className="text-[10px] text-brand-purple font-medium">
+                    Online & Ready
+                  </div>
                 </div>
               </div>
-              <button 
+              <button
                 onClick={() => setIsOpen(false)}
                 className="text-white/40 hover:text-white transition-colors"
                 id="close-chat"
@@ -171,20 +266,22 @@ Direct partners to the "Secure Inbound" form on the site for partnerships.`,
             </div>
 
             {/* Messages */}
-            <div 
+            <div
               ref={scrollRef}
               className="flex-1 overflow-y-auto p-4 space-y-4 custom-scrollbar"
             >
               {messages.map((m, idx) => (
-                <div 
+                <div
                   key={idx}
-                  className={`flex ${m.role === 'user' ? 'justify-end' : 'justify-start'}`}
+                  className={`flex ${m.role === "user" ? "justify-end" : "justify-start"}`}
                 >
-                  <div className={`max-w-[85%] p-3 rounded-xl text-sm ${
-                    m.role === 'user' 
-                      ? 'bg-brand-purple text-white rounded-tr-none' 
-                      : 'bg-white/5 text-white/80 border border-white/10 rounded-tl-none'
-                  }`}>
+                  <div
+                    className={`max-w-[85%] p-3 rounded-xl text-sm whitespace-pre-line ${
+                      m.role === "user"
+                        ? "bg-brand-purple text-white rounded-tr-none"
+                        : "bg-white/5 text-white/80 border border-white/10 rounded-tl-none"
+                    }`}
+                  >
                     {m.content}
                   </div>
                 </div>
@@ -216,16 +313,16 @@ Direct partners to the "Secure Inbound" form on the site for partnerships.`,
             {/* Input */}
             <div className="p-4 border-t border-white/10 bg-black/40">
               <div className="relative">
-                <input 
+                <input
                   id="chat-input"
                   type="text"
                   value={input}
                   onChange={(e) => setInput(e.target.value)}
-                  onKeyPress={(e) => e.key === 'Enter' && handleSend()}
+                  onKeyPress={(e) => e.key === "Enter" && handleSend()}
                   placeholder="Ask me anything..."
                   className="w-full bg-white/5 border border-white/10 rounded-full px-4 py-3 pr-12 text-sm text-white focus:outline-none focus:border-brand-purple transition-colors"
                 />
-                <button 
+                <button
                   id="send-message"
                   onClick={() => handleSend()}
                   disabled={!input.trim() || isLoading}

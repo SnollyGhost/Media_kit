@@ -5,6 +5,10 @@ import path from "path";
 import React from "react";
 import { renderToStream } from "@react-pdf/renderer";
 import { MediaKitPDFDoc } from "./src/components/MediaKitPDFDoc";
+import { FurniturePDFDoc } from "./src/components/FurniturePDFDoc";
+import { ShineVisionPDFDoc } from "./src/components/ShineVisionPDFDoc";
+import { Packer } from "docx";
+import { createShineVisionDocx } from "./src/components/ShineVisionDocxDoc";
 
 // Try to load .env in development
 if (process.env.NODE_ENV !== "production") {
@@ -53,6 +57,52 @@ app.get("/api/portfolio.pdf", async (req, res) => {
     stream.pipe(res);
   } catch (error: any) {
     console.error("PDF Generation error:", error);
+    res.status(500).json({ status: "error", message: error.message });
+  }
+});
+
+// Furniture PDF Generation
+app.get("/api/furniture-mediakit.pdf", async (req, res) => {
+  try {
+    const stream = await renderToStream(React.createElement(FurniturePDFDoc));
+    
+    res.setHeader('Content-Type', 'application/pdf');
+    res.setHeader('Content-Disposition', 'attachment; filename=NafTech_Furniture_MediaKit.pdf');
+    
+    stream.pipe(res);
+  } catch (error: any) {
+    console.error("Furniture PDF Generation error:", error);
+    res.status(500).json({ status: "error", message: error.message });
+  }
+});
+
+// Shine Vision Strategy PDF Generation
+app.get("/api/shine-vision-strategy.pdf", async (req, res) => {
+  try {
+    const stream = await renderToStream(React.createElement(ShineVisionPDFDoc));
+    
+    res.setHeader('Content-Type', 'application/pdf');
+    res.setHeader('Content-Disposition', 'attachment; filename=Shine_Vision_Center_Content_Strategy.pdf');
+    
+    stream.pipe(res);
+  } catch (error: any) {
+    console.error("Shine Vision PDF Generation error:", error);
+    res.status(500).json({ status: "error", message: error.message });
+  }
+});
+
+// Shine Vision Strategy DOCX Generation
+app.get("/api/shine-vision-strategy.docx", async (req, res) => {
+  try {
+    const doc = createShineVisionDocx();
+    const buffer = await Packer.toBuffer(doc);
+    
+    res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document');
+    res.setHeader('Content-Disposition', 'attachment; filename=Shine_Vision_Center_Content_Strategy.docx');
+    
+    res.send(buffer);
+  } catch (error: any) {
+    console.error("Shine Vision DOCX Generation error:", error);
     res.status(500).json({ status: "error", message: error.message });
   }
 });

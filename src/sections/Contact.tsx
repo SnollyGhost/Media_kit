@@ -378,7 +378,7 @@ export const Contact = ({ selectedPackage }: ContactProps) => {
           </div>
 
           <footer className="mt-32 pt-12 border-t border-white/5 text-center">
-             <div className="text-white/20 text-[10px] font-mono tracking-widest uppercase">
+             <div className="text-white/60 text-xs md:text-sm font-mono tracking-widest uppercase">
                 &copy; {new Date().getFullYear()} {CREATOR_NAME} &bull; All Rights Reserved
              </div>
           </footer>

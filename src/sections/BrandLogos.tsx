@@ -14,20 +14,27 @@ export const BrandLogos = () => {
       <div className="flex relative items-center">
         {/* Infinite Scroll Effect - Tripled for seamlessness with fewer items */}
         <div className="flex animate-scroll whitespace-nowrap">
-          {[...BRANDS, ...BRANDS, ...BRANDS].map((brand, idx) => (
-            <div 
-              key={idx} 
-              className="mx-12 flex items-center justify-center grayscale opacity-30 hover:grayscale-0 hover:opacity-100 transition-all duration-500 cursor-pointer"
-            >
-              <img 
-                src={brand.logo} 
-                alt={brand.name} 
-                className="h-8 md:h-10 object-contain"
-                referrerPolicy="no-referrer"
-              />
-              <span className="ml-3 text-sm font-display font-medium tracking-widest uppercase text-white/50">{brand.name}</span>
-            </div>
-          ))}
+          {[...BRANDS, ...BRANDS, ...BRANDS].map((brand, idx) => {
+            const isHawi = brand.name.toLowerCase().includes('hawi');
+            return (
+              <div 
+                key={idx} 
+                className="mx-12 flex items-center justify-center grayscale opacity-30 hover:grayscale-0 hover:opacity-100 transition-all duration-500 cursor-pointer"
+              >
+                <img 
+                  src={brand.logo} 
+                  alt={brand.name} 
+                  className={`h-8 md:h-10 object-contain transition-all ${
+                    isHawi 
+                      ? 'invert brightness-200 contrast-125' 
+                      : ''
+                  }`}
+                  referrerPolicy="no-referrer"
+                />
+                <span className="ml-3 text-sm font-display font-medium tracking-widest uppercase text-white/50">{brand.name}</span>
+              </div>
+            );
+          })}
         </div>
       </div>
       
