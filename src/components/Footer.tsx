@@ -1,7 +1,7 @@
 import { motion } from 'motion/react';
 import { SOCIAL_LINKS, CREATOR_NAME, BUSINESS_EMAIL } from '../lib/data';
 import logoImg from '../assets/logo.png';
-import { Youtube, Instagram, Facebook, ArrowUpRight, Mail, MapPin } from 'lucide-react';
+import { Youtube, Instagram, Facebook, Linkedin, ArrowUpRight, Mail, MapPin } from 'lucide-react';
 
 const TiktokIcon = ({ className }: { className?: string }) => (
   <svg className={className} fill="currentColor" viewBox="0 0 24 24">
@@ -44,6 +44,7 @@ export const Footer = () => {
                 { Icon: Instagram, href: SOCIAL_LINKS.instagram },
                 { Icon: TiktokIcon, href: SOCIAL_LINKS.tiktok },
                 { Icon: Facebook, href: SOCIAL_LINKS.facebook },
+                { Icon: Linkedin, href: SOCIAL_LINKS.linkedin },
               ].map((social, idx) => (
                 <a 
                   key={idx}

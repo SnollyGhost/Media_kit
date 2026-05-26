@@ -7,6 +7,7 @@ export const SOCIAL_LINKS = {
   youtube: "https://www.youtube.com/@NafTech00",
   instagram: "https://www.instagram.com/n.a.f.y.a.d/",
   facebook: "https://web.facebook.com/profile.php?id=61575207906389",
+  linkedin: "https://www.linkedin.com/in/Nafyad",
 };
 
 export const STATS = {

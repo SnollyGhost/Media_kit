@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion } from 'motion/react';
-import { Mail, MessageSquare, Instagram, Facebook, Youtube, Send, ArrowUpRight, CheckCircle2, AlertCircle } from 'lucide-react';
+import { Mail, MessageSquare, Instagram, Facebook, Youtube, Linkedin, Send, ArrowUpRight, CheckCircle2, AlertCircle } from 'lucide-react';
 import { BUSINESS_EMAIL, SOCIAL_LINKS, CREATOR_NAME, PACKAGES } from '../lib/data';
 import { db, OperationType, handleFirestoreError } from '../lib/firebase';
 import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
@@ -191,6 +191,7 @@ export const Contact = ({ selectedPackage }: ContactProps) => {
                   { Icon: Youtube, link: SOCIAL_LINKS.youtube },
                   { Icon: Facebook, link: SOCIAL_LINKS.facebook },
                   { Icon: Instagram, link: SOCIAL_LINKS.instagram },
+                  { Icon: Linkedin, link: SOCIAL_LINKS.linkedin },
                 ].map((item, idx) => (
                    <motion.a
                     key={idx}
