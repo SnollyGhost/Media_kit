@@ -231,8 +231,8 @@ export const Contact = ({ selectedPackage }: ContactProps) => {
                   <div className="flex flex-col gap-3 w-full max-w-[240px]">
                     <a 
                       href={getDirectLink()}
-                      target="_blank"
-                      rel="noopener noreferrer"
+                      target={getDirectLink().startsWith('mailto:') ? '_self' : '_blank'}
+                      rel={getDirectLink().startsWith('mailto:') ? undefined : 'noopener noreferrer'}
                       className="w-full py-4 rounded-xl bg-brand-purple text-white font-bold flex items-center justify-center gap-3 hover:scale-105 transition-all text-[10px] uppercase tracking-widest"
                     >
                       {getMethodIcon()}
