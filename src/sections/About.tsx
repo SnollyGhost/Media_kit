@@ -1,7 +1,7 @@
 import React from 'react';
 import { motion } from 'motion/react';
 import { CREATOR_NAME, NAFYAD_INFO } from '../lib/data';
-import creatorImg from '../assets/creator.jpg';
+import creatorImg from '../assets/creator.png';
 
 export const About = () => {
   return (
@@ -14,15 +14,21 @@ export const About = () => {
             viewport={{ once: true }}
             className="relative"
           >
-            <div className="aspect-[4/5] rounded-[40px] overflow-hidden border border-white/10 relative z-10">
+            <div className="aspect-[4/5] rounded-[40px] overflow-hidden border border-white/10 relative z-10 group">
               <img 
                 src={creatorImg} 
                 alt={`${CREATOR_NAME} - Creator & Strategist`}
-                className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700"
+                className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700 hover:scale-[1.02]"
                 referrerPolicy="no-referrer"
                 onError={(e) => {
                   e.currentTarget.src = "https://images.unsplash.com/photo-1519389950473-47ba0277781c";
                 }}
+              />
+              {/* Dynamic ambient overlay with continuous slow breathing dark interval */}
+              <motion.div 
+                animate={{ opacity: [0.15, 0.55, 0.15] }}
+                transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+                className="absolute inset-0 bg-gradient-to-t from-[#050505] via-transparent to-[#050505]/30 pointer-events-none mix-blend-multiply" 
               />
             </div>
             {/* Decorative Elements */}
@@ -103,6 +109,8 @@ export const About = () => {
                    <div className="text-[10px] uppercase tracking-widest text-white/30 font-bold">Brand Partnerships</div>
                 </div>
               </motion.div>
+
+
             </div>
           </div>
         </div>

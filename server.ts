@@ -2,13 +2,26 @@ import express from "express";
 import nodemailer from "nodemailer";
 import dotenv from "dotenv";
 import path from "path";
+import fs from "fs";
 import React from "react";
 import { renderToStream } from "@react-pdf/renderer";
 import { MediaKitPDFDoc } from "./src/components/MediaKitPDFDoc";
-import { FurniturePDFDoc } from "./src/components/FurniturePDFDoc";
-import { ShineVisionPDFDoc } from "./src/components/ShineVisionPDFDoc";
-import { Packer } from "docx";
-import { createShineVisionDocx } from "./src/components/ShineVisionDocxDoc";
+
+// Helper to convert images to Base64 safely
+const getBase64Image = (assetRelativePath: string) => {
+  try {
+    const fullPath = path.join(process.cwd(), assetRelativePath);
+    if (fs.existsSync(fullPath)) {
+      const bitmap = fs.readFileSync(fullPath);
+      const ext = path.extname(fullPath).toLowerCase().substring(1);
+      const mime = ext === 'jpg' || ext === 'jpeg' ? 'image/jpeg' : ext === 'svg' ? 'image/svg+xml' : `image/${ext}`;
+      return `data:${mime};base64,${bitmap.toString('base64')}`;
+    }
+  } catch (error) {
+    console.error(`Error reading ${assetRelativePath}:`, error);
+  }
+  return undefined;
+};
 
 // Try to load .env in development
 if (process.env.NODE_ENV !== "production") {
@@ -49,60 +62,23 @@ app.get("/api/health", (req, res) => {
 // PDF Portfolio Generation
 app.get("/api/portfolio.pdf", async (req, res) => {
   try {
-    const stream = await renderToStream(React.createElement(MediaKitPDFDoc));
+    const images = {
+      creatorImg: getBase64Image('src/assets/creator.png'),
+      bybit: getBase64Image('src/assets/bybit.jpg'),
+      ehudAi: getBase64Image('src/assets/EhudAI.png'),
+      huluPay: getBase64Image('src/assets/huluPay.png'),
+      hawi: getBase64Image('src/assets/hawi.png'),
+      auctionEthiopia: getBase64Image('src/assets/auction_ethiopia.svg'),
+    };
+
+    const stream = await renderToStream(React.createElement(MediaKitPDFDoc, { images }));
     
     res.setHeader('Content-Type', 'application/pdf');
-    res.setHeader('Content-Disposition', 'attachment; filename=NafTech_Portfolio.pdf');
+    res.setHeader('Content-Disposition', 'attachment; filename=NafTech_Creator_Portfolio.pdf');
     
     stream.pipe(res);
   } catch (error: any) {
     console.error("PDF Generation error:", error);
-    res.status(500).json({ status: "error", message: error.message });
-  }
-});
-
-// Furniture PDF Generation
-app.get("/api/furniture-mediakit.pdf", async (req, res) => {
-  try {
-    const stream = await renderToStream(React.createElement(FurniturePDFDoc));
-    
-    res.setHeader('Content-Type', 'application/pdf');
-    res.setHeader('Content-Disposition', 'attachment; filename=NafTech_Furniture_MediaKit.pdf');
-    
-    stream.pipe(res);
-  } catch (error: any) {
-    console.error("Furniture PDF Generation error:", error);
-    res.status(500).json({ status: "error", message: error.message });
-  }
-});
-
-// Shine Vision Strategy PDF Generation
-app.get("/api/shine-vision-strategy.pdf", async (req, res) => {
-  try {
-    const stream = await renderToStream(React.createElement(ShineVisionPDFDoc));
-    
-    res.setHeader('Content-Type', 'application/pdf');
-    res.setHeader('Content-Disposition', 'attachment; filename=Shine_Vision_Center_Content_Strategy.pdf');
-    
-    stream.pipe(res);
-  } catch (error: any) {
-    console.error("Shine Vision PDF Generation error:", error);
-    res.status(500).json({ status: "error", message: error.message });
-  }
-});
-
-// Shine Vision Strategy DOCX Generation
-app.get("/api/shine-vision-strategy.docx", async (req, res) => {
-  try {
-    const doc = createShineVisionDocx();
-    const buffer = await Packer.toBuffer(doc);
-    
-    res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document');
-    res.setHeader('Content-Disposition', 'attachment; filename=Shine_Vision_Center_Content_Strategy.docx');
-    
-    res.send(buffer);
-  } catch (error: any) {
-    console.error("Shine Vision DOCX Generation error:", error);
     res.status(500).json({ status: "error", message: error.message });
   }
 });

@@ -16,22 +16,9 @@ import { Process } from './sections/Process';
 import { Packages } from './sections/Packages';
 import { Contact } from './sections/Contact';
 import { AIChatBot } from './components/AIChatBot';
-import { FurnitureMediaKitPage } from './sections/FurnitureMediaKitPage';
 
 export default function App() {
   const [selectedPackage, setSelectedPackage] = useState<string>('');
-  const [isFurnitureRoute, setIsFurnitureRoute] = useState(false);
-
-  useEffect(() => {
-    const path = window.location.pathname;
-    if (path === '/furniture' || path === '/furniture-mediakit') {
-      setIsFurnitureRoute(true);
-    }
-  }, []);
-
-  if (isFurnitureRoute) {
-    return <FurnitureMediaKitPage />;
-  }
 
   return (
     <main className="relative selection:bg-brand-purple/30 selection:text-brand-purple overflow-x-hidden min-h-screen">

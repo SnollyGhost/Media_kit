@@ -1,185 +1,254 @@
 import React from 'react';
-import { Page, Text, View, Document, StyleSheet, Font } from '@react-pdf/renderer';
-import { NAFYAD_INFO, PACKAGES, STATS, CREATOR_NAME, BUSINESS_EMAIL, SOCIAL_LINKS, WEBSITE } from '../lib/portfolio-data';
+import { Page, Text, View, Document, StyleSheet, Image, Link, Svg, G, Path, Polygon } from '@react-pdf/renderer';
+import { NAFYAD_INFO, STATS, CREATOR_NAME, BUSINESS_EMAIL, SOCIAL_LINKS, WEBSITE } from '../lib/portfolio-data';
 
-// Register fonts if needed, otherwise use defaults
-// Using standard fonts for reliability in server-side rendering
+export interface PDFImages {
+  creatorImg?: string;
+  bybit?: string;
+  ehudAi?: string;
+  huluPay?: string;
+  hawi?: string;
+  auctionEthiopia?: string;
+}
 
 const styles = StyleSheet.create({
   page: {
     padding: 0,
-    backgroundColor: '#ffffff',
+    backgroundColor: '#050505',
     fontFamily: 'Helvetica',
+    position: 'relative',
   },
   sidebar: {
     position: 'absolute',
     left: 0,
     top: 0,
     bottom: 0,
-    width: 180,
-    backgroundColor: '#0a0a0a',
-    padding: 25,
-    color: '#ffffff',
+    width: 155,
+    backgroundColor: '#09090f',
+    borderRight: '0.75pt solid #1c1c28',
+    padding: 20,
+  },
+  profileContainer: {
+    alignItems: 'center',
+    marginBottom: 15,
+  },
+  profileImage: {
+    width: 90,
+    height: 90,
+    borderRadius: 45,
+    border: '1.5pt solid #a855f7',
+    objectFit: 'cover',
   },
   mainContent: {
-    marginLeft: 180,
-    padding: 40,
+    marginLeft: 155,
+    padding: 25,
     flex: 1,
+    height: '100%',
   },
   sidebarTitle: {
     fontSize: 22,
-    fontWeight: 'black',
-    marginBottom: 4,
+    fontWeight: 'bold',
     color: '#ffffff',
     letterSpacing: -0.5,
   },
   sidebarSubtitle: {
     fontSize: 8,
-    color: '#9333ea',
+    color: '#a855f7',
     textTransform: 'uppercase',
-    letterSpacing: 1.5,
-    marginBottom: 35,
-    fontWeight: 'bold',
+    letterSpacing: 2,
+    marginBottom: 25,
+    marginTop: 4,
   },
   sidebarSection: {
-    marginBottom: 25,
+    marginBottom: 20,
   },
   sidebarSectionTitle: {
-    fontSize: 9,
+    fontSize: 8,
     fontWeight: 'bold',
-    color: '#4b5563',
+    color: '#71717a',
     textTransform: 'uppercase',
-    letterSpacing: 1,
+    letterSpacing: 1.2,
     marginBottom: 8,
   },
   sidebarLink: {
     fontSize: 8,
-    color: '#9ca3af',
-    marginBottom: 5,
+    color: '#d4d4d8',
+    marginBottom: 4,
+    lineHeight: 1.3,
   },
   sidebarContactBox: {
     position: 'absolute',
-    bottom: 30,
-    left: 25,
-    right: 25,
-    borderTop: '0.5pt solid #1f2937',
-    paddingTop: 15,
+    bottom: 25,
+    left: 20,
+    right: 20,
+    borderTop: '0.5pt solid #1c1c28',
+    paddingTop: 12,
   },
   header: {
-    marginBottom: 25,
+    marginBottom: 15,
   },
   mainTitle: {
-    fontSize: 28,
+    fontSize: 24,
     fontWeight: 'bold',
-    color: '#111827',
+    color: '#ffffff',
     letterSpacing: -0.5,
   },
   mainSubtitle: {
-    fontSize: 11,
-    color: '#6b7280',
+    fontSize: 9,
+    color: '#a1a1aa',
     marginTop: 2,
+    letterSpacing: 0.5,
   },
   accentLine: {
-    width: 30,
-    height: 3,
+    width: 40,
+    height: 2,
     backgroundColor: '#9333ea',
-    marginTop: 12,
-    marginBottom: 15,
+    marginTop: 10,
+    marginBottom: 12,
   },
   sectionTitle: {
-    fontSize: 12,
+    fontSize: 10,
     fontWeight: 'bold',
-    color: '#111827',
+    color: '#a855f7',
     textTransform: 'uppercase',
-    letterSpacing: 0.5,
-    marginBottom: 10,
-    marginTop: 15,
+    letterSpacing: 1,
+    marginBottom: 6,
+    marginTop: 12,
   },
   paragraph: {
-    fontSize: 9,
-    lineHeight: 1.6,
-    color: '#374151',
-    marginBottom: 10,
+    fontSize: 7.5,
+    lineHeight: 1.4,
+    color: '#e4e4e7',
+    marginBottom: 6,
   },
   statsGrid: {
     flexDirection: 'row',
-    gap: 10,
-    marginBottom: 20,
-    marginTop: 5,
+    gap: 8,
+    marginBottom: 12,
+    marginTop: 4,
   },
   statCard: {
     flex: 1,
-    backgroundColor: '#f9fafb',
-    padding: 12,
-    border: '0.5pt solid #f3f4f6',
+    backgroundColor: '#09090f',
+    padding: 10,
+    border: '0.5pt solid #1c1c28',
     borderRadius: 4,
     alignItems: 'center',
   },
   statValue: {
-    fontSize: 16,
+    fontSize: 14,
     fontWeight: 'bold',
-    color: '#9333ea',
+    color: '#a855f7',
   },
   statLabel: {
-    fontSize: 7,
-    color: '#6b7280',
+    fontSize: 6.5,
+    color: '#71717a',
     textTransform: 'uppercase',
     marginTop: 2,
   },
-  packageGrid: {
-    marginTop: 5,
+  strategyBox: {
+    padding: 8,
+    backgroundColor: '#09090f',
+    border: '0.5pt solid #1c1c28',
+    borderLeft: '2.5pt solid #a855f7',
+    borderRadius: 3,
+    marginBottom: 6,
   },
-  packageItem: {
-    marginBottom: 8,
-    padding: 10,
-    backgroundColor: '#ffffff',
-    border: '0.5pt solid #f3f4f6',
-    borderLeft: '2.5pt solid #9333ea',
-    borderRadius: 2,
-  },
-  packageHead: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginBottom: 3,
-  },
-  packageName: {
-    fontSize: 10,
+  strategyTitle: {
+    fontSize: 8.5,
     fontWeight: 'bold',
-    color: '#111827',
+    color: '#ffffff',
+    marginBottom: 2,
   },
-  packagePrice: {
-    fontSize: 9,
-    fontWeight: 'bold',
-    color: '#9333ea',
-  },
-  packageDesc: {
-    fontSize: 8,
-    color: '#6b7280',
+  strategyText: {
+    fontSize: 7,
+    color: '#a1a1aa',
     lineHeight: 1.3,
+  },
+  partnerList: {
+    flexDirection: 'row',
+    flexWrap: 'nowrap',
+    gap: 5,
+    marginTop: 6,
+    marginBottom: 10,
+  },
+  partnerBadge: {
+    backgroundColor: '#09090f',
+    border: '0.5pt solid #1c1c28',
+    borderRadius: 3,
+    paddingVertical: 3,
+    paddingHorizontal: 5,
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 4,
+    flexShrink: 0,
+  },
+  partnerLogo: {
+    width: 12,
+    height: 12,
+    borderRadius: 2,
+    objectFit: 'contain',
+  },
+  partnerName: {
+    fontSize: 6.2,
+    color: '#e4e4e7',
+    fontWeight: 'bold',
+  },
+  websiteCallout: {
+    marginTop: 20,
+    padding: 12,
+    backgroundColor: '#09090f',
+    border: '1pt dashed #a855f7',
+    borderRadius: 6,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  websiteCalloutText: {
+    fontSize: 8.5,
+    fontWeight: 'bold',
+    color: '#ffffff',
+    textAlign: 'center',
+  },
+  websiteLinkHighlight: {
+    color: '#a855f7',
+    textDecoration: 'underline',
+    fontWeight: 'bold',
   },
   footer: {
     position: 'absolute',
-    bottom: 30,
-    right: 40,
-    fontSize: 7,
-    color: '#9ca3af',
+    bottom: 20,
+    right: 30,
+    fontSize: 6.5,
+    color: '#52525b',
   }
 });
 
-export const MediaKitPDFDoc = () => (
-  <Document title={`${CREATOR_NAME} - Media Kit`}>
+export const MediaKitPDFDoc = ({ images }: { images?: PDFImages }) => (
+  <Document title={`${CREATOR_NAME} - Creator Portfolio`}>
     <Page size="A4" style={styles.page}>
-      {/* Dark Sidebar */}
+      {/* Immersive Midnight Sidebar */}
       <View style={styles.sidebar}>
+        {images?.creatorImg && (
+          <View style={styles.profileContainer}>
+            <Image src={images.creatorImg} style={styles.profileImage} />
+          </View>
+        )}
         <Text style={styles.sidebarTitle}>{CREATOR_NAME}</Text>
-        <Text style={styles.sidebarSubtitle}>Digital Strategist</Text>
+        <Text style={styles.sidebarSubtitle}>Creator & Strategist</Text>
         
         <View style={styles.sidebarSection}>
           <Text style={styles.sidebarSectionTitle}>Our Pillars</Text>
-          <Text style={styles.sidebarLink}>• Content Strategy</Text>
-          <Text style={styles.sidebarLink}>• Digital Marketing</Text>
-          <Text style={styles.sidebarLink}>• Audience Growth</Text>
+          <Text style={styles.sidebarLink}>• TechTruth: AI & Robotics</Text>
+          <Text style={styles.sidebarLink}>• Cryptospace: Web3 & News</Text>
+          <Text style={styles.sidebarLink}>• Spaceverse: Satellites & Space</Text>
+        </View>
+
+        <View style={styles.sidebarSection}>
+          <Text style={styles.sidebarSectionTitle}>Milestones</Text>
+          <Text style={styles.sidebarLink}>• B.S. CS (Grade: 3.9 CGPA)</Text>
+          <Text style={styles.sidebarLink}>• Selected: Pilot Program 2026</Text>
+          <Text style={styles.sidebarLink}>• TikTok Creative Awards</Text>
+          <Text style={styles.sidebarLink}>• Effoy Portal Founder</Text>
         </View>
 
         <View style={styles.sidebarSection}>
@@ -187,67 +256,120 @@ export const MediaKitPDFDoc = () => (
           <Text style={styles.sidebarLink}>TikTok: @nafyad_</Text>
           <Text style={styles.sidebarLink}>YouTube: @NafTech00</Text>
           <Text style={styles.sidebarLink}>IG: @n.a.f.y.a.d</Text>
+          <Text style={styles.sidebarLink}>LinkedIn: /in/Nafyad</Text>
         </View>
 
         <View style={styles.sidebarContactBox}>
           <Text style={styles.sidebarSectionTitle}>Direct Line</Text>
           <Text style={styles.sidebarLink}>{BUSINESS_EMAIL}</Text>
-          <Text style={{ ...styles.sidebarLink, marginTop: 8, color: '#9333ea', fontWeight: 'bold' }}>{WEBSITE}</Text>
+          <Text style={{ ...styles.sidebarLink, marginTop: 4, color: '#a855f7', fontWeight: 'bold' }}>{WEBSITE}</Text>
         </View>
       </View>
 
-      {/* Main Content Area */}
+      {/* Modern Main Content Column */}
       <View style={styles.mainContent}>
         <View style={styles.header}>
-          <Text style={styles.mainTitle}>OFFICIAL MEDIA KIT</Text>
-          <Text style={styles.mainSubtitle}>Bridging Innovation & Audience Reach</Text>
+          <Text style={styles.mainTitle}>CREATOR PORTFOLIO</Text>
+          <Text style={styles.mainSubtitle}>Turning Complex Tech & Space Science into High-Retention Narrative</Text>
           <View style={styles.accentLine} />
         </View>
 
         <View>
           <Text style={styles.sectionTitle}>Executive Summary</Text>
           <Text style={styles.paragraph}>
-            Nafyad is a Computer Science graduate and research-driven digital strategist building high-impact identity for the modern market. Specialized in creating high-retention content and data-backed digital marketing strategies.
+            Nafyad is a highly skilled Computer Science graduate (3.9 CGPA) and digital strategist based in East Africa. By combining structural developer knowledge with high-fidelity video production, he breaks down emerging technologies—AI, blockchain, and aerospace—into viral, authority-building narratives.
           </Text>
           <Text style={styles.paragraph}>
-            Bridging the gap between technical innovation and audience engagement through high-fidelity storytelling and psychological triggers that drive growth. Delivering results that maximize reach and build authentic communities.
+            As the architect of NafTech, he designs comprehensive organic workflows, dynamic brand integration strategies, and targeted media campaigns that convert passive viewers into highly engaged advocates.
           </Text>
         </View>
 
-        <Text style={styles.sectionTitle}>Impact Metrics</Text>
+        <Text style={styles.sectionTitle}>Global Social Impact Metrics</Text>
         <View style={styles.statsGrid}>
           <View style={styles.statCard}>
-            <Text style={styles.statValue}>{STATS.totalFollowers}</Text>
-            <Text style={styles.statLabel}>Followers</Text>
+            <Text style={styles.statValue}>{STATS.totalFollowers}+</Text>
+            <Text style={styles.statLabel}>SMM Audience</Text>
           </View>
           <View style={styles.statCard}>
             <Text style={styles.statValue}>{STATS.produced}+</Text>
             <Text style={styles.statLabel}>Productions</Text>
           </View>
           <View style={styles.statCard}>
-            <Text style={styles.statValue}>19.5M</Text>
-            <Text style={styles.statLabel}>Monthly Reach</Text>
+            <Text style={styles.statValue}>19M+</Text>
+            <Text style={styles.statLabel}>Total Impressions</Text>
           </View>
           <View style={styles.statCard}>
-            <Text style={styles.statValue}>~96%</Text>
-            <Text style={styles.statLabel}>Engagement</Text>
+            <Text style={styles.statValue}>96%</Text>
+            <Text style={styles.statLabel}>Retention Score</Text>
           </View>
         </View>
 
-        <Text style={styles.sectionTitle}>Commercial Packages</Text>
-        <View style={styles.packageGrid}>
-          {PACKAGES.slice(0, 5).map((pkg) => (
-            <View key={pkg.id} style={styles.packageItem}>
-              <View style={styles.packageHead}>
-                <Text style={styles.packageName}>{pkg.name}</Text>
-                <Text style={styles.packagePrice}>{pkg.price}</Text>
-              </View>
-              <Text style={styles.packageDesc}>{pkg.description}</Text>
-            </View>
-          ))}
+        <Text style={styles.sectionTitle}>Proven Strategic Brand Partnerships</Text>
+        <Text style={styles.paragraph}>
+          Nafyad has engineered custom, retention-driven campaigns and direct brand placements with leading technology and digital payment organizations:
+        </Text>
+        <View style={styles.partnerList}>
+          <View style={styles.partnerBadge}>
+            {images?.bybit && <Image src={images.bybit} style={styles.partnerLogo} />}
+            <Text style={styles.partnerName}>Bybit</Text>
+          </View>
+          <View style={styles.partnerBadge}>
+            {images?.ehudAi && <Image src={images.ehudAi} style={styles.partnerLogo} />}
+            <Text style={styles.partnerName}>EhudAI</Text>
+          </View>
+          <View style={styles.partnerBadge}>
+            <Svg viewBox="0 0 90 90" style={styles.partnerLogo}>
+              <G transform="translate(0, 3)">
+                <Path d="M 45,5 L 80,35 L 30,35 Z" fill="#0c4da2" opacity={0.95} />
+                <Path d="M 30,35 L 48,23 L 45,5 Z" fill="#003366" opacity={0.4} />
+                <Path d="M 55,35 L 90,35 L 65,78 Z" fill="#f7941d" opacity={0.95} />
+                <Path d="M 65,78 L 70,51 L 55,35 Z" fill="#d9531e" opacity={0.4} />
+                <Path d="M 10,25 L 35,68 L 15,78 Z" fill="#22b14c" opacity={0.95} />
+                <Path d="M 15,78 L 27,46 L 10,25 Z" fill="#1b8a3c" opacity={0.5} />
+                <Polygon points="45,35 55,35 50,43" fill="#8dc63f" opacity={0.9} />
+              </G>
+            </Svg>
+            <Text style={styles.partnerName}>Auction Ethiopia</Text>
+          </View>
+          <View style={styles.partnerBadge}>
+            {images?.huluPay && <Image src={images.huluPay} style={styles.partnerLogo} />}
+            <Text style={styles.partnerName}>HuluPay</Text>
+          </View>
+          <View style={styles.partnerBadge}>
+            {images?.hawi && <Image src={images.hawi} style={styles.partnerLogo} />}
+            <Text style={styles.partnerName}>Hawi Solutions</Text>
+          </View>
         </View>
 
-        <Text style={styles.footer}>© {new Date().getFullYear()} {CREATOR_NAME} | Proprietary Partnership Doc</Text>
+        <Text style={styles.sectionTitle}>Engineered Content & Growth Strategy</Text>
+        <View style={styles.strategyBox}>
+          <Text style={styles.strategyTitle}>1. Hook-First Storytelling Architecture</Text>
+          <Text style={styles.strategyText}>
+            Every production is structured mathematically starting with immediate, high-retention engagement hooks, followed by systematic narrative builds, premium post-production payoff, and seamless conversion triggers.
+          </Text>
+        </View>
+
+        <View style={styles.strategyBox}>
+          <Text style={styles.strategyTitle}>2. High-Fidelity Multi-Platform Workflow</Text>
+          <Text style={styles.strategyText}>
+            Full lifecycle execution spanning from exhaustive data research to scriptwriting, filming, and advanced editing with industry-standard Adobe Premiere Pro and CapCut pipelines to deliver polished deliverables within a rapid 24-hour turnaround.
+          </Text>
+        </View>
+
+        <View style={styles.strategyBox}>
+          <Text style={styles.strategyTitle}>3. Analytical Audience Optimization</Text>
+          <Text style={styles.strategyText}>
+            Continuous testing of watch-time graphs, shares, and algorithmic retention score targets. Content is specifically optimized across YouTube long-form, YouTube shorts, and TikTok to ensure sustained organic growth.
+          </Text>
+        </View>
+
+        <View style={styles.websiteCallout}>
+          <Text style={styles.websiteCalloutText}>
+            Check the website <Link src="https://nafyad.vercel.app" style={styles.websiteLinkHighlight}>nafyad.vercel.app</Link> for more detailed portfolio and works.
+          </Text>
+        </View>
+
+        <Text style={styles.footer}>© {new Date().getFullYear()} {CREATOR_NAME} | Proprietary Portfolio Document</Text>
       </View>
     </Page>
   </Document>
