@@ -162,7 +162,7 @@ export const Hero = () => {
           className="inline-flex items-center gap-2.5 px-4 py-2 rounded-full glass border border-white/[0.07] mb-8 bg-white/[0.02] hover:bg-white/[0.06] transition-all duration-300"
         >
           <Sparkles className="w-3.5 h-3.5 text-brand-purple animate-pulse" />
-          <span className="text-[10px] font-bold uppercase tracking-[0.35em] text-white/80">Interactive Creator Portfolio</span>
+          <span className="text-[10px] font-bold uppercase tracking-[0.35em] text-white/80">Creator Portfolio</span>
         </motion.div>
 
         <motion.h1
