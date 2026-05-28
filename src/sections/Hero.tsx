@@ -180,7 +180,7 @@ export const Hero = () => {
           className="grid grid-cols-2 gap-4 max-w-lg mx-auto mb-12"
         >
           <StatItem value={STATS.totalFollowers} label="Global Content Community" />
-          <StatItem value={STATS.produced} label="Cinematic Assets Produced" />
+          <StatItem value={STATS.produced} label="High-Retention Videos Produced" />
         </motion.div>
 
         <motion.div

@@ -38,7 +38,13 @@ Background & Education:
 Channel Data & Timeline:
 - Official TikTok Handle: @nafyad_ (NafTech).
 - Launch Date: NafTech officially launched in September 2024.
-- Social Presence: 200K+ Followers across fast-growing social media platforms, with 430+ high-retention video assets successfully produced to date.
+- Social Presence & Distribution:
+  * Over 200K+ combined followers across fast-growing social media platforms.
+  * TikTok: 91.1K followers (@nafyad_).
+  * Facebook: 50.1K followers.
+  * YouTube: 49.2K subscribers (primarily short-form content).
+  * Instagram: 9,680 followers.
+- Successfully produced 430+ high-retention video assets to date.
 
 Ecosystem Network & Industry Collaborations:
 - Ehud AI Talk: Maintains an active collaboration with Abenezer Alemayehu (Abeni), the host of Ehud AI Talk, focusing on co-production planning and strategic script engineering.

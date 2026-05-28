@@ -19,19 +19,19 @@ export const BrandLogos = () => {
             return (
               <div 
                 key={idx} 
-                className="mx-12 flex items-center justify-center grayscale opacity-30 hover:grayscale-0 hover:opacity-100 transition-all duration-500 cursor-pointer"
+                className="mx-12 flex items-center justify-center opacity-95 md:opacity-85 hover:opacity-100 transition-all duration-500 cursor-pointer hover:scale-105"
               >
                 <img 
                   src={brand.logo} 
                   alt={brand.name} 
-                  className={`h-8 md:h-10 object-contain transition-all ${
+                  className={`h-8 md:h-10 object-contain transition-all duration-500 ${
                     isHawi 
                       ? 'invert brightness-200 contrast-125' 
                       : ''
                   }`}
                   referrerPolicy="no-referrer"
                 />
-                <span className="ml-3 text-sm font-display font-medium tracking-widest uppercase text-white/50">{brand.name}</span>
+                <span className="ml-3 text-sm font-display font-medium tracking-widest uppercase text-white/80 transition-colors duration-500">{brand.name}</span>
               </div>
             );
           })}
