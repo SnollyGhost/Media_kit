@@ -1,3 +1,4 @@
+import React, { useState } from 'react';
 import { motion } from 'motion/react';
 import { SOCIAL_LINKS, CREATOR_NAME, BUSINESS_EMAIL } from '../lib/data';
 import logoImg from '../assets/logo.webp';
@@ -11,6 +12,7 @@ const TiktokIcon = ({ className }: { className?: string }) => (
 
 export const Footer = () => {
   const currentYear = new Date().getFullYear();
+  const [logoError, setLogoError] = useState(false);
 
   return (
     <footer className="bg-black pt-32 pb-12 px-6 border-t border-white/5 relative overflow-hidden">
@@ -26,11 +28,41 @@ export const Footer = () => {
               whileInView={{ opacity: 1 }}
               className="flex items-center gap-3 mb-8 group"
             >
-              <img 
-                src={logoImg} 
-                alt="Nafyad Logo" 
-                className="w-10 h-10 object-contain"
-              />
+              {!logoError ? (
+                <img 
+                  src={logoImg} 
+                  alt="Nafyad Logo" 
+                  className="w-10 h-10 object-contain"
+                  onError={() => setLogoError(true)}
+                />
+              ) : (
+                <svg 
+                  className="w-10 h-10 transition-all duration-700 group-hover:rotate-[360deg]" 
+                  viewBox="0 0 100 100" 
+                  fill="none" 
+                  xmlns="http://www.w3.org/2000/svg"
+                  id="nafyad-footer-svg-logo"
+                >
+                  <defs>
+                    <linearGradient id="footer-logo-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+                      <stop offset="0%" stopColor="#c084fc" />
+                      <stop offset="100%" stopColor="#6366f1" />
+                    </linearGradient>
+                    <linearGradient id="footer-logo-glow" x1="0%" y1="0%" x2="100%" y2="100%">
+                      <stop offset="0%" stopColor="#a855f7" />
+                      <stop offset="100%" stopColor="#3b82f6" />
+                    </linearGradient>
+                  </defs>
+                  <path d="M50 5 L90 28 L90 72 L50 95 L10 72 L10 28 Z" stroke="url(#footer-logo-glow)" strokeWidth="3" fill="rgba(10,10,12,0.8)" />
+                  <line x1="50" y1="5" x2="50" y2="25" stroke="#a855f7" strokeWidth="1" opacity="0.5" />
+                  <line x1="90" y1="28" x2="73" y2="38" stroke="#a855f7" strokeWidth="1" opacity="0.5" />
+                  <line x1="90" y1="72" x2="73" y2="62" stroke="#3b82f6" strokeWidth="1" opacity="0.5" />
+                  <line x1="50" y1="95" x2="50" y2="75" stroke="#3b82f6" strokeWidth="1" opacity="0.5" />
+                  <line x1="10" y1="72" x2="27" y2="62" stroke="#3b82f6" strokeWidth="1" opacity="0.5" />
+                  <line x1="10" y1="28" x2="27" y2="38" stroke="#a855f7" strokeWidth="1" opacity="0.5" />
+                  <path d="M35 30 V70 L50 50 L65 70 V30" stroke="url(#footer-logo-grad)" strokeWidth="6" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+              )}
               <span className="text-xl font-display font-black tracking-tight uppercase text-white">
                 {CREATOR_NAME}
               </span>

@@ -21,7 +21,13 @@ export const About = () => {
                 className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700 hover:scale-[1.02]"
                 referrerPolicy="no-referrer"
                 onError={(e) => {
-                  e.currentTarget.src = "https://images.unsplash.com/photo-1519389950473-47ba0277781c";
+                  const target = e.currentTarget;
+                  const staticFallback = window.location.origin + "/creator.webp";
+                  if (target.src !== staticFallback) {
+                    target.src = "/creator.webp";
+                  } else {
+                    target.src = "https://images.unsplash.com/photo-1519389950473-47ba0277781c";
+                  }
                 }}
               />
               {/* Dynamic ambient overlay with continuous slow breathing dark interval */}

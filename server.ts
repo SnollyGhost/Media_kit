@@ -63,11 +63,11 @@ app.get("/api/health", (req, res) => {
 app.get("/api/portfolio.pdf", async (req, res) => {
   try {
     const images = {
-      creatorImg: getBase64Image('src/assets/creator.png'),
-      bybit: getBase64Image('src/assets/bybit.jpg'),
-      ehudAi: getBase64Image('src/assets/EhudAI.png'),
-      huluPay: getBase64Image('src/assets/huluPay.png'),
-      hawi: getBase64Image('src/assets/hawi.png'),
+      creatorImg: getBase64Image('src/assets/creator.webp'),
+      bybit: getBase64Image('src/assets/bybit.webp'),
+      ehudAi: getBase64Image('src/assets/EhudAI.webp'),
+      huluPay: getBase64Image('src/assets/huluPay.webp'),
+      hawi: getBase64Image('src/assets/hawi.webp'),
       auctionEthiopia: getBase64Image('src/assets/auction_ethiopia.svg'),
     };
 

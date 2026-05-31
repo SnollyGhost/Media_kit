@@ -20,11 +20,31 @@ export const ProgressiveImage: React.FC<ProgressiveImageProps> = ({
   const [isLoaded, setIsLoaded] = useState(false);
   const [errorOccurred, setErrorOccurred] = useState(false);
 
+  const [retryWithFallback, setRetryWithFallback] = useState(false);
+  const [currentSrc, setCurrentSrc] = useState(src);
+
   // Reset state if the source URL changes (e.g. during category Switch)
   useEffect(() => {
     setIsLoaded(false);
     setErrorOccurred(false);
+    setRetryWithFallback(false);
+    setCurrentSrc(src);
   }, [src]);
+
+  const fallbackUrls = {
+    tech: 'https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&q=80&w=800',
+    space: 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&q=80&w=800',
+    crypto: 'https://images.unsplash.com/photo-1621761191319-c6fb62004040?auto=format&fit=crop&q=80&w=800',
+  };
+
+  const handleImageError = () => {
+    if (!retryWithFallback) {
+      setRetryWithFallback(true);
+      setCurrentSrc(fallbackUrls[category] || fallbackUrls.tech);
+    } else {
+      setErrorOccurred(true);
+    }
+  };
 
   // Color configurations based on the Naftech portfolio theme
   const themeGlows = {
@@ -95,7 +115,7 @@ export const ProgressiveImage: React.FC<ProgressiveImageProps> = ({
 
       {/* 3. High-Res Image Element */}
       <img
-        src={src}
+        src={currentSrc}
         alt={alt}
         className={cn(
           "w-full h-full object-cover transition-all duration-700 ease-out",
@@ -103,7 +123,7 @@ export const ProgressiveImage: React.FC<ProgressiveImageProps> = ({
           className
         )}
         onLoad={() => setIsLoaded(true)}
-        onError={() => setErrorOccurred(true)}
+        onError={handleImageError}
         loading="lazy"
         decoding="async"
         referrerPolicy="no-referrer"
