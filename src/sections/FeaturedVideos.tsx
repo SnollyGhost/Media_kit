@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'motion/react';
 import { Play, Eye, Youtube, Instagram, Facebook, X } from 'lucide-react';
 import { VIDEOS } from '../lib/data';
 import { cn } from '../lib/utils';
+import { ProgressiveImage } from '../components/ProgressiveImage';
 
 const CATEGORIES = ['all', 'tech', 'space', 'crypto'] as const;
 
@@ -148,13 +149,11 @@ export const FeaturedVideos = () => {
                       className="w-full h-full relative"
                       onClick={() => setPlayingVideoId(video.id)}
                     >
-                      <img
+                      <ProgressiveImage
                         src={video.thumbnail}
                         alt={video.title}
-                        className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105"
-                        referrerPolicy="no-referrer"
-                        loading="lazy"
-                        decoding="async"
+                        category={video.category}
+                        className="transition-transform duration-1000 group-hover:scale-105"
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/10 opacity-100 transition-opacity" />
                       

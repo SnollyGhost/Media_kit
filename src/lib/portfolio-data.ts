@@ -110,16 +110,26 @@ Core Pillars:
 - Spaceverse: Exploring aerospace, satellites, and the future of space exploration.
 
 Partnership Packages:
-- Option 1: Single Video - 1 video, concept, editing, captions. Price: 30K ETB (~$165).
-- Option 2: Mini Campaign - 3 videos, concept, editing, captions. Price: Locked / Custom Pricing (Requires booking discovery call).
-- Option 3: Standard Campaign - 5 videos, concept, editing, captions. Price: Locked / Custom Pricing (Requires booking discovery call).
-- Option 4: Premium - 8 videos/month, dedicated playlist, monthly planning. Price: Locked / Custom Pricing (Requires booking discovery call).
-- Option 5: Premium Plus | Yearly Partnership - 100 videos/year, long-term partnership, brand consistency. Price: Locked / Custom Pricing (Requires booking discovery call).`;
+- Single - 1 video, concept, editing, captions. Price: 30K ETB (~$165).
+- Mini Campaign - 3 videos, concept, editing, captions. Price: 75K ETB (~$415).
+- Standard Campaign - 5 videos, concept, editing, captions. Price: 120K ETB (~$665).
+- Premium - 8 videos/month, dedicated playlist, monthly planning. Price: 185K ETB (~$1,000).
+- Premium Plus | Yearly Partnership - 100 videos/year, long-term partnership, brand consistency. Price: 2.1M ETB (~$11,700).`;
 
-export const PACKAGES = [
+export const PACKAGES: {
+  id: string;
+  name: string;
+  price: string;
+  priceValue: number;
+  description: string;
+  features: string[];
+  idealFor: string;
+  isHighlighted?: boolean;
+  isBlurred?: boolean;
+}[] = [
   {
     id: 'single',
-    name: 'Option 1: Single Video',
+    name: 'Single',
     price: '30K ETB',
     priceValue: 30000,
     description: '1 high-fidelity video optimized for extreme reach.',
@@ -132,10 +142,9 @@ export const PACKAGES = [
   },
   {
     id: 'campaign-3',
-    name: 'Option 2: Mini Campaign',
+    name: 'Mini Campaign',
     price: '75K ETB',
     priceValue: 75000,
-    isBlurred: true,
     description: '3 premium videos optimized for steady traffic.',
     features: [
       '3-Part Targeted Strategy',
@@ -146,10 +155,9 @@ export const PACKAGES = [
   },
   {
     id: 'campaign-5',
-    name: 'Option 3: Standard Campaign',
+    name: 'Standard Campaign',
     price: '120K ETB',
     priceValue: 120000,
-    isBlurred: true,
     description: '5 top-tier videos targeting leads & growth.',
     features: [
       '5 High-Performance Videos',
@@ -161,10 +169,9 @@ export const PACKAGES = [
   },
   {
     id: 'premium',
-    name: 'Option 4: Premium',
+    name: 'Premium',
     price: '185K ETB',
     priceValue: 185000,
-    isBlurred: true,
     description: '8 premium videos for dominant market presence.',
     features: [
       '8 Bespoke Monthly Videos',
@@ -175,10 +182,9 @@ export const PACKAGES = [
   },
   {
     id: 'premium-plus',
-    name: 'Option 5: Premium Plus',
+    name: 'Premium Plus',
     price: '2.1M ETB',
     priceValue: 2100000,
-    isBlurred: true,
     description: '100 premium videos | Dedicated yearly authority.',
     features: [
       '100 Managed Yearly Videos',

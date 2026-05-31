@@ -7,21 +7,21 @@ import {
   PACKAGES 
 } from './portfolio-data';
 
-import bybitLogo from '../assets/bybit.jpg';
-import ehudAiLogo from '../assets/EhudAI.png';
-import hawiLogo from '../assets/hawi.png';
-import huluPayLogo from '../assets/huluPay.png';
+import bybitLogo from '../assets/bybit.webp';
+import ehudAiLogo from '../assets/EhudAI.webp';
+import hawiLogo from '../assets/hawi.webp';
+import huluPayLogo from '../assets/huluPay.webp';
 import auctionEthiopiaLogo from '../assets/auction_ethiopia.svg';
 
 // Import new custom covers
-import ehudAiCover from '../assets/covers/ehud-ai-1.png';
-import gerdPrideCover from '../assets/covers/gerd-pride-1.png';
-import lazarusCover from '../assets/covers/lazarus.jpeg';
-import telegramCover from '../assets/covers/telegram-premium-1.png';
-import satelliteCover from '../assets/covers/satellite-1.jpg';
-import astronautCover from '../assets/covers/astronaut-1.png';
-import cryptoStartCover from '../assets/covers/crypto-start-1.png';
-import bitcoinGerdCover from '../assets/covers/bitcoin-gerd-1.png';
+import ehudAiCover from '../assets/covers/ehud-ai-1.webp';
+import v22OspreyCover from '../assets/covers/v22-osprey.webp';
+import lazarusCover from '../assets/covers/lazarus.webp';
+import telegramCover from '../assets/covers/telegram-premium-1.webp';
+import satelliteCover from '../assets/covers/satellite-1.webp';
+import astronautCover from '../assets/covers/astronaut-1.webp';
+import cryptoStartCover from '../assets/covers/crypto-start-1.webp';
+import bitcoinGerdCover from '../assets/covers/bitcoin-gerd-1.webp';
 
 export { 
   CREATOR_NAME, 
@@ -109,13 +109,13 @@ export const VIDEOS: Video[] = [
   },
   {
     id: 'tech-2',
-    title: 'Ethiopia Pride, GERD',
+    title: 'V-22 Osprey 🚁 In Ethiopia Land',
     platform: 'tiktok',
     category: 'tech',
     views: '',
-    thumbnail: gerdPrideCover,
-    url: 'https://www.tiktok.com/@nafyad_/video/7544066848392760632',
-    tags: ['Ethiopia', 'Pride'],
+    thumbnail: v22OspreyCover,
+    url: 'https://www.tiktok.com/@nafyad_/video/7600095832196549904',
+    tags: ['Osprey', 'AirForce', 'Ethiopia'],
   },
   {
     id: 'tech-3',
@@ -261,11 +261,11 @@ export const TESTIMONIALS = [
 export const FAQS = [
   {
     question: 'What is your typical turnaround time?',
-    answer: 'For a single video (Option 1: Single Video), turnaround is typically 3-5 business days. For larger campaigns, we work on a 2-4 week production cycle depending on complexity.'
+    answer: 'For a single video, turnaround is typically 3-5 business days. For larger campaigns, we work on a 2-4 week production cycle depending on complexity.'
   },
   {
     question: 'Do you offer whitelisting rights?',
-    answer: 'Yes, whitelisting and usage rights for paid social ads are available as an add-on for Option 1 & 2, and included by default in our Premium packages.'
+    answer: 'Yes, whitelisting and usage rights for paid social ads are available as an add-on for Single & Mini Campaign, and included by default in our Premium packages.'
   },
   {
     question: 'Can you handle hardware product photography?',
