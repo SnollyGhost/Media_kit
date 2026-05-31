@@ -7,10 +7,10 @@ import {
   PACKAGES 
 } from './portfolio-data';
 
-import bybitLogo from '../assets/bybit.webp';
-import ehudAiLogo from '../assets/EhudAI.webp';
-import hawiLogo from '../assets/hawi.webp';
-import huluPayLogo from '../assets/huluPay.webp';
+import bybitLogo from '../assets/bybit.jpg';
+import ehudAiLogo from '../assets/EhudAI.png';
+import hawiLogo from '../assets/hawi.png';
+import huluPayLogo from '../assets/huluPay.png';
 import auctionEthiopiaLogo from '../assets/auction_ethiopia.svg';
 
 // Import new custom covers

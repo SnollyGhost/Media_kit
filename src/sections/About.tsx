@@ -1,7 +1,7 @@
 import React from 'react';
 import { motion } from 'motion/react';
 import { CREATOR_NAME, NAFYAD_INFO } from '../lib/data';
-import creatorImg from '../assets/creator.webp';
+import creatorImg from '../assets/creator.png';
 
 export const About = () => {
   return (
@@ -20,15 +20,6 @@ export const About = () => {
                 alt={`${CREATOR_NAME} - Creator & Strategist`}
                 className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700 hover:scale-[1.02]"
                 referrerPolicy="no-referrer"
-                onError={(e) => {
-                  const target = e.currentTarget;
-                  const staticFallback = window.location.origin + "/creator.webp";
-                  if (target.src !== staticFallback) {
-                    target.src = "/creator.webp";
-                  } else {
-                    target.src = "https://images.unsplash.com/photo-1519389950473-47ba0277781c";
-                  }
-                }}
               />
               {/* Dynamic ambient overlay with continuous slow breathing dark interval */}
               <motion.div 

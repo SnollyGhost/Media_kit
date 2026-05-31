@@ -12,12 +12,11 @@ const NAV_LINKS = [
 ];
 
 import { CREATOR_NAME } from '../lib/data';
-import logoImg from '../assets/logo.webp';
+import logoImg from '../assets/logo.png';
 
 export const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [logoError, setLogoError] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 50);
@@ -39,41 +38,11 @@ export const Navbar = () => {
           animate={{ opacity: 1, x: 0 }}
           className="flex items-center gap-3 group"
         >
-          {!logoError ? (
-            <img 
-              src={logoImg} 
-              alt="Nafyad Logo" 
-              className="w-11 h-11 object-contain group-hover:rotate-[360deg] transition-transform duration-700"
-              onError={() => setLogoError(true)}
-            />
-          ) : (
-            <svg 
-              className="w-11 h-11 transition-all duration-700 group-hover:rotate-[360deg]" 
-              viewBox="0 0 100 100" 
-              fill="none" 
-              xmlns="http://www.w3.org/2000/svg"
-              id="nafyad-svg-logo"
-            >
-              <defs>
-                <linearGradient id="logo-grad" x1="0%" y1="0%" x2="100%" y2="100%">
-                  <stop offset="0%" stopColor="#c084fc" />
-                  <stop offset="100%" stopColor="#6366f1" />
-                </linearGradient>
-                <linearGradient id="logo-glow" x1="0%" y1="0%" x2="100%" y2="100%">
-                  <stop offset="0%" stopColor="#a855f7" />
-                  <stop offset="100%" stopColor="#3b82f6" />
-                </linearGradient>
-              </defs>
-              <path d="M50 5 L90 28 L90 72 L50 95 L10 72 L10 28 Z" stroke="url(#logo-glow)" strokeWidth="3" fill="rgba(10,10,12,0.8)" />
-              <line x1="50" y1="5" x2="50" y2="25" stroke="#a855f7" strokeWidth="1" opacity="0.5" />
-              <line x1="90" y1="28" x2="73" y2="38" stroke="#a855f7" strokeWidth="1" opacity="0.5" />
-              <line x1="90" y1="72" x2="73" y2="62" stroke="#3b82f6" strokeWidth="1" opacity="0.5" />
-              <line x1="50" y1="95" x2="50" y2="75" stroke="#3b82f6" strokeWidth="1" opacity="0.5" />
-              <line x1="10" y1="72" x2="27" y2="62" stroke="#3b82f6" strokeWidth="1" opacity="0.5" />
-              <line x1="10" y1="28" x2="27" y2="38" stroke="#a855f7" strokeWidth="1" opacity="0.5" />
-              <path d="M35 30 V70 L50 50 L65 70 V30" stroke="url(#logo-grad)" strokeWidth="6" strokeLinecap="round" strokeLinejoin="round" />
-            </svg>
-          )}
+          <img 
+            src={logoImg} 
+            alt="Nafyad Logo" 
+            className="w-11 h-11 object-contain group-hover:rotate-[360deg] transition-transform duration-700"
+          />
           <span className="text-3xl font-display font-black tracking-tighter uppercase group-hover:text-brand-purple transition-colors drop-shadow-[0_0_15px_rgba(147,51,234,0.3)]">
             {CREATOR_NAME}
           </span>
