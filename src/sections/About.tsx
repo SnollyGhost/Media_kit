@@ -1,7 +1,7 @@
 import React from 'react';
 import { motion } from 'motion/react';
 import { CREATOR_NAME, NAFYAD_INFO } from '../lib/data';
-import creatorImg from '../assets/creator.png';
+import creatorImg from '../assets/creator.webp';
 
 export const About = () => {
   return (

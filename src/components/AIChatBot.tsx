@@ -99,7 +99,7 @@ LAYER 1: PUBLIC PERSONA
 - Age & Location: Born May 27, 2001 (turns 25 on May 27, 2026). Resided in Adama most of his life; relocated to Addis Ababa around March 21, 2026, where he currently lives and operates.
 - Geek Profile: A total computer science geek who loves highly technical, problem-solving, and system-building work rather than one-off ideas.
 - Space Profile: Childhood dream of becoming an astronomer. Favorite planet is Mars. Speaks to local students about space science and aerospace.
-- Sports Profile: Loves playing football (soccer) very much; prime-tier goalie (vocal about being the best goalkeeper out there in his prime).
+- Sports Profile: Loves playing football (soccer) very much; prime-tier goalie (vocal about being the best goalkeeper out there in his prime). He is a massive fan of Manchester United!
 - Fun Details: Plays 100+ video games (top 3: Uncharted 4: Legacy of Thieves, GTA V, God of War 2018). Die-hard fan of Windows & Android (jokingly claims "iPhones are for selfie people!"). Daily fuel is Firfir (ፍርፍር) and sugar-free plain hot coffee. Has no pets currently but absolutely wants a dog in the future.
 
 LAYER 2: CREATOR BUSINESS, INDUSTRY ECOSYSTEM & NETWORK

@@ -8,27 +8,27 @@ try {
     console.log('Created public/ directory');
   }
 
-  // 2. Copy core brand assets
+  // 2. Copy core brand assets (now WebP and SVG only)
   const filesToCopy = [
-    { src: 'src/assets/logo.png', dest: 'public/logo.png' },
-    { src: 'src/assets/creator.png', dest: 'public/creator.png' },
-    { src: 'src/assets/bybit.jpg', dest: 'public/bybit.jpg' },
-    { src: 'src/assets/hawi.png', dest: 'public/hawi.png' },
-    { src: 'src/assets/huluPay.png', dest: 'public/huluPay.png' },
-    { src: 'src/assets/EhudAI.png', dest: 'public/EhudAI.png' },
+    { src: 'src/assets/logo.webp', dest: 'public/logo.webp' },
+    { src: 'src/assets/creator.webp', dest: 'public/creator.webp' },
+    { src: 'src/assets/bybit.webp', dest: 'public/bybit.webp' },
+    { src: 'src/assets/hawi.webp', dest: 'public/hawi.webp' },
+    { src: 'src/assets/huluPay.webp', dest: 'public/huluPay.webp' },
+    { src: 'src/assets/EhudAI.webp', dest: 'public/EhudAI.webp' },
     { src: 'src/assets/auction_ethiopia.svg', dest: 'public/auction_ethiopia.svg' }
   ];
 
-  // Clean up any lingering webp files in public/ to avoid confusion
-  const legacyWebps = [
-    'public/logo.webp',
-    'public/creator.webp',
-    'public/bybit.webp',
-    'public/hawi.webp',
-    'public/huluPay.webp',
-    'public/EhudAI.webp'
+  // Clean up any legacy png or jpeg files in public/ to avoid confusion
+  const legacyFiles = [
+    'public/logo.png',
+    'public/creator.png',
+    'public/bybit.jpg',
+    'public/hawi.png',
+    'public/huluPay.png',
+    'public/EhudAI.png'
   ];
-  for (const file of legacyWebps) {
+  for (const file of legacyFiles) {
     if (fs.existsSync(file)) {
       fs.unlinkSync(file);
       console.log(`Cleaned up obsolete public asset: ${file}`);
