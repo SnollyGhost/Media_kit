@@ -9,15 +9,6 @@ interface PackagesProps {
 }
 
 export const Packages = ({ onSelectPackage }: PackagesProps) => {
-  const exchangeRate = 180; // Fixed rate: 1 USD = 180 ETB
-
-  const formatUSD = (etb: number) => {
-    const usd = etb / exchangeRate;
-    // Round to nearest 5 or 10 for cleaner international pricing look
-    if (usd > 1000) return Math.round(usd / 100) * 100;
-    return Math.round(usd / 5) * 5;
-  };
-
   return (
     <section id="packages" className="pt-28 pb-20 px-6 bg-[#050505] relative overflow-hidden">
       {/* Decorative Blob */}
@@ -47,7 +38,6 @@ export const Packages = ({ onSelectPackage }: PackagesProps) => {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6 pt-6">
           {PACKAGES.map((pkg, idx) => {
-            const usdPrice = formatUSD(pkg.priceValue);
             const isBlurred = !!pkg.isBlurred;
 
             return (
@@ -111,10 +101,9 @@ export const Packages = ({ onSelectPackage }: PackagesProps) => {
                       <div className="flex flex-col justify-center h-full">
                         <div className="text-3xl font-black tracking-tight text-white flex items-baseline gap-1.5 drop-shadow-sm">
                           <span className="bg-gradient-to-r from-white to-white/95 bg-clip-text text-transparent">{pkg.price}</span>
-                          <span className="text-[10px] font-black text-brand-purple uppercase bg-brand-purple/15 border border-brand-purple/20 px-1.5 py-0.5 rounded tracking-wide font-extrabold shrink-0">ETB</span>
                         </div>
-                        <div className="text-[11px] font-bold text-white/50 tracking-tight mt-0.5">
-                          ≈ ${usdPrice.toLocaleString()} USD
+                        <div className="text-[11.5px] font-bold text-[#c084fc] tracking-tight mt-0.5">
+                          ${pkg.usdPrice.toLocaleString()} USD <span className="text-white/40 text-[9px] font-medium">(Global)</span>
                         </div>
                       </div>
                     )}

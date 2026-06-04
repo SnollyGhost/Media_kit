@@ -59,6 +59,7 @@ export interface Package {
   priceLabel?: string;
   price: string;
   priceValue: number; // Numeric ETB value for conversion
+  usdPrice: number; // Global USD rate
   priceSuffix?: string;
   description: string;
   features: string[];

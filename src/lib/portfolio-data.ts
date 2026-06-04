@@ -109,17 +109,18 @@ Core Pillars:
 - Spaceverse: Exploring aerospace, satellites, and the future of space exploration.
 
 Partnership Packages:
-- Single - 1 video, concept, editing, captions. Price: 30K ETB (~$165).
-- Mini Campaign - 3 videos, concept, editing, captions. Price: 75K ETB (~$415).
-- Standard Campaign - 5 videos, concept, editing, captions. Price: 120K ETB (~$665).
-- Premium - 8 videos/month, dedicated playlist, monthly planning. Price: 185K ETB (~$1,000).
-- Premium Plus | Yearly Partnership - 100 videos/year, long-term partnership, brand consistency. Price: 2.1M ETB (~$11,700).`;
+- Single - 1 video, concept, editing, captions. Price: 30K ETB for local market, $300 USD for global market.
+- Mini Campaign - 3 videos, concept, editing, captions. Price: 75K ETB for local market, $750 USD for global market.
+- Standard Campaign - 5 videos, concept, editing, captions. Price: 120K ETB for local market, $1,200 USD for global market.
+- Premium - 8 videos/month, dedicated playlist, monthly planning. Price: 185K ETB for local market, $1,800 USD for global market.
+- Premium Plus | Yearly Partnership - 100 videos/year, long-term partnership, brand consistency. Price: 2.1M ETB for local market, $18,000 USD for global market.`;
 
 export const PACKAGES: {
   id: string;
   name: string;
   price: string;
   priceValue: number;
+  usdPrice: number;
   description: string;
   features: string[];
   idealFor: string;
@@ -131,6 +132,7 @@ export const PACKAGES: {
     name: 'Single',
     price: '30K ETB',
     priceValue: 30000,
+    usdPrice: 300,
     description: '1 high-fidelity video optimized for extreme reach.',
     features: [
       'Concept & Strategy Script',
@@ -144,6 +146,7 @@ export const PACKAGES: {
     name: 'Mini Campaign',
     price: '75K ETB',
     priceValue: 75000,
+    usdPrice: 750,
     description: '3 premium videos optimized for steady traffic.',
     features: [
       '3-Part Targeted Strategy',
@@ -157,6 +160,7 @@ export const PACKAGES: {
     name: 'Standard Campaign',
     price: '120K ETB',
     priceValue: 120000,
+    usdPrice: 1200,
     description: '5 top-tier videos targeting leads & growth.',
     features: [
       '5 High-Performance Videos',
@@ -171,6 +175,7 @@ export const PACKAGES: {
     name: 'Premium',
     price: '185K ETB',
     priceValue: 185000,
+    usdPrice: 1800,
     description: '8 premium videos for dominant market presence.',
     features: [
       '8 Bespoke Monthly Videos',
@@ -184,6 +189,7 @@ export const PACKAGES: {
     name: 'Premium Plus',
     price: '2.1M ETB',
     priceValue: 2100000,
+    usdPrice: 18000,
     description: '100 premium videos | Dedicated yearly authority.',
     features: [
       '100 Managed Yearly Videos',
