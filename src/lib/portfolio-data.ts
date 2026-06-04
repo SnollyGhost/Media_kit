@@ -53,7 +53,6 @@ Ecosystem Network & Industry Collaborations:
 - Brand Ambassadorships & Partnerships: Active strategic partnerships and content planning campaigns with local platforms, including corporate collaborations with the Auction Ethiopia team (managed alongside contacts Yoseph and Zelalem) to optimize digital ad spend and regional reach. Also collaborates with Bybit, Ehud AI, HuluPay, and Hawi Solutions.
 
 Aviation & Aerospace Milestones:
-- Pilot Training Program: In January 2026, successfully cleared the competitive interview and initial examination phases for the highly prestigious Ethiopian Airlines pilot training program, moving forward into the advanced simulation and flight qualification pipeline. This serves as a practical, high-value extension of Naftech's Spaceverse brand pillar!
 - Space & Tech Events: Heavily involved in regional aerospace community building, including designing behind-the-scenes content frameworks for major tech events like Yuri's Night and digital transformation summits in Addis Ababa.
 
 Event History & Milestones:
