@@ -24,6 +24,24 @@ export const Navbar = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  const handleScrollTo = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    e.preventDefault();
+    setIsMobileMenuOpen(false);
+    
+    if (href.startsWith('#')) {
+      const targetId = href.substring(1);
+      const element = document.getElementById(targetId);
+      if (element) {
+        // Calculate header offset if needed, or simply scroll into view
+        element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        // Update URL hash gracefully without forcing an abrupt jump
+        window.history.pushState(null, '', href);
+      }
+    } else {
+      window.location.href = href;
+    }
+  };
+
   return (
     <nav
       className={cn(
@@ -34,9 +52,15 @@ export const Navbar = () => {
       <div className="max-w-7xl mx-auto flex items-center justify-between">
         <motion.a
           href="#"
+          onClick={(e) => {
+            e.preventDefault();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            window.history.pushState(null, '', '#');
+            setIsMobileMenuOpen(false);
+          }}
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
-          className="flex items-center gap-3 group"
+          className="flex items-center gap-3 group px-1"
         >
           <img 
             src={logoImg} 
@@ -57,6 +81,7 @@ export const Navbar = () => {
               initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: idx * 0.1 }}
+              onClick={(e) => handleScrollTo(e, link.href)}
               className="text-[11px] font-semibold uppercase tracking-[0.2em] text-white/50 hover:text-white transition-colors relative group"
             >
               {link.name}
@@ -67,6 +92,7 @@ export const Navbar = () => {
             href="#contact"
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
+            onClick={(e) => handleScrollTo(e, '#contact')}
             className="px-6 py-2 border border-white/20 rounded-full text-[11px] font-bold uppercase tracking-wider hover:bg-white hover:text-black transition-all"
           >
             Work With Me
@@ -75,7 +101,7 @@ export const Navbar = () => {
 
         {/* Mobile Toggle */}
         <button
-          className="md:hidden text-white"
+          className="md:hidden text-white p-2"
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
         >
           {isMobileMenuOpen ? <X /> : <Menu />}
@@ -96,15 +122,16 @@ export const Navbar = () => {
                 <a
                   key={link.name}
                   href={link.href}
-                  onClick={() => setIsMobileMenuOpen(false)}
-                  className="text-lg font-medium text-white/80"
+                  onClick={(e) => handleScrollTo(e, link.href)}
+                  className="text-lg font-medium text-white/80 py-2.5 border-b border-white/5"
                 >
                   {link.name}
                 </a>
               ))}
               <a
                 href="#contact"
-                className="w-full py-3 rounded-xl bg-brand-purple text-white text-center font-bold"
+                onClick={(e) => handleScrollTo(e, '#contact')}
+                className="w-full py-3.5 mt-2 rounded-xl bg-brand-purple text-white text-center font-bold"
               >
                 Work With Me
               </a>
