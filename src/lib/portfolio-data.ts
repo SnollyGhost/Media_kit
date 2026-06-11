@@ -79,7 +79,7 @@ Content Style & Creative Preferences:
 - Clear & Direct Explanations: Strongly prefers practical, factual, and research-backed explanations over fluffy, motivational talk.
 
 Creator Inspiration & Hardware Setup:
-- Main Tech Inspirations: Global creators MKBHD and Mrwhosetheboss, and locally "Tech talk by Solomon" (Solomon Kassa).
+- Main Tech Inspirations: Global innovators and creators like Elon Musk, MKBHD, and Mrwhosetheboss, and locally "Tech talk by Solomon" (Solomon Kassa).
 - Current Production Gear: HP 15" Laptop with an AMD Ryzen processor, AMD Radeon graphics, 16 GB of RAM, and high-speed SSD storage. (This is his primary coding and editing powerhouse).
 - Video Capture Setup: Samsung phone, a professional neck mic, and a 21-inch ring light.
 
