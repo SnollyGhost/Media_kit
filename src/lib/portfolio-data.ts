@@ -11,7 +11,7 @@ export const SOCIAL_LINKS = {
 };
 
 export const STATS = {
-  totalFollowers: "200K",
+  totalFollowers: "201.7K",
   produced: "430",
 };
 
@@ -39,11 +39,11 @@ Channel Data & Timeline:
 - Official TikTok Handle: @nafyad_ (NafTech).
 - Launch Date: NafTech officially launched in September 2024.
 - Social Presence & Distribution:
-  * Over 200K+ combined followers across fast-growing social media platforms.
-  * TikTok: 91.1K followers (@nafyad_).
-  * Facebook: 50.1K followers.
+  * Over 201K+ combined followers across fast-growing social media platforms.
+  * TikTok: 92.2K followers (@nafyad_).
+  * Facebook: 50.5K followers.
   * YouTube: 49.2K subscribers (primarily short-form content).
-  * Instagram: 9,680 followers.
+  * Instagram: 9,677 followers.
 - Successfully produced 430+ high-retention video assets to date.
 
 Ecosystem Network & Industry Collaborations:
