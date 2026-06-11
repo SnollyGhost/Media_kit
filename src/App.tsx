@@ -20,6 +20,14 @@ import { AIChatBot } from './components/AIChatBot';
 export default function App() {
   const [selectedPackage, setSelectedPackage] = useState<string>('');
 
+  const handleSelectPackage = (pkgName: string) => {
+    setSelectedPackage(pkgName);
+    const contactSection = document.getElementById('contact');
+    if (contactSection) {
+      contactSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  };
+
   return (
     <main className="relative selection:bg-brand-purple/30 selection:text-brand-purple overflow-x-hidden min-h-screen">
       <Navbar />
@@ -61,7 +69,7 @@ export default function App() {
         <Process />
         <FeaturedVideos />
         <AnalyticsDashboard />
-        <Packages onSelectPackage={setSelectedPackage} />
+        <Packages onSelectPackage={handleSelectPackage} />
         <Contact selectedPackage={selectedPackage} />
         <AIChatBot />
       </div>

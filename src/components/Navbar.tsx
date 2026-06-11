@@ -101,10 +101,17 @@ export const Navbar = () => {
 
         {/* Mobile Toggle */}
         <button
-          className="md:hidden text-white p-2"
+          id="mobile-menu-toggle"
+          type="button"
+          className="md:hidden text-white p-2.5 rounded-lg active:scale-95 transition-all duration-200 cursor-pointer z-50 select-none relative focus:outline-none touch-manipulation hover:bg-white/5"
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+          aria-label="Toggle mobile menu"
         >
-          {isMobileMenuOpen ? <X /> : <Menu />}
+          {isMobileMenuOpen ? (
+            <X className="pointer-events-none w-6 h-6 text-white" />
+          ) : (
+            <Menu className="pointer-events-none w-6 h-6 text-white" />
+          )}
         </button>
       </div>
 
@@ -115,7 +122,7 @@ export const Navbar = () => {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
-            className="md:hidden absolute top-full left-0 right-0 glass-dark border-t border-white/10"
+            className="md:hidden absolute top-full left-0 right-0 glass-dark border-t border-b border-white/10 z-50 shadow-2xl backdrop-blur-3xl overflow-hidden"
           >
             <div className="flex flex-col p-6 gap-4">
               {NAV_LINKS.map((link) => (
@@ -123,7 +130,7 @@ export const Navbar = () => {
                   key={link.name}
                   href={link.href}
                   onClick={(e) => handleScrollTo(e, link.href)}
-                  className="text-lg font-medium text-white/80 py-2.5 border-b border-white/5"
+                  className="text-lg font-medium text-white/80 py-2.5 border-b border-white/5 active:text-brand-purple active:bg-white/5 px-2 rounded transition-all block cursor-pointer"
                 >
                   {link.name}
                 </a>
@@ -131,7 +138,7 @@ export const Navbar = () => {
               <a
                 href="#contact"
                 onClick={(e) => handleScrollTo(e, '#contact')}
-                className="w-full py-3.5 mt-2 rounded-xl bg-brand-purple text-white text-center font-bold"
+                className="w-full py-3.5 mt-2 rounded-xl bg-brand-purple text-white text-center font-bold active:scale-[0.98] transition-all block cursor-pointer"
               >
                 Work With Me
               </a>

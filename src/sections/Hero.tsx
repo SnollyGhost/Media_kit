@@ -87,7 +87,7 @@ export const Hero = () => {
       />
 
       {/* Background Atmosphere */}
-      <div className="absolute inset-0 z-0 text-brand-offwhite">
+      <div className="absolute inset-0 z-0 text-brand-offwhite pointer-events-none">
         <motion.div 
           animate={{ 
             opacity: [0.15, 0.25, 0.15],

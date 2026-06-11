@@ -29,8 +29,8 @@ export const About = () => {
               />
             </div>
             {/* Decorative Elements */}
-            <div className="absolute -top-4 -right-4 w-32 h-32 bg-brand-purple/20 rounded-full blur-3xl" />
-            <div className="absolute -bottom-10 -left-10 w-48 h-48 bg-blue-500/10 rounded-full blur-3xl" />
+            <div className="absolute -top-4 -right-4 w-32 h-32 bg-brand-purple/20 rounded-full blur-3xl pointer-events-none" />
+            <div className="absolute -bottom-10 -left-10 w-48 h-48 bg-blue-500/10 rounded-full blur-3xl pointer-events-none" />
             
             <div className="absolute bottom-10 -right-10 glass p-6 rounded-2xl border-white/10 z-20 hidden md:block">
                <div className="text-[10px] font-bold text-brand-purple uppercase tracking-widest mb-1">Current Focus</div>
@@ -102,7 +102,7 @@ export const About = () => {
                    <div className="text-[10px] uppercase tracking-widest text-white/30 font-bold">Total Community</div>
                 </div>
                 <div>
-                   <div className="text-3xl font-display text-white mb-1">5+</div>
+                   <div className="text-3xl font-display text-white mb-1">6+</div>
                    <div className="text-[10px] uppercase tracking-widest text-white/30 font-bold">Brand Partnerships</div>
                 </div>
               </motion.div>

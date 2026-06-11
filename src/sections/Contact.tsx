@@ -125,7 +125,7 @@ export const Contact = ({ selectedPackage }: ContactProps) => {
   return (
     <section ref={sectionRef} id="contact" className="py-24 px-6 bg-[#030303] relative overflow-hidden">
        {/* Background accent */}
-       <div className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-brand-neon/10 rounded-full blur-[100px] translate-y-1/2 translate-x-1/2" />
+       <div className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-brand-neon/10 rounded-full blur-[100px] translate-y-1/2 translate-x-1/2 pointer-events-none" />
 
        <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">

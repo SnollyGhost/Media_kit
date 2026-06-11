@@ -27,7 +27,7 @@ export const AnalyticsDashboard = () => {
   return (
     <section id="analytics" className="py-24 px-6 relative overflow-hidden bg-black">
       {/* Mesh Gradient Effect */}
-      <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-brand-purple/5 rounded-full blur-[150px] -translate-y-1/2 translate-x-1/4" />
+      <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-brand-purple/5 rounded-full blur-[150px] -translate-y-1/2 translate-x-1/4 pointer-events-none" />
 
       <div className="max-w-7xl mx-auto relative z-10">
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-16">
