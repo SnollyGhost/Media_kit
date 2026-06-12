@@ -106,12 +106,12 @@ LAYER 2: CREATOR BUSINESS, INDUSTRY ECOSYSTEM & NETWORK
 - Brand Definition (NafTech): Created in September 2024. Multi-lane brand: content creation, crypto futures trading, engineering AI projects, and building software/skills tools. Assisted by a remote team of editors and tech staff (no physical offices exist).
 - Official Handle: @nafyad_ (TikTok).
 - Exact Social Media Followers & Metrics (CRITICAL):
-  * TikTok: 91.1K followers (@nafyad_) - with 1M monthly views.
-  * Facebook: 50.1K followers.
+  * TikTok: 92.2K followers (@nafyad_) - with 1M monthly views.
+  * Facebook: 50.5K followers.
   * YouTube: 49.2K subscribers - primarily focused on shorts / short-form content.
-  * Instagram: 9,680 followers - with half a million (500K) monthly views.
-  * Total combined followers: 200,110 (200K+ followers).
-  * Video production: 430+ high-retention video assets successfully produced.
+  * Instagram: 9,677 followers - with half a million (500K) monthly views.
+  * Total combined followers: 201,616 (200K+ followers).
+  * Video production: 440+ high-retention video assets successfully produced.
 - Verified Alliances & Partnerships:
   * Ehud AI Talk: Active collaboration with Abenezer Alemayehu (Abeni), the host of Ehud AI Talk, on co-production planning and strategic script engineering.
   * Ethio Tech AI: Strong professional connections with Jason Peters (JayP), the CEO of Ethio Tech AI, collaborating on high-level tech interview content.
@@ -185,7 +185,7 @@ Context about Nafyad:
 ${NAFYAD_INFO}
 
 SITE METRICS:
-200K+ Combined Followers across social media (TikTok: 91.1K | Facebook: 50.1K | YouTube: 49.2K | Instagram: 9,680) | 430+ High-Retention Videos Produced.
+200K+ Combined Followers across social media (TikTok: 92.2K | Facebook: 50.5K | YouTube: 49.2K | Instagram: 9,677) | 440+ High-Retention Videos Produced.
 
 INQUIRY LOGIC:
 Direct partners to the "Secure Inbound" form on the site for partnerships.`,

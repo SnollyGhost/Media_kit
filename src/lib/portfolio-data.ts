@@ -11,8 +11,8 @@ export const SOCIAL_LINKS = {
 };
 
 export const STATS = {
-  totalFollowers: "201.7K",
-  produced: "430",
+  totalFollowers: "200K",
+  produced: "440+",
 };
 
 export const NAFYAD_INFO = `Nafyad (preferred name: Naf) is a Computer Science graduate and tech content creator who is helping shape the digital world in Ethiopia. As the founder of NafTech, he loves breaking down how modern technology works. He makes complicated topics like AI, blockchain, and space tech easy for everyone to understand through clean, high-quality videos and honest, research-backed insights.
@@ -39,12 +39,12 @@ Channel Data & Timeline:
 - Official TikTok Handle: @nafyad_ (NafTech).
 - Launch Date: NafTech officially launched in September 2024.
 - Social Presence & Distribution:
-  * Over 201K+ combined followers across fast-growing social media platforms.
+  * Over 200K+ combined followers across fast-growing social media platforms.
   * TikTok: 92.2K followers (@nafyad_).
   * Facebook: 50.5K followers.
   * YouTube: 49.2K subscribers (primarily short-form content).
   * Instagram: 9,677 followers.
-- Successfully produced 430+ high-retention video assets to date.
+- Successfully produced 440+ high-retention video assets to date.
 
 Ecosystem Network & Industry Collaborations:
 - Ehud AI Talk: Maintains an active collaboration with Abenezer Alemayehu (Abeni), the host of Ehud AI Talk, focusing on co-production planning and strategic script engineering.
