@@ -6,6 +6,7 @@ import fs from "fs";
 import React from "react";
 import { renderToStream } from "@react-pdf/renderer";
 import { MediaKitPDFDoc } from "./src/components/MediaKitPDFDoc";
+import { CVPDFDoc } from "./src/components/CVPDFDoc";
 
 // Helper to convert images to Base64 safely
 const getBase64Image = (assetRelativePath: string) => {
@@ -79,6 +80,21 @@ app.get("/api/portfolio.pdf", async (req, res) => {
     stream.pipe(res);
   } catch (error: any) {
     console.error("PDF Generation error:", error);
+    res.status(500).json({ status: "error", message: error.message });
+  }
+});
+
+// Professional CV PDF Generation
+app.get("/api/cv.pdf", async (req, res) => {
+  try {
+    const stream = await renderToStream(React.createElement(CVPDFDoc));
+    
+    res.setHeader('Content-Type', 'application/pdf');
+    res.setHeader('Content-Disposition', 'attachment; filename=Naftech_Nafyad_Dachasa_CV.pdf');
+    
+    stream.pipe(res);
+  } catch (error: any) {
+    console.error("CV PDF Generation error:", error);
     res.status(500).json({ status: "error", message: error.message });
   }
 });

@@ -13,6 +13,7 @@ import hawiLogo from '../assets/hawi.webp';
 import huluPayLogo from '../assets/huluPay.webp';
 import auctionEthiopiaLogo from '../assets/auction_ethiopia.svg';
 import linkPayLogo from '../assets/linkpay.webp';
+import hulugramLogo from '../assets/hulugram.svg';
 
 // Import new custom covers
 import ehudAiCover from '../assets/covers/ehud-ai-1.webp';
@@ -235,6 +236,7 @@ export const BRANDS = [
   { name: 'Hawi Solutions', logo: hawiLogo },
   { name: 'HuluPay', logo: huluPayLogo },
   { name: 'LinkPay', logo: linkPayLogo },
+  { name: 'Hulugram', logo: hulugramLogo },
 ];
 
 export const TESTIMONIALS = [
