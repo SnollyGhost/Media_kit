@@ -16,6 +16,7 @@ export const BrandLogos = () => {
         <div className="flex animate-scroll whitespace-nowrap">
           {[...BRANDS, ...BRANDS, ...BRANDS].map((brand, idx) => {
             const isHawi = brand.name.toLowerCase().includes('hawi');
+            const isShine = brand.name.toLowerCase().includes('shine');
 
             return (
               <div 
@@ -29,7 +30,13 @@ export const BrandLogos = () => {
                     isHawi 
                       ? 'invert brightness-200 contrast-125' 
                       : ''
+                  } ${
+                    isShine
+                      ? 'w-8 h-8 md:w-10 md:h-10 rounded-full object-cover border border-white/10 shadow-[0_0_12px_rgba(255,255,255,0.05)]'
+                      : ''
                   }`}
+                  width={isShine ? 40 : undefined}
+                  height={isShine ? 40 : undefined}
                   referrerPolicy="no-referrer"
                 />
                 <span className="ml-3 text-sm font-display font-medium tracking-widest uppercase text-white/80 transition-colors duration-500">{brand.name}</span>

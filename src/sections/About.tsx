@@ -102,7 +102,7 @@ export const About = () => {
                    <div className="text-[10px] uppercase tracking-widest text-white/30 font-bold">Total Community</div>
                 </div>
                 <div>
-                   <div className="text-3xl font-display text-white mb-1">7+</div>
+                   <div className="text-3xl font-display text-white mb-1">8+</div>
                    <div className="text-[10px] uppercase tracking-widest text-white/30 font-bold">Brand Partnerships</div>
                 </div>
               </motion.div>

@@ -14,6 +14,7 @@ import huluPayLogo from '../assets/huluPay.webp';
 import auctionEthiopiaLogo from '../assets/auction_ethiopia.svg';
 import linkPayLogo from '../assets/linkpay.webp';
 import hulugramLogo from '../assets/hulugram.svg';
+import shineVisionLogo from '../assets/shineVision.jpg';
 
 // Import new custom covers
 import ehudAiCover from '../assets/covers/ehud-ai-1.webp';
@@ -237,6 +238,7 @@ export const BRANDS = [
   { name: 'HuluPay', logo: huluPayLogo },
   { name: 'LinkPay', logo: linkPayLogo },
   { name: 'Hulugram', logo: hulugramLogo },
+  { name: 'Shine Vision', logo: shineVisionLogo },
 ];
 
 export const TESTIMONIALS = [
