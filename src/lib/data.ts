@@ -15,6 +15,7 @@ import auctionEthiopiaLogo from '../assets/auction_ethiopia.svg';
 import linkPayLogo from '../assets/linkpay.webp';
 import hulugramLogo from '../assets/hulugram.svg';
 import shineVisionLogo from '../assets/shineVision.jpg';
+import ebwLogo from '../assets/ebw.png';
 
 // Import new custom covers
 import ehudAiCover from '../assets/covers/ehud-ai-1.webp';
@@ -239,6 +240,7 @@ export const BRANDS = [
   { name: 'LinkPay', logo: linkPayLogo },
   { name: 'Hulugram', logo: hulugramLogo },
   { name: 'Shine Vision', logo: shineVisionLogo },
+  { name: 'EBW', logo: ebwLogo },
 ];
 
 export const TESTIMONIALS = [

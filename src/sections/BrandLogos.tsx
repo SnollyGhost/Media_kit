@@ -17,6 +17,7 @@ export const BrandLogos = () => {
           {[...BRANDS, ...BRANDS, ...BRANDS].map((brand, idx) => {
             const isHawi = brand.name.toLowerCase().includes('hawi');
             const isShine = brand.name.toLowerCase().includes('shine');
+            const isEbw = brand.name.toLowerCase().includes('ebw');
 
             return (
               <div 
@@ -26,17 +27,19 @@ export const BrandLogos = () => {
                 <img 
                   src={brand.logo} 
                   alt={brand.name} 
-                  className={`h-8 md:h-10 object-contain transition-all duration-500 ${
+                  className={`object-contain transition-all duration-500 ${
+                    isEbw
+                      ? 'h-16 md:h-24 w-16 md:w-24 brightness-110 contrast-110 drop-shadow-[0_0_15px_rgba(234,179,8,0.4)]'
+                      : isShine
+                      ? 'w-8 h-8 md:w-10 md:h-10 rounded-full object-cover border border-white/10 shadow-[0_0_12px_rgba(255,255,255,0.05)]'
+                      : 'h-8 md:h-10'
+                  } ${
                     isHawi 
                       ? 'invert brightness-200 contrast-125' 
                       : ''
-                  } ${
-                    isShine
-                      ? 'w-8 h-8 md:w-10 md:h-10 rounded-full object-cover border border-white/10 shadow-[0_0_12px_rgba(255,255,255,0.05)]'
-                      : ''
                   }`}
-                  width={isShine ? 40 : undefined}
-                  height={isShine ? 40 : undefined}
+                  width={isShine ? 40 : isEbw ? 96 : undefined}
+                  height={isShine ? 40 : isEbw ? 96 : undefined}
                   referrerPolicy="no-referrer"
                 />
                 <span className="ml-3 text-sm font-display font-medium tracking-widest uppercase text-white/80 transition-colors duration-500">{brand.name}</span>

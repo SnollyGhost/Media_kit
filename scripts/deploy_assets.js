@@ -8,9 +8,10 @@ try {
     console.log('Created public/ directory');
   }
 
-  // 2. Copy core brand assets (now WebP and SVG only)
+  // 2. Copy core brand assets (now WebP and SVG only, plus our new LOGO.png)
   const filesToCopy = [
     { src: 'src/assets/logo.webp', dest: 'public/logo.webp' },
+    { src: 'src/assets/LOGO.png', dest: 'public/LOGO.png' },
     { src: 'src/assets/creator.webp', dest: 'public/creator.webp' },
     { src: 'src/assets/bybit.webp', dest: 'public/bybit.webp' },
     { src: 'src/assets/hawi.webp', dest: 'public/hawi.webp' },

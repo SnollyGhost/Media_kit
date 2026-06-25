@@ -12,7 +12,7 @@ const NAV_LINKS = [
 ];
 
 import { CREATOR_NAME } from '../lib/data';
-import logoImg from '../assets/logo.webp';
+import logoImg from '../assets/LOGO.png';
 
 export const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
