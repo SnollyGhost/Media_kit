@@ -1,6 +1,16 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 import nodemailer from 'nodemailer';
 
+function escapeHtml(str: string): string {
+  if (typeof str !== 'string') return '';
+  return str
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#039;');
+}
+
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   // 1. Set CORS headers if needed, but here we just handle POST
   if (req.method !== 'POST') {
@@ -8,7 +18,13 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   }
 
   try {
-    const { name, email, phone, company, package: pkg, message, preferredMethod } = req.body;
+    const name = escapeHtml(req.body.name || '');
+    const email = escapeHtml(req.body.email || '');
+    const phone = escapeHtml(req.body.phone || '');
+    const company = escapeHtml(req.body.company || '');
+    const pkg = escapeHtml(req.body.package || '');
+    const message = escapeHtml(req.body.message || '');
+    const preferredMethod = escapeHtml(req.body.preferredMethod || '');
 
     // 2. Identify credentials
     const SMTP_USER = (process.env.SMTP_USER || 'nafyaddachasa91@gmail.com').trim();

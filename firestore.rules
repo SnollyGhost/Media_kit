@@ -17,23 +17,28 @@ service cloud.firestore {
       let requiredFields = ['name', 'email', 'phone', 'package', 'createdAt', 'status', 'preferredMethod'];
       
       return data.keys().hasAll(requiredFields) &&
-             data.name is string && data.name.size() > 0 &&
-             data.email is string && data.email.size() > 0 &&
-             data.phone is string && data.phone.size() > 0 &&
+             data.keys().size() >= 7 && data.keys().size() <= 9 &&
+             data.name is string && data.name.size() > 0 && data.name.size() <= 100 &&
+             data.email is string && data.email.size() > 0 && data.email.size() <= 100 &&
+             data.phone is string && data.phone.size() > 0 && data.phone.size() <= 50 &&
+             data.package is string && data.package.size() > 0 && data.package.size() <= 100 &&
+             data.preferredMethod is string && (data.preferredMethod == 'telegram' || data.preferredMethod == 'whatsapp' || data.preferredMethod == 'email') &&
              data.status == 'pending' &&
-             data.createdAt is timestamp;
+             data.createdAt == request.time &&
+             (!data.keys().hasAny(['company']) || (data.company is string && data.company.size() <= 100)) &&
+             (!data.keys().hasAny(['message']) || (data.message is string && data.message.size() <= 1000));
     }
 
     match /inquiries/{inquiryId} {
       // Allow any user to submit an inquiry if it passes validation
-      allow create: if isValidInquiry(incoming());
+      allow create: if isValidId(inquiryId) && isValidInquiry(incoming());
       
       // Only admins can read or manage inquiries
-      allow read, update, delete: if isAdmin();
+      allow read, update, delete: if isValidId(inquiryId) && isAdmin();
     }
     
     match /admins/{adminId} {
-      allow read: if isSignedIn() && request.auth.uid == adminId;
+      allow read: if isValidId(adminId) && isSignedIn() && request.auth.uid == adminId;
     }
   }
 }

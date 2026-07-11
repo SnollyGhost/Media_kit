@@ -4,6 +4,7 @@ import { Mail, MessageSquare, Instagram, Facebook, Youtube, Linkedin, Send, Arro
 import { BUSINESS_EMAIL, SOCIAL_LINKS, CREATOR_NAME, PACKAGES } from '../lib/data';
 import { db, OperationType, handleFirestoreError } from '../lib/firebase';
 import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
+import { escapeHtml } from '../lib/utils';
 
 const TiktokIcon = ({ className }: { className?: string }) => (
   <svg className={className} fill="currentColor" viewBox="0 0 24 24">
@@ -47,10 +48,21 @@ export const Contact = ({ selectedPackage }: ContactProps) => {
 
     setStatus('submitting');
     try {
+      // Clean and escape inputs to prevent HTML/XSS injection
+      const sanitizedData = {
+        name: escapeHtml(formData.name.trim()),
+        email: escapeHtml(formData.email.trim()),
+        phone: escapeHtml(formData.phone.trim()),
+        company: escapeHtml(formData.company.trim()),
+        package: escapeHtml(formData.package.trim()),
+        message: escapeHtml(formData.message.trim()),
+        preferredMethod: formData.preferredMethod
+      };
+
       // 1. Save to Firestore
       try {
         await addDoc(collection(db, 'inquiries'), {
-          ...formData,
+          ...sanitizedData,
           status: 'pending',
           createdAt: serverTimestamp()
         });
@@ -69,7 +81,7 @@ export const Contact = ({ selectedPackage }: ContactProps) => {
         const response = await fetch('/api/notify', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(formData)
+          body: JSON.stringify(sanitizedData)
         });
         
         const responseData = await response.json();
@@ -266,7 +278,7 @@ export const Contact = ({ selectedPackage }: ContactProps) => {
                         required
                         value={formData.name}
                         onChange={(e) => setFormData({...formData, name: e.target.value})}
-                        className="w-full px-6 py-4 rounded-xl bg-white/5 border border-white/5 focus:border-brand-purple focus:bg-white/10 transition-all outline-none font-medium text-sm text-white" 
+                        className="w-full px-6 py-4 rounded-xl bg-white/5 border border-white/5 focus:border-brand-purple focus:bg-white/10 focus:ring-2 focus:ring-brand-purple/50 focus:outline-none transition-all font-medium text-sm text-white" 
                         placeholder="Name / Brand" 
                       />
                     </div>
@@ -277,7 +289,7 @@ export const Contact = ({ selectedPackage }: ContactProps) => {
                         required
                         value={formData.email}
                         onChange={(e) => setFormData({...formData, email: e.target.value})}
-                        className="w-full px-6 py-4 rounded-xl bg-white/5 border border-white/5 focus:border-brand-purple focus:bg-white/10 transition-all outline-none font-medium text-sm text-white" 
+                        className="w-full px-6 py-4 rounded-xl bg-white/5 border border-white/5 focus:border-brand-purple focus:bg-white/10 focus:ring-2 focus:ring-brand-purple/50 focus:outline-none transition-all font-medium text-sm text-white" 
                         placeholder="email@brand.com" 
                       />
                     </div>
@@ -290,7 +302,7 @@ export const Contact = ({ selectedPackage }: ContactProps) => {
                       required
                       value={formData.phone}
                       onChange={(e) => setFormData({...formData, phone: e.target.value})}
-                      className="w-full px-6 py-4 rounded-xl bg-white/5 border border-white/5 focus:border-brand-purple focus:bg-white/10 transition-all outline-none font-medium text-sm text-white" 
+                      className="w-full px-6 py-4 rounded-xl bg-white/5 border border-white/5 focus:border-brand-purple focus:bg-white/10 focus:ring-2 focus:ring-brand-purple/50 focus:outline-none transition-all font-medium text-sm text-white" 
                       placeholder="+251 ..." 
                     />
                   </div>
@@ -307,7 +319,7 @@ export const Contact = ({ selectedPackage }: ContactProps) => {
                           key={method.id}
                           type="button"
                           onClick={() => setFormData({...formData, preferredMethod: method.id as any})}
-                          className={`py-3 rounded-xl border text-[10px] uppercase tracking-widest font-bold transition-all ${
+                          className={`py-3 rounded-xl border text-[10px] uppercase tracking-widest font-bold focus:ring-2 focus:ring-brand-purple/50 focus:outline-none transition-all ${
                             formData.preferredMethod === method.id 
                               ? 'bg-brand-purple border-brand-purple text-white shadow-lg shadow-brand-purple/20' 
                               : 'bg-white/5 border-white/5 text-white/40 hover:bg-white/10'
@@ -326,7 +338,7 @@ export const Contact = ({ selectedPackage }: ContactProps) => {
                         type="text" 
                         value={formData.company}
                         onChange={(e) => setFormData({...formData, company: e.target.value})}
-                        className="w-full px-6 py-4 rounded-xl bg-white/5 border border-white/5 focus:border-brand-purple focus:bg-white/10 transition-all outline-none font-medium text-sm text-white" 
+                        className="w-full px-6 py-4 rounded-xl bg-white/5 border border-white/5 focus:border-brand-purple focus:bg-white/10 focus:ring-2 focus:ring-brand-purple/50 focus:outline-none transition-all font-medium text-sm text-white" 
                         placeholder="Company" 
                       />
                     </div>
@@ -336,7 +348,7 @@ export const Contact = ({ selectedPackage }: ContactProps) => {
                         required
                         value={formData.package}
                         onChange={(e) => setFormData({...formData, package: e.target.value})}
-                        className="w-full px-6 py-4 rounded-xl bg-white/5 border border-white/5 focus:border-brand-purple focus:bg-white/10 transition-all outline-none font-medium text-sm text-white appearance-none cursor-pointer"
+                        className="w-full px-6 py-4 rounded-xl bg-white/5 border border-white/5 focus:border-brand-purple focus:bg-white/10 focus:ring-2 focus:ring-brand-purple/50 focus:outline-none transition-all font-medium text-sm text-white appearance-none cursor-pointer"
                       >
                         <option value="" disabled className="bg-black text-white/40">Choose Option</option>
                         {PACKAGES.map(pkg => (
@@ -354,7 +366,7 @@ export const Contact = ({ selectedPackage }: ContactProps) => {
                       rows={3} 
                       value={formData.message}
                       onChange={(e) => setFormData({...formData, message: e.target.value})}
-                      className="w-full px-6 py-4 rounded-xl bg-white/5 border border-white/5 focus:border-brand-purple focus:bg-white/10 transition-all outline-none resize-none font-medium text-sm text-white" 
+                      className="w-full px-6 py-4 rounded-xl bg-white/5 border border-white/5 focus:border-brand-purple focus:bg-white/10 focus:ring-2 focus:ring-brand-purple/50 focus:outline-none transition-all resize-none font-medium text-sm text-white" 
                       placeholder="Tell us about the project goal..." 
                     />
                   </div>
@@ -369,7 +381,7 @@ export const Contact = ({ selectedPackage }: ContactProps) => {
 
                 <button 
                   disabled={status === 'submitting'}
-                  className="w-full py-5 rounded-xl bg-brand-purple text-white font-bold flex items-center justify-center gap-3 hover:scale-[1.02] active:scale-[0.98] transition-all shadow-xl shadow-brand-purple/20 group uppercase tracking-widest text-xs disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="w-full py-5 rounded-xl bg-brand-purple text-white font-bold flex items-center justify-center gap-3 hover:scale-[1.02] active:scale-[0.98] focus:ring-2 focus:ring-brand-purple/50 focus:outline-none transition-all shadow-xl shadow-brand-purple/20 group uppercase tracking-widest text-xs disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   {status === 'submitting' ? 'Encrypting Request...' : 'Transmit Mission Brief'}
                   <Send className="w-4 h-4 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
