@@ -86,12 +86,18 @@ export const AIChatBot = () => {
       }
     } catch (error: any) {
       console.error("Chat Error:", error);
+      const errText = error.message || "";
+      const isConfigError = errText.includes("GEMINI_API_KEY") || errText.includes("API key") || errText.includes("API_KEY");
+      
+      const userFriendlyErrorMessage = isConfigError
+        ? `Configuration Error: ${errText}. Please make sure you have added GEMINI_API_KEY as an Environment Variable in your Vercel project settings.`
+        : "AI is briefly offline for maintenance. Direct inquiries are still active.";
+
       setMessages((prev) => [
         ...prev,
         {
           role: "model",
-          content:
-            "AI is briefly offline for maintenance. Direct inquiries are still active.",
+          content: userFriendlyErrorMessage,
         },
       ]);
     } finally {

@@ -32,7 +32,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       },
     });
 
-    const modelsToTry = ["gemini-3.5-flash", "gemini-flash-latest", "gemini-3.1-flash-lite"];
+    const modelsToTry = ["gemini-3.5-flash", "gemini-3.1-flash-lite"];
     let response: any = null;
     let lastError: any = null;
 
@@ -44,32 +44,49 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       return Promise.race([promise, timeoutPromise]).finally(() => clearTimeout(timer));
     };
 
-    for (const model of modelsToTry) {
+    // Try gemini-3.5-flash first with a 7-second timeout.
+    try {
+      response = await withTimeout(
+        ai.models.generateContent({
+          model: "gemini-3.5-flash",
+          contents: [
+            ...messages.map((m: any) => ({
+              role: m.role,
+              parts: [{ text: m.content }],
+            })),
+            { role: "user", parts: [{ text: userMessage }] },
+          ],
+          config: {
+            systemInstruction: getSystemInstruction(dateStr, currentAge),
+            temperature: 0.4,
+          },
+        }),
+        7000,
+        "Request to gemini-3.5-flash timed out after 7 seconds"
+      );
+    } catch (err: any) {
+      console.warn("Primary model gemini-3.5-flash failed or timed out, trying low-latency fallback gemini-3.1-flash-lite...", err);
+      lastError = err;
+      
+      // Stage 2: Fallback to the ultra-low-latency gemini-3.1-flash-lite
       try {
-        response = await withTimeout(
-          ai.models.generateContent({
-            model,
-            contents: [
-              ...messages.map((m: any) => ({
-                role: m.role,
-                parts: [{ text: m.content }],
-              })),
-              { role: "user", parts: [{ text: userMessage }] },
-            ],
-            config: {
-              systemInstruction: getSystemInstruction(dateStr, currentAge),
-              temperature: 0.4,
-            },
-          }),
-          5000,
-          `Request to model ${model} timed out after 5 seconds`
-        );
-        if (response) {
-          break;
-        }
-      } catch (err: any) {
-        console.warn(`Model ${model} failed or timed out, trying next fallback...`, err);
-        lastError = err;
+        response = await ai.models.generateContent({
+          model: "gemini-3.1-flash-lite",
+          contents: [
+            ...messages.map((m: any) => ({
+              role: m.role,
+              parts: [{ text: m.content }],
+            })),
+            { role: "user", parts: [{ text: userMessage }] },
+          ],
+          config: {
+            systemInstruction: getSystemInstruction(dateStr, currentAge),
+            temperature: 0.4,
+          },
+        });
+      } catch (fallbackErr: any) {
+        console.error("Fallback model gemini-3.1-flash-lite also failed:", fallbackErr);
+        lastError = fallbackErr;
       }
     }
 
