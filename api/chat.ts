@@ -1,5 +1,4 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
-import { GoogleGenAI } from '@google/genai';
 import { NAFYAD_INFO, getSystemInstruction } from '../src/lib/ai-prompt';
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
@@ -23,69 +22,81 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       return res.status(200).json({ status: 'error', message: 'GEMINI_API_KEY is not configured in Vercel environment variables.' });
     }
 
-    const ai = new GoogleGenAI({
-      apiKey: apiKey,
-      httpOptions: {
-        headers: {
-          'User-Agent': 'aistudio-build',
-        },
-      },
-    });
+    const systemPrompt = getSystemInstruction(dateStr, currentAge);
 
-    // We prioritize gemini-3.1-flash-lite first for ultra-low-latency and high reliability on Vercel
+    // We prioritize gemini-3.1-flash-lite first for ultra-low-latency and high reliability on Vercel,
     // falling back to gemini-3.5-flash if needed.
     const modelsToTry = ["gemini-3.1-flash-lite", "gemini-3.5-flash"];
-    let response: any = null;
+    let reply = "";
     let lastError: any = null;
 
-    const withTimeout = (promise: Promise<any>, ms: number, errorMessage: string) => {
-      let timer: any;
-      const timeoutPromise = new Promise((_, reject) => {
-        timer = setTimeout(() => reject(new Error(errorMessage)), ms);
-      });
-      return Promise.race([promise, timeoutPromise]).finally(() => clearTimeout(timer));
+    // Construct the payload content array cleanly
+    const contents = [
+      ...(messages || []).map((m: any) => ({
+        role: m.role === 'assistant' ? 'model' : m.role,
+        parts: [{ text: m.content || '' }]
+      })),
+      { role: "user", parts: [{ text: userMessage || '' }] }
+    ];
+
+    const payload = {
+      contents,
+      systemInstruction: {
+        parts: [{ text: systemPrompt }]
+      },
+      generationConfig: {
+        temperature: 0.4
+      }
     };
 
-    // Vercel serverless function execution budget is 10s.
-    // Setting a 4.5s timeout per model ensures that if the first model fails or hangs,
-    // the second model still has 4.5s to respond before Vercel kills the function.
+    // Try models with clean AbortController timeouts to avoid hanging sockets on Vercel.
     for (const model of modelsToTry) {
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 3500); // 3.5s timeout per model
+
       try {
-        response = await withTimeout(
-          ai.models.generateContent({
-            model,
-            contents: [
-              ...messages.map((m: any) => ({
-                role: m.role,
-                parts: [{ text: m.content }],
-              })),
-              { role: "user", parts: [{ text: userMessage }] },
-            ],
-            config: {
-              systemInstruction: getSystemInstruction(dateStr, currentAge),
-              temperature: 0.4,
-            },
-          }),
-          4500,
-          `Request to model ${model} timed out after 4.5 seconds`
-        );
-        if (response) {
-          break;
+        const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`;
+        const response = await fetch(url, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "User-Agent": "aistudio-build"
+          },
+          body: JSON.stringify(payload),
+          signal: controller.signal
+        });
+
+        clearTimeout(timeoutId);
+
+        if (!response.ok) {
+          const errorText = await response.text();
+          throw new Error(`Google API responded with ${response.status}: ${errorText}`);
+        }
+
+        const data = await response.json();
+        const textResult = data.candidates?.[0]?.content?.parts?.[0]?.text;
+        if (textResult) {
+          reply = textResult;
+          break; // Success!
+        } else {
+          throw new Error(`Empty response candidates or invalid structure: ${JSON.stringify(data)}`);
         }
       } catch (err: any) {
-        console.warn(`Model ${model} failed or timed out, trying next fallback...`, err);
+        clearTimeout(timeoutId);
+        const errName = err.name === 'AbortError' ? 'TimeoutError' : err.name;
+        console.warn(`Model ${model} failed or timed out (${errName}):`, err.message);
         lastError = err;
       }
     }
 
-    if (!response) {
+    if (!reply) {
       throw lastError || new Error("All model fallback options failed.");
     }
 
-    const reply = response.text || "I'm sorry, I couldn't process that. Can you try again?";
     return res.status(200).json({ status: 'ok', reply });
   } catch (error: any) {
     console.error('SERVERLESS GEMINI ERROR:', error);
-    return res.status(200).json({ status: 'error', message: error.message });
+    return res.status(200).json({ status: 'error', message: error.message || 'An unknown error occurred.' });
   }
 }
+
