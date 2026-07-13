@@ -57,7 +57,7 @@ app.post("/api/chat", async (req, res) => {
     const apiKey = process.env.GEMINI_API_KEY;
 
     if (!apiKey) {
-      return res.status(500).json({ status: "error", message: "GEMINI_API_KEY is not configured in local environment variables." });
+      return res.status(200).json({ status: "error", message: "GEMINI_API_KEY is not configured in local environment variables." });
     }
 
     const ai = new GoogleGenAI({
@@ -69,7 +69,9 @@ app.post("/api/chat", async (req, res) => {
       },
     });
 
-    const modelsToTry = ["gemini-3.5-flash", "gemini-3.1-flash-lite"];
+    // We prioritize gemini-3.1-flash-lite first for ultra-low-latency and high reliability on Vercel
+    // falling back to gemini-3.5-flash if needed.
+    const modelsToTry = ["gemini-3.1-flash-lite", "gemini-3.5-flash"];
     let response: any = null;
     let lastError: any = null;
 
@@ -81,49 +83,35 @@ app.post("/api/chat", async (req, res) => {
       return Promise.race([promise, timeoutPromise]).finally(() => clearTimeout(timer));
     };
 
-    // Try gemini-3.5-flash first with a 7-second timeout.
-    try {
-      response = await withTimeout(
-        ai.models.generateContent({
-          model: "gemini-3.5-flash",
-          contents: [
-            ...messages.map((m: any) => ({
-              role: m.role,
-              parts: [{ text: m.content }],
-            })),
-            { role: "user", parts: [{ text: userMessage }] },
-          ],
-          config: {
-            systemInstruction: getSystemInstruction(dateStr, currentAge),
-            temperature: 0.4,
-          },
-        }),
-        7000,
-        "Request to gemini-3.5-flash timed out after 7 seconds"
-      );
-    } catch (err: any) {
-      console.warn("Primary model gemini-3.5-flash failed or timed out, trying low-latency fallback gemini-3.1-flash-lite...", err);
-      lastError = err;
-      
-      // Stage 2: Fallback to the ultra-low-latency gemini-3.1-flash-lite
+    // Vercel serverless function execution budget is 10s.
+    // Setting a 4.5s timeout per model ensures that if the first model fails or hangs,
+    // the second model still has 4.5s to respond before Vercel kills the function.
+    for (const model of modelsToTry) {
       try {
-        response = await ai.models.generateContent({
-          model: "gemini-3.1-flash-lite",
-          contents: [
-            ...messages.map((m: any) => ({
-              role: m.role,
-              parts: [{ text: m.content }],
-            })),
-            { role: "user", parts: [{ text: userMessage }] },
-          ],
-          config: {
-            systemInstruction: getSystemInstruction(dateStr, currentAge),
-            temperature: 0.4,
-          },
-        });
-      } catch (fallbackErr: any) {
-        console.error("Fallback model gemini-3.1-flash-lite also failed:", fallbackErr);
-        lastError = fallbackErr;
+        response = await withTimeout(
+          ai.models.generateContent({
+            model,
+            contents: [
+              ...messages.map((m: any) => ({
+                role: m.role,
+                parts: [{ text: m.content }],
+              })),
+              { role: "user", parts: [{ text: userMessage }] },
+            ],
+            config: {
+              systemInstruction: getSystemInstruction(dateStr, currentAge),
+              temperature: 0.4,
+            },
+          }),
+          4500,
+          `Request to model ${model} timed out after 4.5 seconds`
+        );
+        if (response) {
+          break;
+        }
+      } catch (err: any) {
+        console.warn(`Model ${model} failed or timed out, trying next fallback...`, err);
+        lastError = err;
       }
     }
 
@@ -135,7 +123,7 @@ app.post("/api/chat", async (req, res) => {
     return res.json({ status: "ok", reply });
   } catch (error: any) {
     console.error("Gemini API local server error:", error);
-    return res.status(500).json({ status: "error", message: error.message });
+    return res.status(200).json({ status: "error", message: error.message });
   }
 });
 

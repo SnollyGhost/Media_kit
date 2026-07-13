@@ -77,6 +77,18 @@ export const AIChatBot = () => {
         }),
       });
 
+      if (!response.ok) {
+        const errorText = await response.text();
+        let parsedMessage = "";
+        try {
+          const parsed = JSON.parse(errorText);
+          parsedMessage = parsed.message || parsed.error || errorText;
+        } catch {
+          parsedMessage = errorText;
+        }
+        throw new Error(parsedMessage || `Server returned status ${response.status}`);
+      }
+
       const data = await response.json();
 
       if (data.status === "ok" && data.reply) {
@@ -89,9 +101,12 @@ export const AIChatBot = () => {
       const errText = error.message || "";
       const isConfigError = errText.includes("GEMINI_API_KEY") || errText.includes("API key") || errText.includes("API_KEY");
       
-      const userFriendlyErrorMessage = isConfigError
-        ? `Configuration Error: ${errText}. Please make sure you have added GEMINI_API_KEY as an Environment Variable in your Vercel project settings.`
-        : "AI is briefly offline for maintenance. Direct inquiries are still active.";
+      let userFriendlyErrorMessage = "AI is briefly offline for maintenance. Direct inquiries are still active.";
+      if (isConfigError) {
+        userFriendlyErrorMessage = `Configuration Error: ${errText}. Please make sure you have added GEMINI_API_KEY as an Environment Variable in your Vercel project settings.`;
+      } else {
+        userFriendlyErrorMessage += `\n\n(Technical Details: ${errText.substring(0, 200)})`;
+      }
 
       setMessages((prev) => [
         ...prev,
