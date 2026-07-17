@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { motion } from 'motion/react';
+import React, { useState, useEffect, useRef } from 'react';
+import { motion, useInView } from 'motion/react';
 import { Instagram, Youtube, Facebook, ArrowUpRight, Sparkles, Box } from 'lucide-react';
 import { SOCIAL_LINKS, CREATOR_NAME, STATS } from '../lib/data';
 
@@ -7,11 +7,17 @@ const StatItem = ({ value, label }: { value: string, label: string }) => {
   const [displayValue, setDisplayValue] = useState(0);
   const targetValue = parseInt(value.replace(/[^0-9]/g, ''));
   const isK = value.includes('K') || value.includes('k');
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, amount: 0.1 });
 
   useEffect(() => {
+    if (!isInView) return;
+
     let start = 0;
-    const duration = 2000;
-    const increment = targetValue / (duration / 16);
+    const duration = 1500; // Snappy 1.5s animation
+    const frameRate = 33; // Butter-smooth ~30 FPS saves 50% CPU render cycles
+    const totalFrames = duration / frameRate;
+    const increment = targetValue / totalFrames;
     
     const timer = setInterval(() => {
       start += increment;
@@ -21,17 +27,18 @@ const StatItem = ({ value, label }: { value: string, label: string }) => {
       } else {
         setDisplayValue(Math.floor(start));
       }
-    }, 16);
+    }, frameRate);
 
     return () => clearInterval(timer);
-  }, [targetValue]);
+  }, [targetValue, isInView]);
 
   return (
     <motion.div 
+      ref={ref}
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
-      className="flex flex-col items-center justify-center group p-6 rounded-3xl bg-white/[0.01] border border-white/[0.03] hover:border-white/10 hover:bg-white/[0.03] transition-all duration-500 backdrop-blur-sm shadow-xl text-center w-full"
+      className="flex flex-col items-center justify-center group p-6 rounded-3xl bg-white/[0.01] border border-white/[0.03] hover:border-white/10 hover:bg-white/[0.03] transition-all duration-500 md:backdrop-blur-sm shadow-xl text-center w-full"
     >
       <div className="text-4xl md:text-5xl font-display font-semibold text-white tracking-tighter group-hover:text-brand-purple transition-all duration-300 flex items-center justify-center gap-1">
         <span>{displayValue}{isK ? 'K' : ''}</span>
