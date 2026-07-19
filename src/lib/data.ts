@@ -14,7 +14,7 @@ import huluPayLogo from '../assets/huluPay.webp';
 import auctionEthiopiaLogo from '../assets/auction_ethiopia.svg';
 import linkPayLogo from '../assets/linkpay.webp';
 import hulugramLogo from '../assets/hulugram.svg';
-import ebwLogo from '../assets/ebw.png';
+import ebwLogo from '../assets/ebw.webp';
 
 // Import new custom covers
 import ehudAiCover from '../assets/covers/ehud-ai-1.webp';
@@ -25,6 +25,7 @@ import satelliteCover from '../assets/covers/satellite-1.webp';
 import astronautCover from '../assets/covers/astronaut-1.webp';
 import cryptoStartCover from '../assets/covers/crypto-start-1.webp';
 import bitcoinGerdCover from '../assets/covers/bitcoin-gerd-1.webp';
+import harvestCover from '../assets/covers/harvest.webp';
 
 export { 
   CREATOR_NAME, 
@@ -123,7 +124,7 @@ export const VIDEOS: Video[] = [
   },
   {
     id: 'tech-3',
-    title: "Lazarus vs The World's Banks 💰",
+    title: "Lazarus vs The World's Banks💰",
     platform: 'instagram',
     category: 'tech',
     views: '',
@@ -133,13 +134,13 @@ export const VIDEOS: Video[] = [
   },
   {
     id: 'tech-4',
-    title: 'Telegram Premium in Ethiopia',
-    platform: 'tiktok',
+    title: 'The Second Harvest🌱',
+    platform: 'instagram',
     category: 'tech',
     views: '',
-    thumbnail: telegramCover,
-    url: 'https://www.tiktok.com/@nafyad_/video/7627176419260386577',
-    tags: ['Telegram', 'Premium'],
+    thumbnail: harvestCover,
+    url: 'https://www.instagram.com/reel/DaQgMMBNVQN/?igsh=OWNhODFrNWdkOTIz',
+    tags: ['Digital Freedom', 'Production', 'Farming'],
   },
   // SPACE
   {

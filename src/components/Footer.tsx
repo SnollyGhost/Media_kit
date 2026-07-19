@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { motion } from 'motion/react';
 import { SOCIAL_LINKS, CREATOR_NAME, BUSINESS_EMAIL } from '../lib/data';
-import logoImg from '../assets/LOGO.png';
+import logoImg from '../assets/LOGO.webp';
 import { Youtube, Instagram, Facebook, Linkedin, ArrowUpRight, Mail, MapPin } from 'lucide-react';
 
 const TiktokIcon = ({ className }: { className?: string }) => (

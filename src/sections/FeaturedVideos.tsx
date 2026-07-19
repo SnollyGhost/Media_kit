@@ -126,7 +126,7 @@ export const FeaturedVideos = () => {
               >
                 <div className="relative aspect-[9/16] rounded-2xl overflow-hidden bg-white/5 border border-white/10 cursor-pointer backdrop-blur-sm">
                   {playingVideoId === video.id ? (
-                    <div className="w-full h-full relative">
+                    <div className="w-full h-full relative bg-black">
                       <iframe
                         src={getEmbedUrl(video.url, video.platform)}
                         className="w-full h-full border-0"
@@ -184,7 +184,7 @@ export const FeaturedVideos = () => {
                             </span>
                           ))}
                         </div>
-                        <h3 className="text-xl font-display font-bold leading-tight mb-2 group-hover:text-brand-purple transition-colors">
+                        <h3 className="text-xl font-display font-bold leading-tight mb-2 group-hover:text-brand-purple transition-colors text-white">
                           {video.title}
                         </h3>
                       </div>
